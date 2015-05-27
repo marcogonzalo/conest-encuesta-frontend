@@ -5,10 +5,15 @@ var gulp = require('gulp'),
     filesort = require('gulp-angular-filesort'),
     inject = require('gulp-inject'),
     merge = require('merge-stream'),
+    watch = require('gulp-watch'),
+    usemin = require('gulp-usemin'),
+    uglify = require('gulp-uglify'),
+    minifycss = require('gulp-minify-css'),
+    annotate = require('gulp-ng-annotate'),
     wiredep = require('wiredep').stream;
 
 var globs = {
-    styles: 'app/styles/**/*.scss',
+    styles: 'app/styles/**/*.css',
     html: 'app/**/*.html',
     js: 'app/scripts/**/*.js',
     assets: [
@@ -17,6 +22,7 @@ var globs = {
         './app/views/**/*'
     ]
 };
+
 
 gulp.task('bower', function () {
     return bower({ cmd: 'install' })
@@ -42,7 +48,7 @@ gulp.task('inject', ['wiredep'], function () {
 });
 
 gulp.task('serve', ['inject'], function () {
-    browserSync({
+    browserSync.init({
         server: {
             baseDir: 'app'
         },
@@ -52,11 +58,50 @@ gulp.task('serve', ['inject'], function () {
         }
     });
 
-    gulp.watch('/bower_components', ['bower']);
 
-    gulp.watch(globs.styles, []);
-    gulp.watch([globs.html, globs.js])
+    gulp.watch('app/bower_components', ['app-bower']);
+
+    watch(globs.js, function (vinyl) {
+        if (vinyl.event !== 'change') {
+            injectFiles();
+        } else {
+            reload();
+        }
+    });
+
+    gulp.watch(globs.styles)
+        .on('change', reload);
+    gulp.watch(globs.html)
         .on('change', reload);
 });
+
+gulp.task('mv', function () {
+    return gulp.src(globs.assets, { base: 'app' })
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('usemin', function () {
+    return gulp.src('app/index.html')
+        .pipe(usemin({
+            css: [minifycss(), 'concat'],
+            app: [annotate(), uglify()],
+            vendor: [uglify()]
+        }))
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('build', ['usemin', 'mv']);
+
+gulp.task('deploy', ['build'], function () {
+    browserSync({
+        server: {
+            baseDir: 'dist'
+        },
+        port: 5010,
+        ui: {
+            port: 5011
+        }
+    });
+})
 
 gulp.task('default', ['serve']);
