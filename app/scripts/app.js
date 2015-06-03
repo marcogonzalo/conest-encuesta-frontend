@@ -8,14 +8,22 @@
  *
  * Main module of the application.
  */
-angular.module('sedadApp', ['ngAnimate', 'ngMessages', 'ngResource', 'ngSanitize', 'ngTouch', 'ui.router'])
+angular.module('sedadApp', [
+    'ngAnimate', 
+    'ngMessages', 
+    'ngResource', 
+    'ngSanitize', 
+    'ngTouch', 
+    'ui.bootstrap', 
+    'ui.router'
+  ])
 	.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
-      .state('home', {
+      .state('main', {
         url: '/',
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'AutenticacionCtrl'
       })
       .state('instrumentos', {
         url: '/instrumentos',
@@ -36,4 +44,12 @@ angular.module('sedadApp', ['ngAnimate', 'ngMessages', 'ngResource', 'ngSanitize
         controller: 'InstrumentosEditCtrl'
       });
   })
-;
+  .run(["$rootScope", "$state", "AuthService", function($rootScope, $state, AuthService){
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+      // console.log(toState);
+      if(!AuthService.authorize(toState.data.access)){
+        event.preventDefault();
+        $state.go('main');
+      }
+    });
+  }]);
