@@ -63,15 +63,20 @@ angular.module('sedadApp', [
       
       var permisos = (toState && toState.data) ? toState.data.permisos : null;
       var usuario = CurrentUser.user();
-      
-      if(permisos && !AuthService.canAccess(usuario, permisos)) {
-        event.preventDefault();
-        if(!usuario) {
-          $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-        } 
-        else {
-          $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+      try {
+        if(permisos && !AuthService.canAccess(usuario, permisos)) {
+          event.preventDefault();
+          if(!usuario) {
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+          } 
+          else {
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+          }
+          $state.go('main');
         }
+      }
+      catch(err) {
+        console.log(err);
         $state.go('main');
       }
     });
