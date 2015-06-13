@@ -17,7 +17,7 @@ angular.module('sedadApp', [
     'ui.bootstrap', 
     'ui.router'
   ])
-	.config(function ($stateProvider, $urlRouterProvider) {
+	.config(['$stateProvider', '$urlRouterProvider', 'PERMISOS', function ($stateProvider, $urlRouterProvider, PERMISOS) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('main', {
@@ -36,19 +36,42 @@ angular.module('sedadApp', [
       .state('instrumentos.index', {
         url: '/',
         templateUrl: 'views/instrumentos/index.html',
-        controller: 'InstrumentosCtrl'
+        controller: 'InstrumentosCtrl',
+        data: {
+          permisos: [PERMISOS.verInstrumentos]
+        }
+      })
+      .state('instrumentos.new', {
+        url: '/nuevo',
+        templateUrl: 'views/instrumentos/index.html',
+        controller: 'InstrumentosCtrl',
+        data: {
+          permisos: [PERMISOS.crearInstrumentos]
+        }
       })
       .state('instrumentos.edit', {
         url: '/:id',
         templateUrl: 'views/instrumentos/edit.html',
-        controller: 'InstrumentosEditCtrl'
+        controller: 'InstrumentosEditCtrl',
+        data: {
+          permisos: [PERMISOS.editarInstrumentos]
+        }
       });
-  })
-  .run(["$rootScope", "$state", "AuthService", function($rootScope, $state, AuthService){
+  }])
+  .run(["$rootScope", "$state", "AuthService", 'AUTH_EVENTS', 'CurrentUser', function($rootScope, $state, AuthService, AUTH_EVENTS, CurrentUser){
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-      // console.log(toState);
-      if(!AuthService.authorize(toState.data.access)){
+      
+      var permisos = (toState && toState.data) ? toState.data.permisos : null;
+      var usuario = CurrentUser.user();
+      
+      if(permisos && !AuthService.canAccess(usuario, permisos)) {
         event.preventDefault();
+        if(!usuario) {
+          $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        } 
+        else {
+          $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+        }
         $state.go('main');
       }
     });

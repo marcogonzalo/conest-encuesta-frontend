@@ -9,7 +9,7 @@
  */
 
 angular.module('sedadApp')
-.constant('AuthEvents', {
+.constant('AUTH_EVENTS', {
   loginSuccess: 'auth-login-success',
   loginFailed: 'auth-login-failed',
   logoutSuccess: 'auth-logout-success',
@@ -30,23 +30,44 @@ angular.module('sedadApp')
     }
   };
 })
-.factory('AuthService', ['$http', '$q', '$rootScope', '$state', 'AuthToken', 'AuthEvents', 'CurrentUser', 'SEDAD_API_V1_URL', function($http, $q, $rootScope, $state, AuthToken, AuthEvents, CurrentUser, SEDAD_API_V1_URL) {
+.factory('AuthService', ['$http', '$q', '$rootScope', '$state', 'AuthToken', 'AUTH_EVENTS', 'PERMISOS', 'ROLES', 'CurrentUser', 'SEDAD_API_V1_URL', function($http, $q, $rootScope, $state, AuthToken, AUTH_EVENTS, PERMISOS, ROLES, CurrentUser, SEDAD_API_V1_URL) {
   return {
     login: function(credenciales) {
       var d = $q.defer();
       $http.post(SEDAD_API_V1_URL + '/auth', credenciales)
       .success(function(resp) {
-        AuthToken.set(resp.auth_token);
-        $rootScope.$broadcast(AuthEvents.loginSuccess);
+        AuthToken.set('usuario',angular.toJson(resp));
+        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         d.resolve(resp.user);
-        $state.go('instrumentos');
+        $state.go('instrumentos.index');
+        //$state.go(ROLES[resp.rol.nombre].ruta);
       })
       .error(function(resp) {
-        $rootScope.$broadcast(AuthEvents.loginFailed);
+        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         d.reject(resp.error);
         $state.go('main');
       });
       return d.promise;
+    },
+    canAccess: function(user, permissions) {
+      permissions = angular.isArray(permissions) ? permissions : [permissions];
+      if(user && user.rol) {
+        var access = false;
+        permissions.forEach(function(permiso) {
+          if(!PERMISOS[permiso])
+            throw "Valor de permiso erróneo";
+          
+          switch(permiso) {
+            case PERMISOS.verInstrumentos:
+              access = access || (user.rol.nombre === ROLES.admin.nombre);
+            default:
+              access = access || false;
+          }
+        });
+        return access;
+      }
+      else
+        return false
     }
   };
 }])
@@ -55,22 +76,26 @@ angular.module('sedadApp')
     // This will be called on every outgoing http request
     request: function(config) {
       var AuthToken = $injector.get("AuthToken");
-      var token = AuthToken.get();
+      var token = null;
+      var usuario = AuthToken.get('usuario');
+      if(usuario)
+        token = usuario.auth_token;
+
       config.headers = config.headers || {};
-      if (token) {
+      if(token) {
         config.headers.Authorization = "Bearer " + token;
       }
       return config || $q.when(config);
     },
     // This will be called on every incoming response that has en error status code
     responseError: function(response) {
-      var AuthEvents = $injector.get('AuthEvents')
+      var AUTH_EVENTS = $injector.get('AUTH_EVENTS')
       var matchesAuthenticatePath = response.config && response.config.url.match(new RegExp(SEDAD_API_V1_URL + '/auth'));
       if (!matchesAuthenticatePath) {
         $injector.get('$rootScope').$broadcast({
-          401: AuthEvents.notAuthenticated,
-          403: AuthEvents.notAuthorized,
-          419: AuthEvents.sessionTimeout
+          401: AUTH_EVENTS.notAuthenticated,
+          403: AUTH_EVENTS.notAuthorized,
+          419: AUTH_EVENTS.sessionTimeout
         }[response.status], response);
       }
       return $q.reject(response);
@@ -81,6 +106,6 @@ angular.module('sedadApp')
   $httpProvider.interceptors.push('AuthInterceptor');
 }]);
 
-//$rootScope.$on(AuthEvents.notAuthorized, function() {
+//$rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
   // ... Take some action in response to a 401
 //});

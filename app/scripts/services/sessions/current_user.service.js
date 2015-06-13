@@ -1,16 +1,13 @@
 'use strict';
 
 angular.module('sedadApp')
-.factory('CurrentUser', ["AuthToken", function(AuthToken){
+.factory('CurrentUser', ["AuthToken", 'ROLES', function(AuthToken, ROLES){
 	return {
 		user : function(){
-			if(AuthToken.get('auth_token')){
-				return angular.fromJson(AuthToken.get('auth_token')).user;
+			if(AuthToken.get('usuario')) {
+				return angular.fromJson(AuthToken.get('usuario'));
 			} else {
-				return { 
-					role: 'anon',
-					level : 0
-				};
+				return { rol: ROLES.anonimo };
 			}
 		}
 	}
