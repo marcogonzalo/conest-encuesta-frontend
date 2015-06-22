@@ -60,6 +60,10 @@ angular.module('sedadApp')
           switch(permiso) {
             case PERMISOS.verInstrumentos:
               access = access || (user.rol.nombre === ROLES.admin.nombre);
+            case PERMISOS.crearInstrumentos:
+              access = access || (user.rol.nombre === ROLES.admin.nombre);
+            case PERMISOS.editarInstrumentos:
+              access = access || (user.rol.nombre === ROLES.admin.nombre);
             default:
               access = access || false;
           }

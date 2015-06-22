@@ -36,21 +36,21 @@ angular.module('sedadApp', [
       .state('instrumentos.index', {
         url: '/',
         templateUrl: 'views/instrumentos/index.html',
-        controller: 'InstrumentosCtrl',
+        controller: 'InstrumentosIndexCtrl',
         data: {
           permisos: [PERMISOS.verInstrumentos]
         }
       })
       .state('instrumentos.new', {
         url: '/nuevo',
-        templateUrl: 'views/instrumentos/index.html',
-        controller: 'InstrumentosCtrl',
+        templateUrl: 'views/instrumentos/new.html',
+        controller: 'InstrumentosEditCtrl',
         data: {
           permisos: [PERMISOS.crearInstrumentos]
         }
       })
       .state('instrumentos.edit', {
-        url: '/:id',
+        url: '/:id/editar',
         templateUrl: 'views/instrumentos/edit.html',
         controller: 'InstrumentosEditCtrl',
         data: {
@@ -76,7 +76,6 @@ angular.module('sedadApp', [
         }
       }
       catch(err) {
-        console.log(err);
         $state.go('main');
       }
     });
