@@ -1,0 +1,17 @@
+{{ instrumento.nombre }}
+{{ instrumento.descripcion }}
+<div class="bloque" ng-repeat="b in instrumento.bloques">
+	{{b.nombre}}
+	{{b.descripcion}}
+	{{b.tipo}}
+	<div class="pregunta" ng-repeat="p in b.preguntas">
+		{{p.interrogante}}
+		{{p.descripcion}}
+		<ul>
+			<li class="opcion" ng-repeat="o in p.opciones">
+				{{o.etiqueta}}
+				{{o.valor}}
+			</li>
+		</ul>
+	</div>
+</div>
