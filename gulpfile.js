@@ -59,7 +59,7 @@ gulp.task('serve', ['inject'], function () {
     });
 
 
-    gulp.watch('app/bower_components', ['app-bower']);
+    gulp.watch('app/bower_components', ['bower']);
 
     watch(globs.js, function (vinyl) {
         if (vinyl.event !== 'change') {
