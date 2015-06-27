@@ -1312,7 +1312,7 @@ angular.module('sedadApp')
         ]
     };
 
-    $scope.agregarBloque = function(idx_bloque_anterior = null) {
+    $scope.agregarBloque = function(idx_bloque_anterior) {
         var bloque = {
             "id": null,
             "nombre": null,
@@ -1327,9 +1327,9 @@ angular.module('sedadApp')
         else {
             $scope.instrumento.bloques.splice(idx_bloque_anterior+1,0,bloque);
         }
-    }
+    };
 
-    $scope.agregarPregunta = function(bloque, idx_pregunta_anterior = null) {
+    $scope.agregarPregunta = function(bloque, idx_pregunta_anterior) {
         var pregunta = {
             "id": null,
             "interrogante": null,
@@ -1351,9 +1351,9 @@ angular.module('sedadApp')
         else {
             $scope.instrumento.bloques[indices.bloque_idx].preguntas.splice(idx_pregunta_anterior+1,0,bloque);
         }
-    }
+    };
 
-    $scope.agregarOpcion = function(pregunta, idx_opcion_anterior = null) {
+    $scope.agregarOpcion = function(pregunta, idx_opcion_anterior) {
         var opcion = {
             "id": null,
             "etiqueta": null,
@@ -1368,7 +1368,7 @@ angular.module('sedadApp')
         else {
             $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(idx_opcion_anterior+1,0,pregunta);
         }
-    }
+    };
 
     var getIdxBloque = function(bloque) {
         var indices = {};
@@ -1379,7 +1379,7 @@ angular.module('sedadApp')
                 return indices;
             }
         }
-    }
+    };
 
     var getIdxPregunta = function(pregunta) {
         var indices = {};
@@ -1394,7 +1394,7 @@ angular.module('sedadApp')
                 }
             }     
         }
-    }
+    };
 
     var getIdxOpcion = function(opcion) {
         var indices = {};
@@ -1411,20 +1411,20 @@ angular.module('sedadApp')
                 }
             }
         }
-    }
+    };
 
     $scope.quitarBloque = function(bloque) {
         var indices = getIdxBloque(bloque);
         $scope.instrumento.bloques.splice(indices.bloque_idx,1);
-    }
+    };
 
     $scope.quitarPregunta = function(pregunta) {
         var indices = getIdxPregunta(pregunta);
         $scope.instrumento.bloques[indices.bloque_idx].preguntas.splice(indices.pregunta_idx,1);        
-    }
+    };
 
     $scope.quitarOpcion = function(opcion) {
         var indices = getIdxOpcion(opcion);
         $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(indices.opcion_idx,1);
-    }
+    };
   }]);
