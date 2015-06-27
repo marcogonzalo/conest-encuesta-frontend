@@ -64,6 +64,8 @@ angular.module('sedadApp')
               access = access || (user.rol.nombre === ROLES.admin.nombre);
             case PERMISOS.editarInstrumentos:
               access = access || (user.rol.nombre === ROLES.admin.nombre);
+            case PERMISOS.listarPeriodos:
+              access = access || (user.rol.nombre === ROLES.admin.nombre);
             default:
               access = access || false;
           }

@@ -56,6 +56,21 @@ angular.module('sedadApp', [
         data: {
           permisos: [PERMISOS.editarInstrumentos]
         }
+      })
+      
+      .state('periodos', {
+        url : '/periodos',
+        abstract : true,
+        template : '<ui-view/>'
+      })
+
+      .state('periodos.index', {
+        url : '/',
+        templateUrl : 'views/periodos/index.html',
+        controller: 'PeriodosIndexCtrl',
+        data : {
+          permisos : [PERMISOS.listarPeriodos]
+        }
       });
   }])
   .run(["$rootScope", "$state", "AuthService", 'AUTH_EVENTS', 'CurrentUser', function($rootScope, $state, AuthService, AUTH_EVENTS, CurrentUser){
