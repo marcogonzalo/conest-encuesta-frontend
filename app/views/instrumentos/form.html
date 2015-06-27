@@ -2,14 +2,20 @@
 	<form id="instrumento-form">
 		<input type="text" id="titulo-instrumento" ng-model="instrumento.nombre" placeholder="Nombre del instrumento" class="col-xs-12">
 		<textarea ng-model="instrumento.descripcion" placeholder="Descripción sobre el instrumento" class="col-xs-12"></textarea>
+		<div class="text-right">
+			<button class="btn btn-primary btn-sm" ng-click="agregarBloque()">Agregar bloque</button>
+		</div>
 		<div class="col-xs-12 bloque" ng-repeat="b in instrumento.bloques">
 			<fieldset class="row">
-				<legend>Bloque de preguntas</legend>
+				<legend>Bloque</legend>
 				<button class="btn btn-xs btn-danger" ng-click="quitarBloque(b)">X</button>
 				<input type="text" ng-model="b.nombre" placeholder="Nombre del bloque" class="col-xs-12">
 				<input type="text" ng-model="b.descripcion" placeholder="Descripción del bloque" class="col-xs-12 descripcion">
 				<input type="text" ng-model="b.tipo" placeholder="Tipo de aspecto a evaluar en el bloque" class="col-xs-12">
 				<div class="col-xs-offset-1 col-xs-10">
+					<div class="text-right">
+						<button class="btn btn-primary btn-sm" ng-click="agregarPregunta(b)">Agregar pregunta</button>
+					</div>
 					<fieldset class="row">
 						<legend>Preguntas</legend>
 						<div class="col-xs-12 pregunta" ng-repeat="p in b.preguntas">
@@ -17,6 +23,9 @@
 								<button class="btn btn-xs btn-danger" ng-click="quitarPregunta(p)">X</button>
 								<input type="text" ng-model="p.interrogante" placeholder="Texto de la pregunta" class="col-xs-12">
 								<input type="text" ng-model="p.descripcion" placeholder="Texto orientativo sobre la pregunta" class="col-xs-12 descripcion">
+								<div class="text-right">
+									<button class="btn btn-primary btn-sm" ng-click="agregarOpcion(p)">Agregar opción</button>
+								</div>
 								<ul class="opciones">
 									<li class="row opcion" ng-repeat="o in p.opciones">
 										<label class="col-xs-2">								
@@ -28,16 +37,18 @@
 									</li>
 								</ul>
 							</div>
-						</div>
-						<div class="text-right">
-							<button class="btn btn-primary btn-sm">Agregar pregunta</button>
+							<div class="row">
+								<div class="text-right">
+									<button class="btn btn-primary btn-sm" ng-click="agregarPregunta(b,$index)">Agregar pregunta</button>
+								</div>
+							</div>
 						</div>
 					</fieldset>
 				</div>
 			</fieldset>
-		</div>
-		<div class="text-right">
-			<button class="btn btn-primary btn-sm">Agregar bloque</button>
+			<div class="text-right">
+				<button class="btn btn-primary btn-sm" ng-click="agregarBloque($index)">Agregar bloque</button>
+			</div>
 		</div>
 	</form>
 </div>

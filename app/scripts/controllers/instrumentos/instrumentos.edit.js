@@ -1312,54 +1312,119 @@ angular.module('sedadApp')
         ]
     };
 
-    $scope.quitarBloque = function(bloque) {
+    $scope.agregarBloque = function(idx_bloque_anterior = null) {
+        var bloque = {
+            "id": null,
+            "nombre": null,
+            "descripcion": null,
+            "tipo": null,
+            "preguntas": []
+        };
+
+        if(idx_bloque_anterior === null) {
+            $scope.instrumento.bloques.unshift(bloque);
+        }
+        else {
+            $scope.instrumento.bloques.splice(idx_bloque_anterior+1,0,bloque);
+        }
+    }
+
+    $scope.agregarPregunta = function(bloque, idx_pregunta_anterior = null) {
+        var pregunta = {
+            "id": null,
+            "interrogante": null,
+            "descripcion": null,
+            "tipo_pregunta": {
+                "public_send": "valor_html",
+                "nombre": "nombre",
+                "valor": "valor",
+                "valor_html": "valor_html"
+            },
+            "opciones": []
+        };
+
+        var indices = getIdxBloque(bloque);
+
+        if(idx_pregunta_anterior === null) {
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas.unshift(pregunta);
+        }
+        else {
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas.splice(idx_pregunta_anterior+1,0,bloque);
+        }
+    }
+
+    $scope.agregarOpcion = function(pregunta, idx_opcion_anterior = null) {
+        var opcion = {
+            "id": null,
+            "etiqueta": null,
+            "valor": null
+        };
+
+        var indices = getIdxPregunta(pregunta);
+
+        if(idx_opcion_anterior === null) {
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.unshift(opcion);
+        }
+        else {
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(idx_opcion_anterior+1,0,pregunta);
+        }
+    }
+
+    var getIdxBloque = function(bloque) {
+        var indices = {};
         for(var bi = 0, nb = $scope.instrumento.bloques.length; bi < nb; bi++) {
             if($scope.instrumento.bloques[bi].id == bloque.id) {
-                $scope.instrumento.bloques.splice(bi,1);
-                break;
+                indices = { "bloque_idx":bi };
+                console.log(indices);
+                return indices;
             }
         }
     }
 
-    $scope.quitarPregunta = function(pregunta) {
+    var getIdxPregunta = function(pregunta) {
+        var indices = {};
         for(var bi = 0, nb = $scope.instrumento.bloques.length; bi < nb; bi++) {
             var pi = 0; // index de la pregunta
             var np = $scope.instrumento.bloques[bi].preguntas.length;
             for(pi = 0; pi < np; pi++) {        
                 if($scope.instrumento.bloques[bi].preguntas[pi].id == pregunta.id) {
-                    console.log(pi);
-                    break;
+                    indices = { "bloque_idx":bi, "pregunta_idx": pi };
+                    console.log(indices);
+                    return indices;
                 }
             }     
-            if(pi < np) {
-                $scope.instrumento.bloques[bi].preguntas.splice(pi,1);
-                break;
-            }
         }
     }
 
-    $scope.quitarOpcion = function(opcion) {
-        console.log(opcion);
-        var encontrado = false;
+    var getIdxOpcion = function(opcion) {
+        var indices = {};
         for(var bi = 0, nb = $scope.instrumento.bloques.length; bi < nb; bi++) {
             for(var pi = 0, np = $scope.instrumento.bloques[bi].preguntas.length; pi < np; pi++) {
                 var oi = 0; // index de la pregunta
                 var no = $scope.instrumento.bloques[bi].preguntas[pi].opciones.length;
                 for(oi = 0; oi < no; oi++) {
                     if($scope.instrumento.bloques[bi].preguntas[pi].opciones[oi].id == opcion.id) {
-                        console.log(oi);
-                        encontrado = true;
-                        break;
+                        indices = { "bloque_idx":bi, "pregunta_idx": pi, "opcion_idx": oi };
+                        console.log(indices);
+                        return indices;
                     }
                 }
-                if(oi < no) {
-                    $scope.instrumento.bloques[bi].preguntas[pi].opciones.splice(oi,1);
-                    break;
-                }
-            }
-            if(encontrado) {
-                break;
             }
         }
+    }
+
+    $scope.quitarBloque = function(bloque) {
+        var indices = getIdxBloque(bloque);
+        $scope.instrumento.bloques.splice(indices.bloque_idx,1);
+    }
+
+    $scope.quitarPregunta = function(pregunta) {
+        var indices = getIdxPregunta(pregunta);
+        $scope.instrumento.bloques[indices.bloque_idx].preguntas.splice(indices.pregunta_idx,1);        
+    }
+
+    $scope.quitarOpcion = function(opcion) {
+        var indices = getIdxOpcion(opcion);
+        $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(indices.opcion_idx,1);
     }
   }]);
