@@ -10,12 +10,11 @@
 angular.module('sedadApp')
   .controller('InstrumentosEditCtrl', ['$scope', '$stateParams', 'Instrumento', function ($scope, $stateParams, Instrumento) {
     var nuevoInstrumento = true; // Se asume, por defecto, que es un nuevo instrumento
-
+    $scope.texto_boton = "Crear";
     $scope.instrumento = {};
 
     // Estructura de un instrumento nuevo
     var instrumento = {
-        "id": null,
         "nombre": null,
         "descripcion": null,
         "bloques": Array()
@@ -31,6 +30,7 @@ angular.module('sedadApp')
         // Si existe un id, se solicita el instrumento
         nuevoInstrumento = false;
         $scope.instrumento = Instrumento.get({id: $stateParams.id});
+        $scope.texto_boton = "Actualizar";
 
         // Falta validar si se obtuvo el objeto
     }
@@ -38,7 +38,6 @@ angular.module('sedadApp')
     $scope.agregarBloque = function(idx_bloque_anterior) {
         // Estructura de un bloque nuevo
         var bloque = {
-            "id": null,
             "nombre": null,
             "descripcion": null,
             "tipo": null,
@@ -57,7 +56,6 @@ angular.module('sedadApp')
     $scope.agregarPregunta = function(bloque, idx_pregunta_anterior) {
         // Estructura de una pregunta nueva
         var pregunta = {
-            "id": null,
             "interrogante": null,
             "descripcion": null,
             "tipo_pregunta": {
@@ -82,7 +80,6 @@ angular.module('sedadApp')
     $scope.agregarOpcion = function(pregunta, idx_opcion_anterior) {
         // Estructura de una opción nueva
         var opcion = {
-            "id": null,
             "etiqueta": null,
             "valor": null
         };
@@ -158,8 +155,14 @@ angular.module('sedadApp')
     $scope.guardar = function() {
         if(nuevoInstrumento) {
             alert("nuevo");
-            Instrumento.create($scope.instrumento, function(data) {
-                console.log(data);
+            Instrumento.save($scope.instrumento, function(data) {
+                if(data.id != null) {
+                    $scope.instrumento = data;
+                    $scope.texto_boton = "Actualizar";
+                }
+                else {
+                    console.log(data);
+                }
                 console.log("Instrumento creado");
             });
         }
