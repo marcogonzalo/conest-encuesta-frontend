@@ -11,10 +11,23 @@ angular.module('sedadApp')
   .controller('InstrumentosIndexCtrl', ['$scope', 'Instrumento', function ($scope, Instrumento) {
     $scope.instrumentosDisponibles = Instrumento.query();
 
-    $scope.eliminar = function() {
-        Instrumento.delete($scope.instrumento, function(data) {
+    $scope.eliminarInstrumento = function(instrumento) {
+        var indices = getIdxInstrumento(instrumento);
+        Instrumento.delete({id: instrumento.id}, function(data) {
             console.log(data);
-            console.log("Instrumento creado");
+            $scope.instrumentosDisponibles.splice(indices.instrumento_idx,1);
+            console.log("Instrumento eliminado");
         });
+    };
+
+    var getIdxInstrumento = function(instrumento) {
+        var indices = {};
+        for(var ii = 0, ni = $scope.instrumentosDisponibles.length; ii < ni; ii++) {
+            if($scope.instrumentosDisponibles[ii].id == instrumento.id) {
+                indices = { "instrumento_idx":ii };
+                console.log(indices);
+                return indices;
+            }
+        }
     };
   }]);
