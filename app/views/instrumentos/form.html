@@ -2,37 +2,64 @@
 	<form id="instrumento-form">
 		<input type="text" id="titulo-instrumento" ng-model="instrumento.nombre" placeholder="Nombre del instrumento" class="col-xs-12">
 		<textarea ng-model="instrumento.descripcion" placeholder="Descripción sobre el instrumento" class="col-xs-12"></textarea>
-		<div class="col-xs-12 bloque" ng-repeat="b in instrumento.bloques">
-			<fieldset class="row">
-				<legend>Bloque de preguntas</legend>
-				<input type="text" ng-model="b.nombre" placeholder="Nombre del bloque" class="col-xs-12">
-				<input type="text" ng-model="b.descripcion" placeholder="Descripción del bloque" class="col-xs-12 descripcion">
-				<input type="text" ng-model="b.tipo" placeholder="Tipo de aspecto a evaluar en el bloque" class="col-xs-12">
-				<div class="col-xs-offset-1 col-xs-10">
-					<fieldset class="row">
-						<legend>Preguntas</legend>
-						<div class="col-xs-12 pregunta" ng-repeat="p in b.preguntas">
-							<div class="row">
-								<input type="text" ng-model="p.interrogante" placeholder="Texto de la pregunta" class="col-xs-12">
-								<input type="text" ng-model="p.descripcion" placeholder="Texto orientativo sobre la pregunta" class="col-xs-12 descripcion">
+		<div class="text-center">
+			<button class="btn btn-default btn-xs col-xs-12" ng-click="agregarBloque(null)">Agregar bloque</button>
+		</div>
+		<div class="row" ng-repeat="b in instrumento.bloques">
+			<fieldset class="col-xs-12">
+				<legend>
+					<div class="col-xs-10">Bloque {{$index}}</div><div class="col-xs-2 text-right"><a class="x-borrar" ng-click="quitarBloque(b)"><i class="glyphicon glyphicon-remove"></i></a></div>
+				</legend>
+				<div class="bloque">
+					<input type="text" ng-model="b.nombre" placeholder="Nombre del bloque" class="col-xs-12">
+					<input type="text" ng-model="b.descripcion" placeholder="Descripción del bloque" class="col-xs-12 descripcion">
+					<input type="text" ng-model="b.tipo" placeholder="Tipo de aspecto a evaluar en el bloque" class="col-xs-12">
+					<fieldset class="col-xs-12">
+						<legend>
+							<div class="col-xs-9">Preguntas</div>
+							<div class="col-xs-3 text-right">
+								<button class="btn btn-primary btn-xs" ng-click="agregarPregunta(b,null)">Agregar pregunta</button>
+							</div>
+						</legend>
+						<div class="row pregunta" ng-repeat="p in b.preguntas track by $index">
+							<div class="col-xs-12">
+								<input type="text" ng-model="p.interrogante" placeholder="Texto de la pregunta" class="col-xs-10">
+								<div class="col-xs-2 text-right">
+									<button class="btn btn-sm btn-danger" ng-click="quitarPregunta(p)"><i class="glyphicon glyphicon-trash"></i></button>
+								</div>
+								<input type="text" ng-model="p.descripcion" placeholder="Texto orientativo sobre la pregunta" class="col-xs-10 descripcion">
+								<div class="col-xs-12 text-right">
+									<button class="btn btn-primary btn-xs" ng-click="agregarOpcion(p,null)">Agregar opción</button>
+								</div>
 								<ul class="opciones">
-									<li class="row opcion" ng-repeat="o in p.opciones">
-										<label class="col-xs-2">Opción {{$index + 1}}</label>
-										<input type="text" ng-model="o.etiqueta" placeholder="Etiqueta de la opción" class="col-xs-8">
-										<input type="number" ng-model="o.valor" placeholder="Valor asociado a la opción" class="col-xs-2" integer>
+									<li class="col-xs-12  opcion" ng-repeat="o in p.opciones">
+										<label class="col-xs-2">
+											Opción {{$index + 1}}
+										</label>
+										<input type="text" ng-model="o.etiqueta" placeholder="Etiqueta de la opción" class="col-xs-6">
+										<input type="number" ng-model="o.valor" placeholder="Valor" class="col-xs-2" integer>											
+										<div class="col-xs-1"><a ng-click="quitarOpcion(o)" class="btn-ms x-borrar">x</a></div>
 									</li>
 								</ul>
 							</div>
-						</div>
-						<div class="text-right">
-							<button class="btn btn-primary btn-sm">Agregar pregunta</button>
+							<div class="col-xs-12 text-right">
+								<hr>
+								<button class="btn btn-primary btn-xs" ng-click="agregarPregunta(b,$index)">Agregar pregunta</button>
+								<hr>
+							</div>
 						</div>
 					</fieldset>
+					<div class="clear">&nbsp;</div>
+				</div>
+				<div class="text-center">
+					<hr class="hide">
+					<button class="btn btn-default btn-xs col-xs-12" ng-click="agregarBloque($index)">Agregar bloque</button>
 				</div>
 			</fieldset>
 		</div>
-		<div class="text-right">
-			<button class="btn btn-primary btn-sm">Agregar bloque</button>
-		</div>
+		<p class="text-right">
+			<br>
+			<button class="btn btn-success" ng-click="guardar()">{{texto_boton}}</button>
+		</p>
 	</form>
 </div>

@@ -1,3 +1,14 @@
+form#instrumento-form fieldset {
+	display: block;
+	position:relative;
+}
+
+form#instrumento-form fieldset legend {
+	background-color: #f6f6f6;
+	border:1px solid #e0e0e0;
+	font-size: medium;
+	margin:0;
+}
 form#instrumento-form label {
 	color:gray;
 	font-size: small;
@@ -10,6 +21,7 @@ form#instrumento-form label {
 form#instrumento-form input, form#instrumento-form textarea {
 	border:1px solid white;
 	padding:5px;
+	position: relative
 }
 
 form#instrumento-form input:hover, form#instrumento-form input:focus, form#instrumento-form textarea:hover, form#instrumento-form textarea:focus {
@@ -30,8 +42,18 @@ form#instrumento-form .descripcion {
 	font-style: italic;
 }
 
+form#instrumento-form fieldset .bloque {
+	border: 1px solid #e0e0e0;
+	display: block;
+}
+
 form#instrumento-form ul.opciones {
 	list-style: none;
-	margin:0px;
-	padding:0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.x-borrar {
+	cursor: pointer;
+	vertical-align: middle;
 }

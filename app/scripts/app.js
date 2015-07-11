@@ -15,7 +15,8 @@ angular.module('sedadApp', [
     'ngSanitize', 
     'ngTouch', 
     'ui.bootstrap', 
-    'ui.router'
+    'ui.router',
+    'angular-momentjs'
   ])
 	.config(['$stateProvider', '$urlRouterProvider', 'PERMISOS', function ($stateProvider, $urlRouterProvider, PERMISOS) {
     $urlRouterProvider.otherwise('/');
