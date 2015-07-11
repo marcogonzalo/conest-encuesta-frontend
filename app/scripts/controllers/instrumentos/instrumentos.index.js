@@ -23,7 +23,7 @@ angular.module('sedadApp')
     var getIdxInstrumento = function(instrumento) {
         var indices = {};
         for(var ii = 0, ni = $scope.instrumentosDisponibles.length; ii < ni; ii++) {
-            if($scope.instrumentosDisponibles[ii].id == instrumento.id) {
+            if($scope.instrumentosDisponibles[ii] == instrumento) {
                 indices = { "instrumento_idx":ii };
                 console.log(indices);
                 return indices;

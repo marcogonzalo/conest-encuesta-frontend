@@ -51,6 +51,8 @@ angular.module('sedadApp')
         else {
             $scope.instrumento.bloques.splice(idx_bloque_anterior+1,0,bloque);
         }
+
+        $scope.agregarPregunta(bloque, null);
     };
 
     $scope.agregarPregunta = function(bloque, idx_pregunta_anterior) {
@@ -73,8 +75,11 @@ angular.module('sedadApp')
             $scope.instrumento.bloques[indices.bloque_idx].preguntas.unshift(pregunta);
         }
         else {
-            $scope.instrumento.bloques[indices.bloque_idx].preguntas.splice(idx_pregunta_anterior+1,0,bloque);
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas.splice(idx_pregunta_anterior+1,0,pregunta);
         }
+
+        $scope.agregarOpcion(pregunta,null);
+        $scope.agregarOpcion(pregunta,null);
     };
 
     $scope.agregarOpcion = function(pregunta, idx_opcion_anterior) {
@@ -90,14 +95,15 @@ angular.module('sedadApp')
             $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.unshift(opcion);
         }
         else {
-            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(idx_opcion_anterior+1,0,pregunta);
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(idx_opcion_anterior+1,0,opcion);
         }
     };
 
     var getIdxBloque = function(bloque) {
         var indices = {};
+        console.log(bloque);
         for(var bi = 0, nb = $scope.instrumento.bloques.length; bi < nb; bi++) {
-            if($scope.instrumento.bloques[bi].id == bloque.id) {
+            if($scope.instrumento.bloques[bi] == bloque) {
                 indices = { "bloque_idx":bi };
                 console.log(indices);
                 return indices;
@@ -111,7 +117,7 @@ angular.module('sedadApp')
             var pi = 0; // index de la pregunta
             var np = $scope.instrumento.bloques[bi].preguntas.length;
             for(pi = 0; pi < np; pi++) {        
-                if($scope.instrumento.bloques[bi].preguntas[pi].id == pregunta.id) {
+                if($scope.instrumento.bloques[bi].preguntas[pi] == pregunta) {
                     indices = { "bloque_idx":bi, "pregunta_idx": pi };
                     console.log(indices);
                     return indices;
@@ -127,7 +133,7 @@ angular.module('sedadApp')
                 var oi = 0; // index de la pregunta
                 var no = $scope.instrumento.bloques[bi].preguntas[pi].opciones.length;
                 for(oi = 0; oi < no; oi++) {
-                    if($scope.instrumento.bloques[bi].preguntas[pi].opciones[oi].id == opcion.id) {
+                    if($scope.instrumento.bloques[bi].preguntas[pi].opciones[oi] == opcion) {
                         indices = { "bloque_idx":bi, "pregunta_idx": pi, "opcion_idx": oi };
                         console.log(indices);
                         return indices;
@@ -139,6 +145,7 @@ angular.module('sedadApp')
 
     $scope.quitarBloque = function(bloque) {
         var indices = getIdxBloque(bloque);
+        console.log(indices.bloque_idx);
         $scope.instrumento.bloques.splice(indices.bloque_idx,1);
     };
 
@@ -170,6 +177,7 @@ angular.module('sedadApp')
             alert("existe");
             Instrumento.update($scope.instrumento, function(data) {
                 console.log(data);
+                $scope.instrumento = data;
                 console.log("Instrumento actualizado");
             });
         }
