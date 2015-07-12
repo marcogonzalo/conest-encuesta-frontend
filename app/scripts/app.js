@@ -62,7 +62,7 @@ angular.module('sedadApp', [
       .state('periodos', {
         url : '/periodos',
         abstract : true,
-        template : '<ui-view/>'
+        template : '<div ui-view/>'
       })
 
       .state('periodos.index', {
@@ -77,7 +77,7 @@ angular.module('sedadApp', [
       .state('consultas', {
         url : '/consultas',
         abstract : true,
-        template : '<ui-view/>'
+        template : '<div ui-view/>'
       })
 
       .state('consultas.index', {
@@ -86,6 +86,15 @@ angular.module('sedadApp', [
         controller: 'ConsultasIndexCtrl',
         data : {
           permisos : [PERMISOS.listarConsultasSinResponder]
+        }
+      })
+
+      .state('consultas.responder', {
+        url : '/:id/responder',
+        templateUrl : 'views/consultas/responder.html',
+        controller: 'ConsultasResponderCtrl',
+        data : {
+          permisos : [PERMISOS.responderConsulta]
         }
       });
 

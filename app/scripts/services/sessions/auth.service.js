@@ -68,6 +68,8 @@ angular.module('sedadApp')
               access = access || (user.rol.nombre === ROLES.admin.nombre);
             case PERMISOS.listarConsultasSinResponder:
               access = access || (user.rol.nombre === ROLES.admin.nombre);
+            case PERMISOS.responderConsulta:
+              access = access || (user.rol.nombre === ROLES.admin.nombre);
             default:
               access = access || false;
           }
