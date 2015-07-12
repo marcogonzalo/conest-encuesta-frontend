@@ -1,0 +1,154 @@
+<ol class="breadcrumb">
+  <li><a ui-sref="instrumentos.index">Inicio</a></li>
+<!--   <li><a href="#">Administración</a></li> -->
+  <li class="active">Reportes</li>
+</ol>
+<br>
+<div class="clearfix"> </div>
+<div ng-hide="Visible1">
+ <div class="col-xs-12 ">
+  <div class="panel panel-primary">
+
+   <div class="panel-heading">
+    <strong><h4>Reportes Disponibles</h4></strong>
+   </div>
+  
+   <table class="table table-bordered table-hover">
+    <thead>
+     <tr>
+      <th class="col-xs-1 text-center text-align: center">Número</th>
+      <th class="col-xs-12">Reporte</th>
+      <th class="col-xs-1 text-center text-align: center">Datos Requeridos</th>
+      <th class="col-xs-1 text-center text-align: center">PDF</th>
+      <th class="col-xs-1 text-center text-align: center">CSV</th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr ng-repeat="r in repdis">
+      <td class="col-xs-1 text-center text-align: center">{{r.id }}</td>
+      <td class="col-xs-12">{{r.nombre }}</td>
+      <td class="col-xs-1 text-center text-align: center">
+        <span class="input-group-btn">
+          <button class="btn btn-info btn-xs" ng-click="pedirparametros($index)">
+           <i class="glyphicon glyphicon-pencil"></i>  <!-- {{r.id}} -->
+          </button>         
+        </span>
+      </td>      
+      <td class="col-xs-1 text-center text-align: center">
+        <span class="input-group-btn">
+          <button class="btn btn-danger btn-xs" ng-click="pdfReporte()">
+             <i>PDF</i>  
+          </button>         
+        </span>
+      </td>
+      <td class="col-xs-1 text-center text-align: center">  
+        <span class="input-group-btn">    
+          <button class="btn btn-success btn-xs" ng-click="cvsReporte()">
+             <i>CSV</i>
+          </button>
+        </span>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+</div>
+</div>
+
+<div ng-hide="Visible2">
+ <h1> Seleccion de Parámetros</h1>
+
+  <form class="form form-horizontal" ng-submit="enviar($scope.indice)">
+
+   <div ng-hide="Vp0">
+    <h5> Carreras</h5>
+       <div ng-controller="ReportesIndexCtrl" > 
+
+        <div class="form-group">
+          <label for="carrera_id" class="col-md-2 control-label">Carreras:</label>
+          <div class="col-md-10">
+           <select class='form-control' ng-model="pcarrera" required="required" ng-options="cr.id as cr.id+' - '+cr.nombre for cr in crs">
+           </select> <br>
+          </div>
+         </div>
+      </div>
+  </div> 
+
+   <div ng-hide="Vp1">
+    <h5> Materia</h5>
+       <div ng-controller="ReportesIndexCtrl" > 
+
+        <div class="form-group">
+          <label for="tipo_pregunta_id" class="col-md-2 control-label">xxxx:</label>
+          <div class="col-md-10">
+           <select class='form-control' ng-model="nuevoPregunta.tipo_pregunta_id" required="required" ng-options="tp.id as tp.id+' - '+tp.nombre for tp in tps">
+           </select> <br>
+          </div>
+         </div>
+      </div>
+  </div> 
+
+  <div ng-hide="Vp2">
+    <h5> Pregunta</h5>
+       <div ng-controller="ReportesIndexCtrl" > 
+
+        <div class="form-group">
+          <label for="tipo_pregunta_id" class="col-md-2 control-label">xxxx:</label>
+          <div class="col-md-10">
+           <select class='form-control' ng-model="nuevoPregunta.tipo_pregunta_id" required="required" ng-options="tp.id as tp.id+' - '+tp.nombre for tp in tps">
+           </select> <br>
+          </div>
+         </div>
+      </div>
+  </div> 
+  <div ng-hide="Vp3">
+    <h5> Instrumento</h5>
+       <div ng-controller="ReportesIndexCtrl" > 
+
+        <div class="form-group">
+          <label for="tipo_pregunta_id" class="col-md-2 control-label">xxxx:</label>
+          <div class="col-md-10">
+           <select class='form-control' ng-model="nuevoPregunta.tipo_pregunta_id" required="required" ng-options="tp.id as tp.id+' - '+tp.nombre for tp in tps">
+           </select> <br>
+          </div>
+         </div>
+      </div>
+
+  </div> 
+  <div ng-hide="Vp4">
+    <h5> Período</h5>
+       <div ng-controller="ReportesIndexCtrl" > 
+
+        <div class="form-group">
+          <label for="tipo_pregunta_id" class="col-md-2 control-label">xxx:</label>
+          <div class="col-md-10">
+           <select class='form-control' ng-model="nuevoPregunta.tipo_pregunta_id" required="required" ng-options="tp.id as tp.id+' - '+tp.nombre for tp in tps">
+           </select> <br>
+          </div>
+         </div>
+      </div>
+  
+  </div> 
+  <div ng-hide="Vp5">
+    <h5> Cédula del Docente</h5>
+
+        <div ng-controller="ReportesIndexCtrl" > 
+
+        <div class="form-group">
+          <label for="tipo_pregunta_id" class="col-md-2 control-label">xxx:</label>
+          <div class="col-md-10">
+           <select class='form-control' ng-model="nuevoPregunta.tipo_pregunta_id" required="required" ng-options="tp.id as tp.id+' - '+tp.nombre for tp in tps">
+           </select> <br>
+          </div>
+         </div>
+      </div>  
+  </div> 
+
+    <div align="left">
+     <rigth>
+      <button class="btn btn-primary" ng-click="volver()">Volver 
+      </button>
+     </rigth>  
+    </div> 
+
+</div>

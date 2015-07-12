@@ -56,8 +56,7 @@ angular.module('sedadApp', [
         data: {
           permisos: [PERMISOS.editarInstrumentos]
         }
-      })
-      
+      })     
       .state('periodos', {
         url : '/periodos',
         abstract : true,
@@ -69,7 +68,20 @@ angular.module('sedadApp', [
         templateUrl : 'views/periodos/index.html',
         controller: 'PeriodosIndexCtrl',
         data : {
-          permisos : [PERMISOS.listarPeriodos]
+        permisos : [PERMISOS.listarPeriodos]
+        }
+      })
+      .state('reportes', {
+        url : '/reportes',
+        abstract : true,
+        template : '<ui-view/>'
+      })
+      .state('reportes.index', {
+        url : '/',
+        templateUrl : 'views/reportes/index.html',
+        controller: 'ReportesIndexCtrl',
+        data : {
+          permisos : [PERMISOS.listarReportes]
         }
       });
   }])
