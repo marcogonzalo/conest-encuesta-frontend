@@ -20,10 +20,9 @@
 				<div class="col-xs-12">
 					<label>{{ p.interrogante }}</label>
 					<p>{{ p.descripcion }}</p>
-					<input type="number" ng-show="false" ng-model="respuesta.respuestas[p.id].pregunta_id" value="{{ p.id }}">
 					<ul class="opciones">
-						<li class="col-xs-12  opcion" ng-repeat="o in p.opciones">
-							<input type="radio" ng-model="respuesta.respuestas[p.id].valor" value="{{ o.valor }}">
+						<li class="col-xs-12 opcion" ng-repeat="o in p.opciones">
+							<input type="radio" ng-model="p.respuesta" value="{{ o.valor }}">
 							{{ o.etiqueta }}
 						</li>
 					</ul>
