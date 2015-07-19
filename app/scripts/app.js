@@ -61,7 +61,7 @@ angular.module('sedadApp', [
       .state('periodos', {
         url : '/periodos',
         abstract : true,
-        template : '<ui-view/>'
+        template : '<div ui-view/>'
       })
 
       .state('periodos.index', {
@@ -84,7 +84,33 @@ angular.module('sedadApp', [
         data : {
           permisos : [PERMISOS.listarReportes]
         }
+      })
+
+      .state('consultas', {
+        url : '/consultas',
+        abstract : true,
+        template : '<div ui-view/>'
+      })
+
+      .state('consultas.index', {
+        url : '/',
+        templateUrl : 'views/consultas/index.html',
+        controller: 'ConsultasIndexCtrl',
+        data : {
+          permisos : [PERMISOS.listarConsultasSinResponder]
+        }
+      })
+
+      .state('consultas.responder', {
+        url : '/:id/responder',
+        templateUrl : 'views/consultas/responder.html',
+        controller: 'ConsultasResponderCtrl',
+        data : {
+          permisos : [PERMISOS.responderConsulta]
+        }
       });
+
+
   }])
   .run(["$rootScope", "$state", "AuthService", 'AUTH_EVENTS', 'CurrentUser', function($rootScope, $state, AuthService, AUTH_EVENTS, CurrentUser){
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){

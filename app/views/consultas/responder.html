@@ -1,0 +1,38 @@
+<div class="container">
+		<h1>Consulta sobre la Actividad Docente</h1>
+		<dl>
+			<dt>Per&iacute;odo</dt>
+			<dd>{{ consulta.oferta_academica.periodo }}</dd>
+			<dt>Asignatura:</dt>
+			<dd>{{ consulta.oferta_academica.nombre }} ({{ consulta.oferta_academica.codigo }})</dd>
+			<dt>Sección</dt>
+			<dd>{{ consulta.oferta_academica.seccion }} - Prof. {{ consulta.oferta_academica.docente.primer_nombre }} {{ consulta.oferta_academica.docente.primer_apellido }}</dd>
+		</dl>
+
+		<h2>{{ consulta.instrumento.nombre }}</h2>
+		<p>{{ consulta.instrumento.descripcion }}</p>
+		
+		<div class="row" ng-repeat="b in consulta.instrumento.bloques">
+			<h3>{{ b.nombre }} ({{ b.tipo }})</h3>
+			<p>{{ b.descripcion }}</p>
+
+			<div class="row pregunta" ng-repeat="p in b.preguntas track by $index">
+				<div class="col-xs-12">
+					<label>{{ p.interrogante }}</label>
+					<p>{{ p.descripcion }}</p>
+					<ul class="opciones">
+						<li class="col-xs-12 opcion" ng-repeat="o in p.opciones">
+							<input type="radio" ng-model="p.respuesta" value="{{ o.valor }}">
+							{{ o.etiqueta }}
+						</li>
+					</ul>
+					<div class="clear">&nbsp;</div>
+				</div>
+			</div>
+		</div>
+		<p class="text-right">
+			<br>
+			<button class="btn btn-success" ng-click="responderConsulta()">Enviar</button>
+		</p>
+	</form>
+</div>
