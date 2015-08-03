@@ -20,7 +20,7 @@ angular.module('sedadApp')
 .factory('AuthToken', function() {
   return {
     get: function(key) {
-      return localStorage.getItem(key);
+      return JSON.parse(localStorage.getItem(key));
     },
     set: function(key, val) {
       return localStorage.setItem(key, val);
@@ -49,37 +49,39 @@ angular.module('sedadApp')
       });
       return d.promise;
     },
-    canAccess: function(user, permissions) {
-      permissions = angular.isArray(permissions) ? permissions : [permissions];
-      if(user && user.rol) {
-        var access = false;
-        permissions.forEach(function(permiso) {
+    canAccess: function(usuario, permisos, callback) {
+      if(!usuario) {
+        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+        return false
+      } 
+      // Enviar token de autenticacion
+      var token = usuario.auth_token;
+      
+      var auth = "Bearer ";
+      if(token) {
+        auth = auth + token;
+      }
+
+      // Confirmacion de permiso
+      if(permisos) {
+        var arrPermisos = angular.isArray(permisos) ? permisos : [permisos];
+        var promise = false;
+        arrPermisos.forEach(function(permiso) {
           if(!PERMISOS[permiso])
             throw "Valor de permiso erróneo";
-          
-          switch(permiso) {
-            case PERMISOS.verInstrumentos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.crearInstrumentos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.editarInstrumentos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.listarPeriodos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.listarReportes:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);              
-            case PERMISOS.listarConsultasSinResponder:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.responderConsulta:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            default:
-              access = access || false;
-          }
+          promise = promise || $http.get(SEDAD_API_V1_URL + '/usuario_puede/' + PERMISOS[permiso], { headers: { 'Authorization': auth } })
+            .then(function(response, status, headers, config) {
+              return response.data.puede;
+            }, function(response, status, headers, config) {
+              return false;
+              // called asynchronously if an error occurs
+              // or server returns response with an error status.
+            });
         });
-        return access;
+        callback(promise);
       }
       else
-        return false
+        return false;
     }
   };
 }])
@@ -88,15 +90,15 @@ angular.module('sedadApp')
     // This will be called on every outgoing http request
     request: function(config) {
       var AuthToken = $injector.get("AuthToken");
-      var token = null;
       var usuario = AuthToken.get('usuario');
-      if(usuario)
-        token = usuario.auth_token;
-
       config.headers = config.headers || {};
-      if(token) {
-        config.headers.Authorization = "Bearer " + token;
+      if(usuario.auth_token) {
+        console.log("hola");
+        config.headers.Authorization = "Bearer " + usuario.auth_token;
       }
+
+      console.log(usuario);
+      console.log(config.headers);
       return config || $q.when(config);
     },
     // This will be called on every incoming response that has en error status code
@@ -113,11 +115,9 @@ angular.module('sedadApp')
       return $q.reject(response);
     }
   };
-}])
-.config(["$httpProvider", function($httpProvider) {
+}]);
+
+angular.module('sedadApp').config(["$httpProvider", function($httpProvider) {
   $httpProvider.interceptors.push('AuthInterceptor');
 }]);
 
-//$rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
-  // ... Take some action in response to a 401
-//});
