@@ -67,7 +67,7 @@ angular.module('sedadApp')
             case PERMISOS.listarPeriodos:
               access = access || (user.rol.nombre === ROLES.admin.nombre);
             case PERMISOS.listarReportes:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);              
+              access = access || (user.rol.nombre === ROLES.admin.nombre);                
             case PERMISOS.listarConsultasSinResponder:
               access = access || (user.rol.nombre === ROLES.admin.nombre);
             case PERMISOS.responderConsulta:

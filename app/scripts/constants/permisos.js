@@ -17,5 +17,6 @@ angular.module('sedadApp')
 		responderConsultas: "responderConsulta",
 		crearPeriodo: "crearPeriodo",
 		listarPeriodos: "listarPeriodos",
-		listarReportes: "listarReportes"
+		listarReportes: "listarReportes",
+		listarGraficas: "listarGraficas"
 	});

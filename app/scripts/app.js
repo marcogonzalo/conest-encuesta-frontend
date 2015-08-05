@@ -9,6 +9,7 @@
  * Main module of the application.
  */
 angular.module('sedadApp', [
+    'chart.js',
     'ngAnimate', 
     'ngMessages', 
     'ngResource', 
@@ -72,6 +73,14 @@ angular.module('sedadApp', [
         permisos : [PERMISOS.listarPeriodos]
         }
       })
+      .state('periodos.new', {
+        url: '/nuevo',
+        templateUrl: 'views/periodos/new.html',
+        controller: 'PeriodosEditCtrl',
+        data: {
+          permisos: [PERMISOS.crearPeriodos]
+        }
+      })
       .state('reportes', {
         url : '/reportes',
         abstract : true,
@@ -85,7 +94,6 @@ angular.module('sedadApp', [
           permisos : [PERMISOS.listarReportes]
         }
       })
-
       .state('consultas', {
         url : '/consultas',
         abstract : true,

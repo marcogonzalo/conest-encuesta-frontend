@@ -1,95 +1,107 @@
 'use strict';
 
-// angular.module('sedadApp')
-// 	.factory('ListadoCarreras',function($resource){
-// 		return $resource('http://localhost:3000/api/v1/carreras',{},{
-// 			 query:  {method:'GET', params:{}, isArray:true}
-// 		});
-//      });
-
-
 angular.module('sedadApp')
-	.factory('ListadoCarreras', ['$resource', 'SEDAD_API_V1_URL', function($resource, API){
-   
-		var res = $resource('http://localhost:3000/api/v1/carreras', {id: '@id'}, {
-		// var res = $resource(API + '/periodos_academicos/:id', {id: '@id'}, {			
+	.factory('GraR0', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}, {
+// 'http://localhost:3000/api/v1/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}
 			update: {
-				method: 'PUT'
+				method: 'GET', isArray: true
 			}
 		});
 		return res;
-	}]);
-
-
-
-
-angular.module('sedadApp')
-	.factory('ListadoMaterias',function($resource){
-		return $resource('http://localhost:3000/api/v1/carreras/:carrera_id/materias',{carrera_id: '@carrera_id'},{
-			 query:  {method:'GET', params:{}, isArray:true}
+	}])
+	.factory('GraR1', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/historico_completo/materias/:codigo/instrumentos/:instrumento_id.json', {codigo: '@codigo',instrumento_id: '@id'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
 		});
-     });
-
-angular.module('sedadApp')
-	.factory('ListadoPreguntas',function($resource){
-		return $resource('http://localhost:3000/api/v1/preguntas',{id: '@id'},{
-			 query:  {method:'GET', params:{}, isArray:true}
+		return res;
+	}])	
+	.factory('GraR2', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/historico_comparado/materias/:codigo/instrumentos/:instrumento_id.json?ids[]=1&ids[]=2&ids[]=3', {codigo: '@codigo',instrumento_id: '@id'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
 		});
-     });
-
-angular.module('sedadApp')
-	.factory('ListadoInstrumentos',function($resource){
-		return $resource('http://localhost:3000/api/v1/instrumentos',{id: '@id'},{
-			 query:  {method:'GET', params:{}, isArray:true}
+		return res;
+	}])	
+	.factory('GraR3', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/periodo_completo/materias/:codigo/periodos/:periodo.json', {codigo: '@codigo',periodo: '@periodo'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
 		});
-     });
-
-angular.module('sedadApp')
-	.factory('ListadoPeriodos',function($resource){
-		return $resource('http://localhost:3000/api/v1/periodos_academicos',{id: '@id'},{
-			 query:  {method:'GET', params:{}, isArray:true}
+		return res;
+	}])
+	.factory('GraR4', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/periodo_comparado/materias/:codigo_materia/periodos/:periodo.json?ids[]=1&ids[]=2&ids[]=3', {codigo_materia: '@codigo_materia',periodo: '@periodo'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
 		});
-     });
-
-angular.module('sedadApp')
-	.factory('ListadoDocentes',function($resource){
-		return $resource('http://localhost:3000/api/v1/docentes',{id: '@id'},{
-			 query:  {method:'GET', params:{}, isArray:true}
+		return res;
+	}])
+	.factory('GraR5', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/historico_pregunta/docentes/:cedula_docente/preguntas/:pregunta_id.json', {cedula_docente: '@cedula_docente',pregunta_id: '@pregunta_id'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
 		});
-     });
-
-angular.module('sedadApp')
-.factory('CrResource', function($resource) {
-   var factory = {
-    obtenerCr: $resource('http://localhost:3000/api/v1/carreras',{}, {
-       todosCr: {method: 'GET', isArray: true}
-    }),
-    agregarCr: $resource('http://localhost:3000/api/v1/carreras',{},{
-      nuevoPr: {method: 'POST'}//, params: {interrogante: '@interrogante', descripcion: '@descripcion', tipo_pregunta_id: '@tipo_pregunta_id'}
-    }),
-    eliminarCr: $resource('http://localhost:3000/api/v1/carreras:id',{},{
-      borraCr: {method: 'DELETE', params: {id: '@id'}}
-    }),
-   };
-   return factory;
-});
-
-
-
-
-
-
-
-
-// angular.module('sedadApp')
-// 	.factory('ListadoMaterias',function($resource){
-// 		return $resource('http://localhost:3000/api/v1/reportes/historico_pregunta/materias/6014/preguntas/:id.csv',{id: '@id',codigo: '@codigo'},{
-// 			 query:  {method:'GET', params:{format: 'csv'}, isArray:true},
-//              post:   {method:'POST'},
-//              update: {method:'PUT'},
-//              remove: {method:'DELETE'}
-// 		});
-
-     // });	
-
+		return res;
+	}])
+	.factory('GraR6', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/historico_completo/docentes/:cedula_docente/instrumentos/:instrumento_id.json', {cedula_docente: '@cedula_docente',instrumento_id: '@instrumento_id'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
+		});
+		return res;
 	
+	}])
+	.factory('GraR7', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/historico_comparado/docentes/:cedula_docente/instrumentos/:instrumento_id.json?ids[]=1&ids[]=2&ids[]=3', {cedula_docente: '@cedula_docente',instrumento_id: '@instrumento_id'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
+		});
+		return res;
+	
+	}])
+	.factory('GraR8', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/periodo_completo/docentes/:cedula_docente/periodos/:periodo.json', {cedula_docente: '@cedula_docente',periodo: '@periodo'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
+		});
+		return res;
+	
+	}])
+	.factory('GraR9', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		var res = $resource (API +'/reportes/periodo_comparado/docentes/:cedula_docente/periodos/:periodo.json?ids[]=1&ids[]=2&ids[]=3', {cedula_docente: '@cedula_docente',periodo: '@periodo'}, {
+			update: {
+				method: 'GET', isArray: true
+			}
+		});
+		return res;
+	
+	}])
+
+	.factory('LisDoc',function ($resource){
+		return $resource('http://localhost:3000/api/v1/docentes/:id');
+		})
+	.factory('LisPer',function ($resource){
+		return $resource('http://localhost:3000/api/v1/periodos_academicos/:id');
+		})
+	.factory('LisIns',function ($resource){
+		return $resource('http://localhost:3000/api/v1/instrumentos/:id');
+		})
+	.factory('LisCar',function ($resource){
+		return $resource('http://localhost:3000/api/v1/carreras');
+		})
+	.factory('LisPre',function ($resource){
+		return $resource('http://localhost:3000/api/v1/preguntas');
+		})
+	.factory('LisMat',function ($resource){
+		return $resource('http://localhost:3000/api/v1/carreras/:id/materias', {id: '@id'});
+		});
