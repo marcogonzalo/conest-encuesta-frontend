@@ -33,12 +33,14 @@ angular.module('sedadApp')
 .factory('AuthService', ['$http', '$q', '$rootScope', '$state', 'AuthToken', 'AUTH_EVENTS', 'PERMISOS', 'ROLES', 'CurrentUser', 'SEDAD_API_V1_URL', function($http, $q, $rootScope, $state, AuthToken, AUTH_EVENTS, PERMISOS, ROLES, CurrentUser, SEDAD_API_V1_URL) {
   return {
     login: function(credenciales) {
+      AuthToken.unset('usuario');
       var d = $q.defer();
       $http.post(SEDAD_API_V1_URL + '/auth', credenciales)
       .success(function(resp) {
         AuthToken.set('usuario',angular.toJson(resp));
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         d.resolve(resp.user);
+        console.log(resp);
         $state.go(ROLES[(resp.rol).toLowerCase()].ruta);
       })
       .error(function(resp) {
@@ -60,7 +62,6 @@ angular.module('sedadApp')
             access = access || (permiso === permiso_usuario);
           })
         });
-        callback(promise);
       }
       else
         return false;
@@ -74,13 +75,12 @@ angular.module('sedadApp')
       var AuthToken = $injector.get("AuthToken");
       var usuario = AuthToken.get('usuario');
       config.headers = config.headers || {};
-      if(usuario.auth_token) {
-        console.log("hola");
+      if(usuario && usuario.auth_token) {
         config.headers.Authorization = "Bearer " + usuario.auth_token;
       }
 
-      console.log(usuario);
-      console.log(config.headers);
+      //console.log(usuario);
+      //console.log(config.headers);
       return config || $q.when(config);
     },
     // This will be called on every incoming response that has en error status code
@@ -102,7 +102,3 @@ angular.module('sedadApp')
 angular.module('sedadApp').config(["$httpProvider", function($httpProvider) {
   $httpProvider.interceptors.push('AuthInterceptor');
 }]);
-<<<<<<< HEAD
-=======
-
->>>>>>> permisos_dinamicos

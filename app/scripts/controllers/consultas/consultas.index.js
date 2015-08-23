@@ -10,6 +10,7 @@
 angular.module('sedadApp')
   .controller('ConsultasIndexCtrl', ['$scope', '$http', 'CurrentUser', 'SEDAD_API_V1_URL', function ($scope, $http, CurrentUser, SEDAD_API_V1_URL) {
     var u = CurrentUser.user();
+    console.log(u);
     $http.get(SEDAD_API_V1_URL + '/estudiantes/'+u.cedula+'/consultas_sin_responder')
     	.success(function(data, status, headers, config) {
     		$scope.consultasSinResponder = data.consultas_sin_responder;
