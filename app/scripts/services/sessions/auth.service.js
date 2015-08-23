@@ -60,10 +60,10 @@ angular.module('sedadApp')
             access = access || (permiso === permiso_usuario);
           })
         });
-        return access;
+        callback(promise);
       }
       else
-        return false
+        return false;
     }
   };
 }])
@@ -73,9 +73,9 @@ angular.module('sedadApp')
     request: function(config) {
       var AuthToken = $injector.get("AuthToken");
       var usuario = AuthToken.get('usuario');
-      console.log("hola");
       config.headers = config.headers || {};
       if(usuario.auth_token) {
+        console.log("hola");
         config.headers.Authorization = "Bearer " + usuario.auth_token;
       }
 
@@ -97,7 +97,12 @@ angular.module('sedadApp')
       return $q.reject(response);
     }
   };
-}])
-.config(["$httpProvider", function($httpProvider) {
+}]);
+
+angular.module('sedadApp').config(["$httpProvider", function($httpProvider) {
   $httpProvider.interceptors.push('AuthInterceptor');
 }]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> permisos_dinamicos

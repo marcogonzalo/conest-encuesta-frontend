@@ -122,22 +122,29 @@ angular.module('sedadApp', [
   }])
   .run(["$rootScope", "$state", "AuthService", 'AUTH_EVENTS', 'CurrentUser', function($rootScope, $state, AuthService, AUTH_EVENTS, CurrentUser){
     $rootScope.$on('$stateChangeStart', function(event, next, toState, toParams, fromState, fromParams){
-      
       var permisos = (next && next.data) ? next.data.permisos : null;
       var usuario = CurrentUser.user();
-      if(!usuario) {
-        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-      } 
-
-      try {
-        if(permisos && !AuthService.canAccess(usuario, permisos)) {
-          event.preventDefault();
-          $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+        if(permisos) {
+          AuthService.canAccess(usuario, permisos, function(promise) {
+            promise.then(function(puede) {
+              if(!puede) {
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+              }
+            });
+          });
         }
-      }
-      catch(err) {
-        $state.go('main');
-      }
+    });
+
+    $rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
+      $state.go('main');
+    });
+
+    $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
+      $state.go('main');
+    });
+
+    $rootScope.$on(AUTH_EVENTS.sessionTimeout, function() {
+      $state.go('main');
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
@@ -152,3 +159,4 @@ angular.module('sedadApp', [
       $state.go('main');
     });
   }]);
+
