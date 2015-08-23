@@ -1,0 +1,47 @@
+<ol class="breadcrumb">
+ <li><a ui-sref="instrumentos.index">Inicio</a></li>
+ <li class="active">Gráficas</li>
+</ol>
+<br>
+<div class="col-md-12  text-center">
+  <h3 class="subtitulo-rep"><strong>Gráfica Torta: {{nombre}}</strong></h3>
+  <div class="col-md-8 col-md-offset-2">
+    <canvas id="pie" class="chart chart-pie" data="datos1"
+      labels="etiquetas" legend="true" 
+      click="">
+    </canvas>
+  </div>
+</div>
+<br><br>
+<div class="col-md-12  text-center">
+  <h3 class="subtitulo-rep"><strong>Gráfica Radar: {{nombre}}</strong></h3>
+  <div class="col-md-8 col-md-offset-2">
+    <canvas id="base" class="chart-base" chart-type="type" data="datos1"
+      labels="etiquetas" legend="true" 
+      click="">
+    </canvas>
+  </div>
+</div>
+<br><br>
+
+<div class="row text-center">
+
+  <h3 class="subtitulo-rep"><strong>Gráfica Linea: {{nombre}}</strong></h3>
+  <div class="col-md-8 col-md-offset-2">
+    <canvas id="line" class="chart chart-line" data="datos2"
+      labels="etiquetas" legend="true" series="series2"
+      click="onClick">
+    </canvas>
+  </div>
+</div>
+
+<div class="row text-center">
+
+  <h3 class="subtitulo-rep"><strong>Gráfica Linea: {{nombre}}</strong></h3>
+  <div class="col-md-8 col-md-offset-2">
+    <canvas id="bar" class="chart chart-bar" data="datos2"
+      labels="etiquetas" legend="true" series="series2"
+      click="onClick">
+    </canvas>
+  </div>
+</div>
