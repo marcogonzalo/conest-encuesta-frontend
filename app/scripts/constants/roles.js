@@ -9,24 +9,24 @@
  */
 angular.module('sedadApp')
 	.constant('ROLES', {
-		anonimo: {
-			nombre: "anonimo",
-			ruta: 'public.home',
+		superadmin: {
+			nombre: "superadmin",
+			ruta: 'instrumentos.index',
 			level: 0
-		},
-		estudiante: {
-			nombre: "estudiante",
-			ruta: 'estudiante.home',
-			level: 1
-		},
-		docente: {
-			nombre: "docente",
-			ruta: 'docente.home',
-			level: 2
 		},
 		admin: {
 			nombre: "admin",
-			ruta: 'admin.home',
+			ruta: 'instrumentos.index',
+			level: 2
+		},
+		docente: {
+			nombre: "docente",
+			ruta: 'reportes.index',
 			level: 3
+		},
+		estudiante: {
+			nombre: "estudiante",
+			ruta: 'consultas.index',
+			level: 4
 		}
 	});

@@ -20,7 +20,7 @@ angular.module('sedadApp')
 .factory('AuthToken', function() {
   return {
     get: function(key) {
-      return localStorage.getItem(key);
+      return JSON.parse(localStorage.getItem(key));
     },
     set: function(key, val) {
       return localStorage.setItem(key, val);
@@ -33,14 +33,15 @@ angular.module('sedadApp')
 .factory('AuthService', ['$http', '$q', '$rootScope', '$state', 'AuthToken', 'AUTH_EVENTS', 'PERMISOS', 'ROLES', 'CurrentUser', 'SEDAD_API_V1_URL', function($http, $q, $rootScope, $state, AuthToken, AUTH_EVENTS, PERMISOS, ROLES, CurrentUser, SEDAD_API_V1_URL) {
   return {
     login: function(credenciales) {
+      AuthToken.unset('usuario');
       var d = $q.defer();
       $http.post(SEDAD_API_V1_URL + '/auth', credenciales)
       .success(function(resp) {
         AuthToken.set('usuario',angular.toJson(resp));
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         d.resolve(resp.user);
-        $state.go('instrumentos.index');
-        //$state.go(ROLES[resp.rol.nombre].ruta);
+        console.log(resp);
+        $state.go(ROLES[(resp.rol).toLowerCase()].ruta);
       })
       .error(function(resp) {
         $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
@@ -51,35 +52,19 @@ angular.module('sedadApp')
     },
     canAccess: function(user, permissions) {
       permissions = angular.isArray(permissions) ? permissions : [permissions];
-      if(user && user.rol) {
+      if(user && user.rol && user.permisos) {
         var access = false;
         permissions.forEach(function(permiso) {
           if(!PERMISOS[permiso])
             throw "Valor de permiso erróneo";
           
-          switch(permiso) {
-            case PERMISOS.verInstrumentos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.crearInstrumentos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.editarInstrumentos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.listarPeriodos:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.listarReportes:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);                
-            case PERMISOS.listarConsultasSinResponder:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            case PERMISOS.responderConsulta:
-              access = access || (user.rol.nombre === ROLES.admin.nombre);
-            default:
-              access = access || false;
-          }
+          user.permisos.forEach(function(permiso_usuario) {
+            access = access || (permiso === permiso_usuario);
+          })
         });
-        return access;
       }
       else
-        return false
+        return false;
     }
   };
 }])
@@ -88,15 +73,14 @@ angular.module('sedadApp')
     // This will be called on every outgoing http request
     request: function(config) {
       var AuthToken = $injector.get("AuthToken");
-      var token = null;
       var usuario = AuthToken.get('usuario');
-      if(usuario)
-        token = usuario.auth_token;
-
       config.headers = config.headers || {};
-      if(token) {
-        config.headers.Authorization = "Bearer " + token;
+      if(usuario && usuario.auth_token) {
+        config.headers.Authorization = "Bearer " + usuario.auth_token;
       }
+
+      //console.log(usuario);
+      //console.log(config.headers);
       return config || $q.when(config);
     },
     // This will be called on every incoming response that has en error status code
@@ -113,11 +97,8 @@ angular.module('sedadApp')
       return $q.reject(response);
     }
   };
-}])
-.config(["$httpProvider", function($httpProvider) {
-  $httpProvider.interceptors.push('AuthInterceptor');
 }]);
 
-//$rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
-  // ... Take some action in response to a 401
-//});
+angular.module('sedadApp').config(["$httpProvider", function($httpProvider) {
+  $httpProvider.interceptors.push('AuthInterceptor');
+}]);

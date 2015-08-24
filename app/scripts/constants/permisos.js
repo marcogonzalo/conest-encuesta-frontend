@@ -9,10 +9,10 @@
  */
 angular.module('sedadApp')
 	.constant('PERMISOS', {
-		verInstrumentos: "verInstrumentos",
-		crearInstrumentos: "crearInstrumentos",
-		editarInstrumentos: "editarInstrumentos",
-		eliminarInstrumentos: "eliminarInstrumentos",
+		verInstrumento: "verInstrumento",
+		crearInstrumentos: "crearInstrumento",
+		editarInstrumentos: "editarInstrumento",
+		eliminarInstrumentos: "eliminarInstrumento",
 		listarConsultasSinResponder: "listarConsultasSinResponder",
 		responderConsultas: "responderConsulta",
 		crearPeriodo: "crearPeriodo",
