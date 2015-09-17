@@ -8,35 +8,38 @@
 
 <div class="clearfix"> </div>
   <div ng-hide="Vp7" class="col-sm-4 col-md-4">
-<!-- Reserva el lado Izquierdo para las gráficas Vp7 -->
-<!-- Gráfica Torta -->
-<!--     <div ng-show="Vp71">
-     <h5 class="subtitulo-rep">Gráfica Torta:</h5>
-    </div>  -->
-     
-      <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
+     <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
         <div ng-hide="Vp70">
-        ¿{{graficas.pregunta.interrogante}}? Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}
-
+         ¿{{graficas.pregunta.interrogante}}? Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}
         </div>
         <div ng-hide="Vp71">
          Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Instrumento:{{graficas.instrumento.nombre}}
         </div> 
+        <div ng-hide="Vp72">
+         {{graficas.materia.codigo}} {{graficas.materia.nombre}}    Instrumento: {{graficas.instrumento.nombre}}
+        </div>
         <div ng-hide="Vp73">
          Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Per&iacute;odo: {{periodos[persel].periodo}}
-        </div>                
+        </div>  
+        <div ng-hide="Vp74">
+         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}}
+        </div> 
         <div ng-hide="Vp75">
          {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Pregunta:{{graficas.pregunta.interrogante}}
         </div> 
          <div ng-hide="Vp76">
          {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Instrumento:{{graficas.instrumento.nombre}}
-        </div>   
+        </div> 
+        <div ng-hide="Vp77">
+         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}    Instrumento: {{graficas.instrumento.nombre}}
+        </div>  
          <div ng-hide="Vp78">
          {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Per&iacute;odo:{{graficas.periodo}}
-        </div>               
+        </div>  
+          <div ng-hide="Vp79">
+         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}     Per&iacute;odo:{{graficas.periodo_academico.periodo}}
+        </div>   
        </h5> 
-
-      
         <canvas id="pie" class="chart chart-pie" data="datos1"
         labels="etiquetas" legend="true" 
         click="">
@@ -45,7 +48,7 @@
      
 <!-- fin Gráfica Torta -->
 <!-- Gráfica Radar -->
-      <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
+<!--       <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
         <div ng-hide="Vp70">
          ¿{{graficas.pregunta.interrogante}}? Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}
         </div>
@@ -70,12 +73,12 @@
       labels="etiquetas" legend="true" 
       click="">
       </canvas>
-   
+    -->
 <!--fin Gráfica Radar-->
 
 <!--Gráfica Linea -->
 
-      <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
+<!--       <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
         <div ng-hide="Vp72">
          Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}    Instrumento: {{graficas.instrumento.nombre}}
         </div>
@@ -91,13 +94,13 @@
       </h5> 
 
       <canvas id="line" class="chart chart-line" data="datos2"
-      labels="etiquetas" legend="true" series="series2"
+      labels="ejex1" legend="true" series="series2"
       click="onClick">
       </canvas>
-     
+ -->     
 <!--fin Gráfica Linea-->
 <!--Gráfica Barra-->
-      <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
+<!--       <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
         <div ng-hide="Vp72">
          Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}    Instrumento: {{graficas.instrumento.nombre}}
         </div>
@@ -112,8 +115,8 @@
         </div>                      
       </h5> 
 
-      <canvas id="bar" class="chart chart-bar" data="datos2" labels="etiquetas" legend="true" series="series2" click="onClick">
-     </canvas>
+      <canvas id="bar" class="chart chart-bar" data="datos2" labels="ejex1" legend="true" series="series2" click="">
+     </canvas> -->
     
 <!--fin Gráfica Barra-->
 </div>
@@ -121,9 +124,11 @@
 
 <!--Inicio opciones de Descarga en PDF/CSV Vp6-->
 <div ng-hide="Vp6">
+
   <div class="col-sm-8 col-md-8 text-center ">
     <a href={{repourl}}>Presione para Descargar<i class="glyphicon glyphicon-download"></i></a>
   </div>
+
 </div>
 <!--fin Descargas-->
 <!--Tabla de reportes Visible1-->
@@ -245,18 +250,20 @@
 </div> 
  <!--Fin Cancelar Reporte --> 
 <!--Emitir Reporte Formato PDF-->  
-    <div class="col-xs-3">
-      <button class="btn btn-rep3" ng-click="pdfReporte($scope.indice)">PDF
-      </button>
-    </div><!--Fin Reporte Formato PDF-->
+    <div ng-hide="pdf">
+      <div class="col-xs-3">
+        <button class="btn btn-rep3" ng-click="pdfReporte()">PDF
+        </button>
+      </div><!--Fin Reporte Formato PDF-->
+    </div>
     <div ng-hide="csv"><!--Emitir Reporte Formato CSV-->
       <div class="col-xs-3"> <!-- align="center" -->
-        <button class="btn btn-rep2" ng-click="csvReporte($scope.indice)">CSV
+        <button class="btn btn-rep2" ng-click="csvReporte()">CSV
         </button>   
       </div>
     </div><!--Fin Reporte Formato CSV--> 
     <div class="col-xs-3"><!--Emitir Graficas-->  
-      <button class="btn btn-rep1 " ng-click="graReporte($scope.indice)">Gráfica
+      <button class="btn btn-rep1 " ng-click="graReporte()">Gráfica
       </button>  
     </div><!--Fin Graficas-->
 </div>    

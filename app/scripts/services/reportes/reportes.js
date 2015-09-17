@@ -5,10 +5,11 @@ angular.module('sedadApp')
 		var res = $resource (API +'/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}, {
 // 'http://localhost:3000/api/v1/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}
 			update: {
-				method: 'GET', isArray: true
+				method: 'GET', isArray: false
 			}
 		});
-		return res;
+
+     	return res;
 	}])
 	.factory('GraR1', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		var res = $resource (API +'/reportes/historico_completo/materias/:codigo/instrumentos/:instrumento_id.json', {codigo: '@codigo',instrumento_id: '@id'}, {

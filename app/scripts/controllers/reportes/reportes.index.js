@@ -14,12 +14,12 @@ angular.module('sedadApp')
           // rcsv:'http://localhost:3000/api/v1/reportes/historico_completo/materias/:codigo/instrumentos/:instrumento_id.csv',
     bpdf: false,bcsv: true,grat: false,grar: false,gral: true,grab: true},
     {id:' 2',nombre:'Histórico Comparado de Materia',     
-    pdcs:'(PDF)',
+    pdcs:'(JSON)',
     // rpdf:'http://localhost:3000/api/v1/reportes/historico_comparado/materias/:codigo/instrumentos/:instrumento_id.pdf',     
     // rcsv:'http://localhost:3000/api/v1/reportes/historico_comparado/materias/:codigo/instrumentos/:instrumento_id.csv',
-    bpdf: false,bcsv: true,grat: true,grar: true,gral: false,grab: false},    
+    bpdf: true,bcsv: true,grat: false,grar: true,gral: false,grab: false},    
     {id:' 3',nombre:'Completo de Materia por Período', 
-    pdcs:'(PDF)',
+    pdcs:'(PDF/CSV)',
     // rpdf:'http://localhost:3000/api/v1/reportes/periodo_completo/materias/:codigo/periodos/:periodo.pdf',                
     // rcsv:'http://localhost:3000/api/v1/reportes/periodo_completo/materias/:codigo/periodos/:periodo.csv',
     bpdf: false,bcsv: false,grat: false,grar: false,gral: true,grab: true},
@@ -65,41 +65,43 @@ angular.module('sedadApp')
     $scope.preguntas    = LisPre.query();
     $scope.presel       = 0;
     $scope.materias     = LisMat.query({id: $scope.carsel});
-    $scope.Visible1     =false;
-    $scope.Visible2     =true;
-    $scope.Vp1          =true;
-    $scope.Vp2          =true;
-    $scope.Vp3          =true;
-    $scope.Vp4          =true;
-    $scope.Vp5          =true;
-    $scope.Vp6          =true;
-    $scope.Vp7          =false;
+    $scope.Visible1     = false;
+    $scope.Visible2     = true;
+    $scope.Vp1          = true;
+    $scope.Vp2          = true;
+    $scope.Vp3          = true;
+    $scope.Vp4          = true;
+    $scope.Vp5          = true;
+    $scope.Vp6          = true;
+    $scope.Vp7          = false;
     $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;
     $scope.Vp73=true;$scope.Vp74=true;$scope.Vp75=true;
     $scope.Vp76=true;$scope.Vp77=true;$scope.Vp78=true;
     $scope.Vp79=true;
-    $scope.urlgra       = '';                 
+    $scope.indice=0;
+    $scope.psel = [{ids: '1'},{ids:'2'},{ids:'3'}];
+    // $scope.urlgra       = '';                 
     $scope.numrep       = 0;
     $scope.tiprep       = 0;  //pdf por defecto 
     $scope.mensaje      ='por defecto';
     $scope.repourl      = "";
-    $scope.nombre_reporte='Ver Siguiente Gráfica';
+    $scope.nombre_reporte='Seleccione Reporte';
     $scope.pdf          =false;
     $scope.csv          =false;
     $scope.gra          =false;
     $scope.etiquetas = ['Opción 1','Opción 2','Opción 3','Opción 4','Opción 5'];
-    $scope.datos1    = [1,2,3,4,5];
-    $scope.datos0    = [0,0,0,0,0];
+    $scope.datos1    = [0,0,0,0,0];
+
     $scope.series1   = [];
-    $scope.ejex1     = ['vot 1','vot 2','vot 3','vot 4','vot 5'];
+    $scope.ejex1     = ['Opc 1','Opc 2','Opc 3','Opc 4','Opc 5'];//[['vot 1','vot 2','vot 3','vot 4','vot 5'],['','','','','']];
 // Valores obligatorios requeridos por las graficas
     $scope.type      = 'PolarArea';
     $scope.toogle    = function() {$scope.type = $scope.type === 'PolarArea' ? 'Pie' : 'PolarArea';};  
 // Fin valores requeridos
     $scope.nombre2  = 'Resultados de la Pregunta: xxxxxxxx';
     $scope.nombres  = 'Disponible';
-    $scope.datos2   = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
-    $scope.series2  = ['Series A','Serie B','Serie C'];
+    $scope.datos2   = [[0,0,0,0,0],[0,0,0,0,0]];
+    $scope.series2  = ['Series A',''];
     $scope.ejex2    = ['vot 1','vot 2','vot 3','vot 4','vot 5'];
     $scope.graficas ={};
     $scope.onClick  = function (points, evt) {
@@ -110,8 +112,8 @@ angular.module('sedadApp')
      $scope.Visible1=true;
      $scope.Visible2=false;
      console.log(index);
-     // $scope.datos1    = [0,0,0,0,0];
-     // $scope.datos0    = [0,0,0,0,0];
+     $scope.datos1    = [0,0,0,0,0];
+
      $scope.Vp6=true;
      $scope.Vp7=false; 
      $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;
@@ -120,6 +122,7 @@ angular.module('sedadApp')
      $scope.Vp79=true;
      $scope.nombre_reporte='no ha seleccionado reporte';                
      console.log(index);
+     $scope.pdf=$scope.repdis[index].bpdf;
      $scope.csv=$scope.repdis[index].bcsv;
      console.log($scope.repdis[index].bcsv);  
      console.log($scope.csv);  
@@ -185,84 +188,251 @@ angular.module('sedadApp')
       // $scope.nombre_reporte='Período Comparado de Docente';
      };
     };
-    $scope.pdfReporte = function(index) {
-      $scope.Vp6=false;  
-      $scope.Visible1=false;
-      $scope.Visible2=true;  
-      console.log($scope.preguntas);            
+    $scope.pdfReporte = function() {
+      $scope.Vp6=false;$scope.Visible1=false;$scope.Visible2=true;
+      $scope.datos1=[0,0,0,0,0];$scope.Vp7=false;
+      $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;$scope.Vp73=true;$scope.Vp74=true;$scope.Vp75=true;
+      $scope.Vp76=true;$scope.Vp77=true;$scope.Vp78=true;$scope.Vp79=true;
+         
       if ($scope.numrep === 0) {
        $scope.repourl=API+'/reportes/historico_pregunta/materias/'+$scope.matsel+'/preguntas/'+$scope.presel+'.pdf';
+       GraR0.get({codigo: $scope.matsel ,id: $scope.presel}, function(data){
+        $scope.graficas = data;
+        console.log(data.periodos);
+        for (var i = data.periodos.length - 1; i >= 0; i--) {
+          var periodo = data.periodos[i];
+          for (var j = periodo.secciones.length - 1; j >= 0; j--) {
+            var seccion = periodo.secciones[j];
+            for (var k = seccion.totalizacion.length - 1; k >= 0; k--) {
+              var objeto = seccion.totalizacion[k];
+              $scope.datos1[k] += objeto.total;
+              $scope.datos2[k,1] += objeto.total;
+              };
+            };
+          };
+        });
+       $scope.Vp70=false; 
       }
       if ($scope.numrep === 1) {
-      $scope.repourl=API+'/reportes/historico_completo/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.pdf';
+        $scope.repourl=API+'/reportes/historico_completo/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.pdf';
+        GraR1.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.secciones.length - 1; l >= 0; l--) {
+                  var seccion = resultado.secciones[l];                    
+                  for (var m = seccion.totalizacion.length - 1; m >= 0; m--) {
+                    var objeto = seccion.totalizacion[m];
+                    $scope.datos1[m] += objeto.total;
+                    $scope.datos2[m,1] += objeto.total;
+                    console.log($scope.datos1[m]);
+                  };
+                };  
+              };        
+            };
+          };
+        });        
+        $scope.Vp71=false;
       }
-      if ($scope.numrep === 2) {
-        $scope.repourl=API+'/reportes/historico_comparado/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.json?ids[]=1&ids[]=2&ids[]=3';
-      }
+      // if ($scope.numrep === 2) {
+      //   $scope.repourl=API+'/reportes/historico_comparado/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.json?ids[]=1&ids[]=2&ids[]=3';
+      // }
       if ($scope.numrep === 3) {
         $scope.repourl=API+'/reportes/periodo_completo/materias/'+$scope.matsel+'/periodos/'+$scope.persel+'.pdf';
+        GraR3.get({codigo: $scope.matsel ,periodo: $scope.persel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.secciones.length - 1; l >= 0; l--) {
+                  var seccion = resultado.secciones[l];
+                  for (var m = seccion.totalizacion.length - 1; m >= 0; m--) {
+                    var objeto = seccion.totalizacion[m];
+                    $scope.datos1[m] += objeto.total;
+                    $scope.datos2[m,1] += objeto.total;
+                    console.log($scope.datos1[m]);
+                  };
+                };
+              };
+            };
+          };
+        });
+        $scope.Vp73=false;
       }
-      if ($scope.numrep === 4) {
-        $scope.repourl=API+'/reportes/periodo_comparado/materias/'+$scope.matsel+'/periodos/'+$scope.persel+'.json?ids[]=1&ids[]=2&ids[]=3';
-      }
+      // if ($scope.numrep === 4) {
+      //   $scope.repourl=API+'/reportes/periodo_comparado/materias/'+$scope.matsel+'/periodos/'+$scope.persel+'.json?ids[]=1&ids[]=2&ids[]=3';
+      // }
       if ($scope.numrep === 5) {
         $scope.repourl=API+'/reportes/historico_pregunta/docentes/'+$scope.docsel+'/preguntas/'+$scope.presel+'.pdf';
+
+        GraR5.get({cedula_docente: $scope.docsel ,pregunta_id: $scope.presel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.periodos.length - 1; i >= 0; i--) {
+            var periodo = data.periodos[i];
+            for (var j = periodo.materias.length - 1; j >= 0; j--) {
+              var materia = periodo.materias[j];
+              for (var k = materia.secciones.length - 1; k >= 0; k--) {
+                var seccion = materia.secciones[k];
+                for (var l = seccion.totalizacion.length - 1; l >= 0; l--) {
+                  var objeto = seccion.totalizacion[l];
+                  $scope.datos1[l] += objeto.total;
+                  $scope.datos2[l,1] += objeto.total;
+                };
+              };
+            };
+          };
+        });
+      $scope.Vp75=false;
       } 
       if ($scope.numrep === 6) {
         $scope.repourl=API+'/reportes/historico_completo/docentes/'+$scope.docsel+'/instrumentos/'+$scope.inssel+'.pdf';
+        GraR6.get({cedula_docente: $scope.docsel ,instrumento_id: $scope.inssel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.materias.length - 1; l >= 0; l--) {
+                  var materia = resultado.materias[l];                  
+                  for (var m = materia.secciones.length - 1; m >= 0; m--) {
+                    var seccion = materia.secciones[m];
+                    for (var n = seccion.totalizacion.length - 1; n >= 0; n--) {
+                      var objeto = seccion.totalizacion[n];
+                      $scope.datos1[n] += objeto.total;
+                      $scope.datos2[n,1] += objeto.total;
+                      console.log($scope.datos1[n]);
+                    };
+                  };  
+                };        
+              };
+            };
+          };  
+        }); 
+        $scope.Vp76=false;
       }
-      if ($scope.numrep === 7) {
-        $scope.repourl=API+'/reportes/historico_comparado/docentes/'+$scope.docsel+'/instrumentos/'+$scope.inssel+'.json?ids[]=1&ids[]=2&ids[]=3';
-      }
+      // if ($scope.numrep === 7) {
+      //   $scope.repourl=API+'/reportes/historico_comparado/docentes/'+$scope.docsel+'/instrumentos/'+$scope.inssel+'.json?ids[]=1&ids[]=2&ids[]=3';
+      // }
       if ($scope.numrep === 8) {
         $scope.repourl=API+'/reportes/periodo_completo/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.pdf';
+         GraR8.get({cedula_docente: $scope.docsel ,periodo: $scope.persel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.materias.length - 1; l >= 0; l--) {
+                  var materia = resultado.materias[l];                  
+                  for (var m = materia.secciones.length - 1; m >= 0; m--) {
+                    var seccion = materia.secciones[m];
+                    for (var n = seccion.totalizacion.length - 1; n >= 0; n--) {
+                      var objeto = seccion.totalizacion[n];
+                      $scope.datos1[n] += objeto.total;
+                      $scope.datos2[n,1] += objeto.total;
+                      console.log($scope.datos1[n]);
+                    };
+                  };  
+                };        
+              };
+            };
+          };  
+        });
+        $scope.Vp78=false;
       }
-      if ($scope.numrep === 9) {
-        $scope.repourl=API+'/reportes/periodo_comparado/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.json?ids[]=1&ids[]=2&ids[]=3';
-        console.log($scope.repourl);
-      };         
+      // if ($scope.numrep === 9) {
+      //   $scope.repourl=API+'/reportes/periodo_comparado/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.json?ids[]=1&ids[]=2&ids[]=3';
+      //   console.log($scope.repourl);
+      // };         
       $scope.docsel= 0;$scope.persel= 0;$scope.inssel= 0;$scope.carsel= 1;
       $scope.presel= 0;$scope.matsel= 0;
     };  
 
-    $scope.csvReporte = function(index) {
+    $scope.csvReporte = function() {
       $scope.Vp6=false;  
       $scope.Visible1=false;
       $scope.Visible2=true;  
       if ($scope.numrep === 0) {
        $scope.repourl=API+'/reportes/historico_pregunta/materias/'+$scope.matsel+'/preguntas/'+$scope.presel+'.csv';
+       GraR0.get({codigo: $scope.matsel ,id: $scope.presel}, function(data){
+        $scope.graficas = data;
+        console.log(data.periodos);
+        for (var i = data.periodos.length - 1; i >= 0; i--) {
+          var periodo = data.periodos[i];
+          for (var j = periodo.secciones.length - 1; j >= 0; j--) {
+            var seccion = periodo.secciones[j];
+            for (var k = seccion.totalizacion.length - 1; k >= 0; k--) {
+              var objeto = seccion.totalizacion[k];
+              $scope.datos1[k] += objeto.total;
+              $scope.datos2[k,1] += objeto.total;
+              };
+            };
+          };
+        });
+       $scope.Vp70=false; 
      }
-     if ($scope.numrep === 1) {
-      $scope.repourl=API+'/reportes/historico_completo/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.csv';
-      }
-      if ($scope.numrep === 2) {
-        $scope.repourl=API+'/reportes/historico_comparado/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.csv';
-      }
       if ($scope.numrep === 3) {
         $scope.repourl=API+'/reportes/periodo_completo/materias/'+$scope.matsel+'/periodos/'+$scope.persel+'.csv';
-      }
-      if ($scope.numrep === 4) {
-        $scope.repourl=API+'/reportes/periodo_comparado/materias/'+$scope.matsel+'/periodos/'+$scope.persel+'.csv';  
+        GraR3.get({codigo: $scope.matsel ,periodo: $scope.persel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.secciones.length - 1; l >= 0; l--) {
+                  var seccion = resultado.secciones[l];
+                  for (var m = seccion.totalizacion.length - 1; m >= 0; m--) {
+                    var objeto = seccion.totalizacion[m];
+                    $scope.datos1[m] += objeto.total;
+                    $scope.datos2[m,1] += objeto.total;
+                    console.log($scope.datos1[m]);
+                  };
+                };
+              };
+            };
+          };
+        });
+        $scope.Vp73=false;
       }
       if ($scope.numrep === 5) {
         $scope.repourl=API+'/reportes/historico_pregunta/docentes/'+$scope.docsel+'/preguntas/'+$scope.presel+'.csv';
+        GraR5.get({cedula_docente: $scope.docsel ,pregunta_id: $scope.presel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.periodos.length - 1; i >= 0; i--) {
+            var periodo = data.periodos[i];
+            for (var j = periodo.materias.length - 1; j >= 0; j--) {
+              var materia = periodo.materias[j];
+              for (var k = materia.secciones.length - 1; k >= 0; k--) {
+                var seccion = materia.secciones[k];
+                for (var l = seccion.totalizacion.length - 1; l >= 0; l--) {
+                  var objeto = seccion.totalizacion[l];
+                  $scope.datos1[l] += objeto.total;
+                  $scope.datos2[l,1] += objeto.total;
+                };
+              };
+            };
+          };
+        });
+      $scope.Vp75=false;
       } 
-      if ($scope.numrep === 6) {
-        $scope.repourl=API+'/reportes/historico_completo/docentes/'+$scope.docsel+'/instrumentos/'+$scope.inssel+'.csv';
-      }
-      if ($scope.numrep === 7) {
-        $scope.repourl=API+'/reportes/historico_comparado/docentes/'+$scope.docsel+'/instrumentos/'+$scope.inssel+'.csv';
-      }
-      if ($scope.numrep === 8) {
-        $scope.repourl=API+'/reportes/periodo_completo/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.csv';
-      }
-      if ($scope.numrep === 9) {
-        $scope.repourl=API+'/reportes/periodo_comparado/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.json?ids[]=1&ids[]=2&ids[]=3';
-      };         
+        
       $scope.docsel=0;$scope.persel=0;$scope.inssel=0;$scope.carsel=1;
       $scope.presel= 0;$scope.matsel= 0;
      }; 
-    $scope.graReporte = function(index) {
+    $scope.graReporte = function() {
+      $scope.datos1    = [0,0,0,0,0];
       $scope.Vp7=false;
       $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;
       $scope.Vp73=true;$scope.Vp74=true;$scope.Vp75=true;
@@ -272,95 +442,254 @@ angular.module('sedadApp')
       $scope.Visible2=true;  
       // $scope.gra_nom="'Histórico de Pregunta: ¿'+{{graficas.pregunta.interrogante}}+'? Materia: '+{{graficas.materia.codigo}}+{{graficas.materia.nombre}}";          
       if ($scope.numrep === 0) {
-
-        $scope.graficas = GraR0.get({codigo: $scope.matsel ,id: $scope.presel});
-
-
-$scope.Vp70=false; 
-
+        GraR0.get({codigo: $scope.matsel ,id: $scope.presel}, function(data){
+          $scope.graficas = data;
+          console.log(data.periodos);
+          for (var i = data.periodos.length - 1; i >= 0; i--) {
+            var periodo = data.periodos[i];
+            for (var j = periodo.secciones.length - 1; j >= 0; j--) {
+              var seccion = periodo.secciones[j];
+              for (var k = seccion.totalizacion.length - 1; k >= 0; k--) {
+                var objeto = seccion.totalizacion[k];
+                $scope.datos1[k] += objeto.total;
+                $scope.datos2[k,1] += objeto.total;
+                // console.log($scope.datos1[k]);
+              };
+            };
+          };
+        });
+        $scope.Vp70=false; 
       }
       if ($scope.numrep === 1) {
-        $scope.graficas = GraR1.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel});
+        GraR1.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel}, function(data){
+          $scope.graficas = data;
+          // console.log(data);
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.secciones.length - 1; l >= 0; l--) {
+                  var seccion = resultado.secciones[l];
+              // console.log(seccion);                     
+                  for (var m = seccion.totalizacion.length - 1; m >= 0; m--) {
+                    var objeto = seccion.totalizacion[m];
+                    $scope.datos1[m] += objeto.total;
+                    $scope.datos2[m,1] += objeto.total;
+                    console.log($scope.datos1[m]);
+                  };
+                };  
+              };        
+            };
+          };
+        });        
+        // $scope.graficas = GraR1.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel});
         // $scope.repourl=API+'/reportes/historico_completo/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.json';
-$scope.Vp71=false;
+       $scope.Vp71=false;
       }
       if ($scope.numrep === 2) {
-        $scope.graficas = GraR2.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel});
+        // $scope.graficas = GraR2.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel});
           // $scope.repourl=API+'/reportes/historico_comparado/materias/'+$scope.matsel+'/instrumentos/'+$scope.inssel+'.json?ids[]=1&ids[]=2&ids[]=3';
-$scope.Vp72=false;
+ 
+        GraR2.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel, ids: $scope.psel}, function(data){
+          $scope.graficas = data;
+          // console.log(data);
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.secciones.length - 1; l >= 0; l--) {
+                  var seccion = resultado.secciones[l];
+              // console.log(seccion);                     
+                  for (var m = seccion.totalizacion.length - 1; m >= 0; m--) {
+                    var objeto = seccion.totalizacion[m];
+                    $scope.datos1[m] += objeto.total;
+                    $scope.datos2[m,1] += objeto.total;
+                    console.log($scope.datos1[m]);
+                  };
+                };  
+              };        
+            };
+          };
+        }); 
+
+       $scope.Vp72=false;
       }
       if ($scope.numrep === 3) {
-        $scope.graficas = GraR3.get({codigo: $scope.matsel ,periodo: $scope.persel});
 
-$scope.Vp73=false;
+        GraR3.get({codigo: $scope.matsel ,periodo: $scope.persel}, function(data){
+          $scope.graficas = data;
+          // console.log(data);
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+            
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+
+                for (var l = resultado.secciones.length - 1; l >= 0; l--) {
+                  var seccion = resultado.secciones[l];
+              // console.log(seccion);                     
+                  for (var m = seccion.totalizacion.length - 1; m >= 0; m--) {
+                    var objeto = seccion.totalizacion[m];
+                    $scope.datos1[m] += objeto.total;
+                    $scope.datos2[m,1] += objeto.total;
+                    console.log($scope.datos1[m]);
+                  };
+                };  
+              };        
+            };
+          };
+        });  
+
+       $scope.Vp73=false;
       }
-      if ($scope.numrep === 4) {
+if ($scope.numrep === 4) {
 // console.log($scope.persel);        
-        $scope.graficas = GraR4.get({codigo_materia: $scope.matsel ,periodo: $scope.persel});
-$scope.Vp74=false;
-      }
+  // $scope.graficas = GraR4.get({codigo_materia: $scope.matsel ,periodo: $scope.persel});
+
+        GraR4.get({codigo: $scope.matsel ,periodo: $scope.persel, ids: $scope.psel}, function(data){
+          $scope.graficas = data;
+          // console.log(data);
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+            
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+
+                for (var l = resultado.secciones.length - 1; l >= 0; l--) {
+                  var seccion = resultado.secciones[l];
+              // console.log(seccion);                     
+                  for (var m = seccion.totalizacion.length - 1; m >= 0; m--) {
+                    var objeto = seccion.totalizacion[m];
+                    $scope.datos1[m] += objeto.total;
+                    $scope.datos2[m,1] += objeto.total;
+                    console.log($scope.datos1[m]);
+                  };
+                };  
+              };        
+            };
+          };
+        });
+
+
+
+
+
+
+
+
+
+
+  $scope.Vp74=false;
+}
       if ($scope.numrep === 5) {
-        $scope.graficas = GraR5.get({cedula_docente: $scope.docsel ,pregunta_id: $scope.presel});
-          // $scope.repourl=API+'/reportes/historico_pregunta/docentes/'+$scope.docsel+'/preguntas/'+$scope.presel+'.json';
-$scope.Vp75=false;
+ 
+        GraR5.get({cedula_docente: $scope.docsel ,pregunta_id: $scope.presel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.periodos.length - 1; i >= 0; i--) {
+            var periodo = data.periodos[i];
+            for (var j = periodo.materias.length - 1; j >= 0; j--) {
+              var materia = periodo.materias[j];
+              for (var k = materia.secciones.length - 1; k >= 0; k--) {
+                var seccion = materia.secciones[k];
+                for (var l = seccion.totalizacion.length - 1; l >= 0; l--) {
+                  var objeto = seccion.totalizacion[l];
+                  $scope.datos1[l] += objeto.total;
+                  $scope.datos2[l,1] += objeto.total;
+                };
+              };
+            };
+          };
+        });
+      $scope.Vp75=false;
       } 
       if ($scope.numrep === 6) {
-        $scope.graficas = GraR6.get({cedula_docente: $scope.docsel ,instrumento_id: $scope.inssel});
-          // $scope.repourl=API+'/reportes/historico_completo/docentes/'+$scope.docsel+'/instrumentos/'+$scope.inssel+'.json';
-$scope.Vp76=false;
+        GraR6.get({cedula_docente: $scope.docsel ,instrumento_id: $scope.inssel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.materias.length - 1; l >= 0; l--) {
+                  var materia = resultado.materias[l];                  
+                  for (var m = materia.secciones.length - 1; m >= 0; m--) {
+                    var seccion = materia.secciones[m];
+                    for (var n = seccion.totalizacion.length - 1; n >= 0; n--) {
+                      var objeto = seccion.totalizacion[n];
+                      $scope.datos1[n] += objeto.total;
+                      $scope.datos2[n,1] += objeto.total;
+                      console.log($scope.datos1[n]);
+                    };
+                  };  
+                };        
+              };
+            };
+          };  
+        }); 
+        $scope.Vp76=false;
       }
       if ($scope.numrep === 7) {
         $scope.graficas = GraR7.get({cedula_docente: $scope.docsel ,instrumento_id: $scope.inssel});
           // $scope.repourl=API+'/reportes/historico_comparado/docentes/'+$scope.docsel+'/instrumentos/'+$scope.inssel+'.json?ids[]=1&ids[]=2&ids[]=3';
-$scope.Vp77=false;
+      $scope.Vp77=false;
       }
       if ($scope.numrep === 8) {
-        $scope.graficas = GraR8.get({cedula_docente: $scope.docsel ,periodo: $scope.persel});
-          // $scope.repourl=API+'/reportes/periodo_completo/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.json';
-$scope.Vp78=false;
+         GraR8.get({cedula_docente: $scope.docsel ,periodo: $scope.persel}, function(data){
+          $scope.graficas = data;
+          for (var i = data.instrumento.bloques.length - 1; i >= 0; i--) {
+            var bloque = data.instrumento.bloques[i];
+            for (var j = bloque.preguntas.length - 1; j >= 0; j--) {
+              var pregunta = bloque.preguntas[j];
+              for (var k = pregunta.resultados.length - 1; k >= 0; k--) {
+                var resultado = pregunta.resultados[k];
+                for (var l = resultado.materias.length - 1; l >= 0; l--) {
+                  var materia = resultado.materias[l];                  
+                  for (var m = materia.secciones.length - 1; m >= 0; m--) {
+                    var seccion = materia.secciones[m];
+                    for (var n = seccion.totalizacion.length - 1; n >= 0; n--) {
+                      var objeto = seccion.totalizacion[n];
+                      $scope.datos1[n] += objeto.total;
+                      $scope.datos2[n,1] += objeto.total;
+                      console.log($scope.datos1[n]);
+                    };
+                  };  
+                };        
+              };
+            };
+          };  
+        });
+      $scope.Vp78=false;
       }
-      if ($scope.numrep === 9) {
-        $scope.graficas = GraR9.get({cedula_docente: $scope.docsel ,periodo: $scope.persel});
-          // $scope.repourl=API+'/reportes/periodo_comparado/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.json?ids[]=1&ids[]=2&ids[]=3';
-          console.log($scope.repourl);
-$scope.Vp79=false;
-      }; 
+    if ($scope.numrep === 9) {
+    $scope.graficas = GraR9.get({cedula_docente: $scope.docsel ,periodo: $scope.persel});
+      // $scope.repourl=API+'/reportes/periodo_comparado/docentes/'+$scope.docsel+'/periodos/'+$scope.persel+'.json?ids[]=1&ids[]=2&ids[]=3';
+      console.log($scope.repourl);
+    $scope.Vp79=false;
+    }; 
       $scope.grafica={};        
       $scope.docsel=0;$scope.persel=0;$scope.inssel=0;$scope.carsel=1;
       $scope.presel= 0;$scope.matsel= 0;
     }; 
 
-      // $scope.asignavalor1 = function() {
-      //   var parcial = 0;
-      //   for(var bi = 0, nb = $scope.graficas.periodos.length; bi < nb; bi++) {
-      //   // for(var bi = 0, nb = $scope.instrumento.bloques.length; bi < nb; bi++) {
-      //       for(var pi = 0, np = $scope.graficas.periodos[bi].secciones.length; pi < np; pi++) {
-      //       // for(var pi = 0, np = $scope.instrumento.bloques[bi].preguntas.length; pi < np; pi++) {                 
-      //           var oi = 0; // index de la pregunta
-      //           var no = $scope.graficas.periodos[bi].secciones[pi].totalizacion.length;
-      //           // var no = $scope.instrumento.bloques[bi].preguntas[pi].opciones.length;                    
-      //           for(oi = 0; oi < no; oi++) {
-      //               parcial = $scope.graficas.periodos[bi].secciones[pi].totalizacion[oi];
-      //               // $scope.datos1[oi]= $scope.datos1[oi]+parcial;
-      //               // if($scope.instrumento.bloques[bi].preguntas[pi].opciones[oi] == opcion) { 
-      //                   // indices = { "bloque_idx":bi, "pregunta_idx": pi, "opcion_idx": oi };
-      //                   console.log(parcial);
-      //                   console.log($scope.datos1[oi]);
-      //                   return parcial;//return indices;
-      //               // }
-      //           }
-      //       }
-      //   }
-      // };
       $scope.enviar = function() {
          $scope.Vp6=false;
       };        
       $scope.volver = function() {
-         $scope.Visible1=false;
-         $scope.Visible2=true;
-         $scope.Vp0=true;$scope.Vp1=true;$scope.Vp2=true;$scope.Vp3=true;
-         $scope.Vp4=true;$scope.Vp5=true;$scope.Vp6=true;$scope.Vp7=false;          
-         $scope.docsel= 0;$scope.persel= 0;$scope.inssel= 0;
-         $scope.carsel= 1;$scope.presel= 0;$scope.matsel= 0;           
+       $scope.Visible1=false;$scope.Visible2=true;
+       $scope.Vp0=true;$scope.Vp1=true;$scope.Vp2=true;$scope.Vp3=true;
+       $scope.Vp4=true;$scope.Vp5=true;$scope.Vp6=true;$scope.Vp7=false;          
+       $scope.docsel= 0;$scope.persel= 0;$scope.inssel= 0;
+       $scope.carsel= 1;$scope.presel= 0;$scope.matsel= 0;           
       };
   }]);
