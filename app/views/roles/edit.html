@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8 col-md-8">
+			<h3>Editar Rol {{rolCompleto.rol.nombre}}</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<ul>
+				<li ng-repeat="p in rolCompleto.permisos | orderBy:'nombre'">
+					<input type="checkbox" ng-checked="p.existe"> <label>{{p.nombre}}</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

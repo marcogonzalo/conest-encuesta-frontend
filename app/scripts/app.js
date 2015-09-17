@@ -116,7 +116,32 @@ angular.module('sedadApp', [
         data : {
           permisos : [PERMISOS.responderConsulta]
         }
-      });
+      })
+
+      .state('roles', {
+        url: '/roles',
+        abstract: true,
+
+        // Note: abstract still needs a ui-view for its children to populate.
+        // You can simply add it inline here.
+        template: '<ui-view/>'
+      })
+      .state('roles.index', {
+        url: '/',
+        templateUrl: 'views/roles/index.html',
+        controller: 'RolesIndexCtrl',
+        data: {
+          permisos: [PERMISOS.listarRoles]
+        }
+      })
+      .state('roles.edit', {
+        url: '/:id/editar',
+        templateUrl: 'views/roles/edit.html',
+        controller: 'RolesEditCtrl',
+        data: {
+          permisos: [PERMISOS.editarRol]
+        }
+      })     ;
 
 
   }])

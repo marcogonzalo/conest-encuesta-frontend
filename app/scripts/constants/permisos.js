@@ -18,5 +18,7 @@ angular.module('sedadApp')
 		crearPeriodo: "crearPeriodo",
 		listarPeriodos: "listarPeriodos",
 		listarReportes: "listarReportes",
-		listarGraficas: "listarGraficas"
+		listarGraficas: "listarGraficas",
+		listarRoles: "listarRoles",
+		editarRol: "editarRol"
 	});
