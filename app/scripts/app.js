@@ -27,6 +27,7 @@ angular.module('sedadApp', [
         templateUrl: 'views/main.html',
         controller: 'AutenticacionCtrl'
       })
+      
       .state('instrumentos', {
         url: '/instrumentos',
         abstract: true,
@@ -35,6 +36,7 @@ angular.module('sedadApp', [
         // You can simply add it inline here.
         template: '<ui-view/>'
       })
+      
       .state('instrumentos.index', {
         url: '/',
         templateUrl: 'views/instrumentos/index.html',
@@ -43,6 +45,7 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.verInstrumento]
         }
       })
+      
       .state('instrumentos.new', {
         url: '/nuevo',
         templateUrl: 'views/instrumentos/new.html',
@@ -51,6 +54,7 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.crearInstrumento]
         }
       })
+      
       .state('instrumentos.edit', {
         url: '/:id/editar',
         templateUrl: 'views/instrumentos/edit.html',
@@ -59,6 +63,7 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.editarInstrumento]
         }
       })     
+      
       .state('periodos', {
         url : '/periodos',
         abstract : true,
@@ -73,6 +78,7 @@ angular.module('sedadApp', [
         permisos : [PERMISOS.listarPeriodos]
         }
       })
+      
       .state('periodos.new', {
         url: '/nuevo',
         templateUrl: 'views/periodos/new.html',
@@ -81,11 +87,13 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.crearPeriodos]
         }
       })
+      
       .state('reportes', {
         url : '/reportes',
         abstract : true,
         template : '<ui-view/>'
       })
+      
       .state('reportes.index', {
         url : '/',
         templateUrl : 'views/reportes/index.html',
@@ -94,6 +102,7 @@ angular.module('sedadApp', [
           permisos : [PERMISOS.listarReportes]
         }
       })
+      
       .state('consultas', {
         url : '/consultas',
         abstract : true,
@@ -126,6 +135,7 @@ angular.module('sedadApp', [
         // You can simply add it inline here.
         template: '<ui-view/>'
       })
+      
       .state('roles.index', {
         url: '/',
         templateUrl: 'views/roles/index.html',
@@ -134,6 +144,7 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.listarRoles]
         }
       })
+
       .state('roles.edit', {
         url: '/:id/editar',
         templateUrl: 'views/roles/edit.html',
@@ -141,7 +152,34 @@ angular.module('sedadApp', [
         data: {
           permisos: [PERMISOS.editarRol]
         }
-      })     ;
+      })
+
+      .state('usuarios', {
+        url: '/usuarios',
+        abstract: true,
+
+        // Note: abstract still needs a ui-view for its children to populate.
+        // You can simply add it inline here.
+        template: '<ui-view/>'
+      })
+      
+      .state('usuarios.index', {
+        url: '/',
+        templateUrl: 'views/usuarios/index.html',
+        controller: 'UsuariosIndexCtrl',
+        data: {
+          permisos: [PERMISOS.listarUsuarios]
+        }
+      })
+
+      .state('usuarios.edit', {
+        url: '/:id/editar',
+        templateUrl: 'views/usuarios/edit.html',
+        controller: 'UsuariosEditCtrl',
+        data: {
+          permisos: [PERMISOS.editarUsuario]
+        }
+      });
 
 
   }])
@@ -181,6 +219,10 @@ angular.module('sedadApp', [
     });
 
     $rootScope.$on(AUTH_EVENTS.sessionTimeout, function() {
+      $state.go('main');
+    });
+
+    $rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
       $state.go('main');
     });
   }]);

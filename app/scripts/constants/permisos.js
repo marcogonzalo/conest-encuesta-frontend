@@ -10,6 +10,7 @@
 angular.module('sedadApp')
 	.constant('PERMISOS', {
 		verInstrumento: "verInstrumento",
+		listarInstrumentos: "listarInstrumentos",
 		crearInstrumentos: "crearInstrumento",
 		editarInstrumentos: "editarInstrumento",
 		eliminarInstrumentos: "eliminarInstrumento",
@@ -20,5 +21,7 @@ angular.module('sedadApp')
 		listarReportes: "listarReportes",
 		listarGraficas: "listarGraficas",
 		listarRoles: "listarRoles",
-		editarRol: "editarRol"
+		editarRol: "editarRol",
+		listarUsuarios: "listarUsuarios",
+		editarUsuario: "editarUsuario"
 	});

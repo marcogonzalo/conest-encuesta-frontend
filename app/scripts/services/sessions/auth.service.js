@@ -51,20 +51,30 @@ angular.module('sedadApp')
       return d.promise;
     },
     canAccess: function(user, permissions) {
+      var d = $q.defer();
       permissions = angular.isArray(permissions) ? permissions : [permissions];
       if(user && user.rol && user.permisos) {
         var access = false;
         permissions.forEach(function(permiso) {
+
           if(!PERMISOS[permiso])
             throw "Valor de permiso erróneo";
           
           user.permisos.forEach(function(permiso_usuario) {
-            access = access || (permiso === permiso_usuario);
-          })
+            access = access || (permiso === permiso_usuario) || (permiso_usuario === "accesoTotal");
+          });
         });
+        d.resolve(access);
       }
       else
-        return false;
+        d.reject(false);
+
+      return d.promise;
+    },
+    logout: function() {
+      AuthToken.unset('usuario');
+      $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+      $state.go('main');
     }
   };
 }])

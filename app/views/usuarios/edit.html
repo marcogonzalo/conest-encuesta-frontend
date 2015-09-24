@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8 col-md-8">
+			<h3>Editar Usuario {{usuarioEditar.cedula}}</h3>
+		</div>
+		<div class="col-sm-4 col-md-4 text-right">
+			<button class="btn btn-primary" ng-click="guardar()">Guardar</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<label>Rol</label>
+			<select ng-options="option.nombre for option in usuarioEditar.roles track by option.id  | orderBy:'nombre':true" ng-model="rol_seleccionado" convert-to-number> </select>
+		</div>
+	</div>
+</div>

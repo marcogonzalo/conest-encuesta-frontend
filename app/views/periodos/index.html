@@ -6,20 +6,13 @@
 
 <div class="container">
  
-<!--   <div class="row">
+  <div class="row">
     <div class="col-sm-8 col-md-8">
       <h3>Períodos Registrados</h3>
     </div>
-    <div class="col-sm-4 col-md-4 text-right"><br><a ui-sref="periodos.new" class="btn btn-success">+ Nuevo</a>
+    <div class="col-sm-4 col-md-4 text-right"><br><a ui-sref="periodos.new" class="btn btn-success">+ Nuevo Período</a>
     </div>
-  </div> -->
-
-     <div class="col-md-12  text-center">
-      <h3 class="subtitulo-rep"><strong>Períodos Registrados</strong>
-      </h3>
-     </div>
-     <br><br><br><br>
-
+  </div>
 
   <div class="row">
     <div class="col-sm-12">
@@ -32,9 +25,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="periodo in periodos | orderBy:'id'">
-            <td>{{ periodo.periodo }}</td>
-            <td>{{ periodo.sincronizacion }}</td>
+          <tr ng-repeat="p in periodos | orderBy:'id'">
+            <td>{{ p.periodo }}</td>
+            <td>{{ p.sincronizacion | mostrarFechaHoraAMPM }}</td>
             <td class="text-right">
               <a ui-sref="periodos.edit({id: periodo.id})" class="btn btn-small btn-primary">editar</a>
               <a ng-click="eliminarPeriodo(periodo)" class="btn btn-small btn-danger">eliminar</a>
