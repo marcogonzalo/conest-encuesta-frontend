@@ -82,7 +82,7 @@ angular.module('sedadApp', [
       .state('periodos.new', {
         url: '/nuevo',
         templateUrl: 'views/periodos/new.html',
-        controller: 'PeriodosEditCtrl',
+        controller: 'PeriodosNewCtrl',
         data: {
           permisos: [PERMISOS.crearPeriodos]
         }

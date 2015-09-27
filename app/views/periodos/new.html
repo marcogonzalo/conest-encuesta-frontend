@@ -1,10 +1,16 @@
 <div class="container">
+	<h3>Habilitar período</h3>
 	<form id="periodo-form">
-		<div class="col-xs-8">
-			<input type="text" id="periodo" ng-model="nuevo.periodo" placeholder="Semestre y año del Período. Ej.: 02-2015" class="col-xs-12 form-control">
+		<div class="col-xs-5">
+			<input type="text" id="periodo" ng-model="nuevoPeriodo" placeholder="Semestre y año del Período. Ej.: 02-2015" class="col-xs-12 form-control">
 		</div>
-		<div class="col-xs-4 text-right">
-			<button class="btn btn-success" ng-click="guardar()">Guardar</button>
+		<div class="col-xs-5">
+			<select ng-options="option.nombre for option in instrumentosDisponibles track by option.id  | orderBy:'nombre':true" ng-model="instrumentoSeleccionado" convert-to-number>
+				<option value="">Instrumento a emplear en el período</option>
+			</select>
+		</div>
+		<div class="col-xs-2 text-right">
+			<button class="btn btn-success" ng-click="guardar()">Habilitar Período</button>
 		</div>
 	</form>
 </div>
