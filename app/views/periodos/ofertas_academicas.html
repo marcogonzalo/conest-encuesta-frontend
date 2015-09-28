@@ -1,0 +1,42 @@
+<ol class="breadcrumb">
+  <li><a href="#">Inicio</a></li>
+<!--   <li><a href="#">Administración</a></li> -->
+  <li class="active">Períodos</li>
+</ol>
+
+<div class="container">
+ 
+  <div class="row">
+    <div class="col-sm-8 col-md-8">
+      <h3>Ofertas académicas en {{ periodo.periodo }}</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+              <th class="col-xs-6">Asginaturas</th>
+              <th class="col-xs-6 text-center">Instrumento a aplicar en consulta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="o in ofertasEnPeriodo | orderBy:'materia.nombre'">
+            <td>({{o.materia.codigo}}) {{o.materia.nombre}}</td>
+            <td class="text-center">
+              <div ng-if="o.cambiarInstrumento != true">
+                {{o.instrumento_de_consulta.nombre}}
+                <a ng-click="cambiarInstrumento(o)" class="btn btn-xs">Cambiar</a>
+              </div>
+              <div ng-if="o.cambiarInstrumento == true">
+                <select ng-options="option.nombre for option in instrumentosDisponibles track by option.id  | orderBy:'nombre':true" ng-model="o.instrumentoSeleccionado" convert-to-number></select>
+                <a ng-click="cambiarInstrumento(o)" class="btn btn-xs btn-primary">Guardar</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

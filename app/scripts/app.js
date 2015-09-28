@@ -36,7 +36,6 @@ angular.module('sedadApp', [
         // You can simply add it inline here.
         template: '<ui-view/>'
       })
-      
       .state('instrumentos.index', {
         url: '/',
         templateUrl: 'views/instrumentos/index.html',
@@ -45,7 +44,6 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.verInstrumento]
         }
       })
-      
       .state('instrumentos.new', {
         url: '/nuevo',
         templateUrl: 'views/instrumentos/new.html',
@@ -54,7 +52,6 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.crearInstrumento]
         }
       })
-      
       .state('instrumentos.edit', {
         url: '/:id/editar',
         templateUrl: 'views/instrumentos/edit.html',
@@ -69,7 +66,6 @@ angular.module('sedadApp', [
         abstract : true,
         template : '<div ui-view/>'
       })
-
       .state('periodos.index', {
         url : '/',
         templateUrl : 'views/periodos/index.html',
@@ -78,7 +74,6 @@ angular.module('sedadApp', [
         permisos : [PERMISOS.listarPeriodos]
         }
       })
-      
       .state('periodos.new', {
         url: '/nuevo',
         templateUrl: 'views/periodos/new.html',
@@ -87,13 +82,20 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.crearPeriodos]
         }
       })
+      .state('periodos.ofertas', {
+        url: '/:periodo/ofertas_academicas',
+        templateUrl: 'views/periodos/ofertas_academicas.html',
+        controller: 'PeriodosOfertasCtrl',
+        data: {
+          permisos: [PERMISOS.cambiarInstrumentoDeConsulta]
+        }
+      })
       
       .state('reportes', {
         url : '/reportes',
         abstract : true,
         template : '<ui-view/>'
       })
-      
       .state('reportes.index', {
         url : '/',
         templateUrl : 'views/reportes/index.html',
@@ -108,7 +110,6 @@ angular.module('sedadApp', [
         abstract : true,
         template : '<div ui-view/>'
       })
-
       .state('consultas.index', {
         url : '/',
         templateUrl : 'views/consultas/index.html',
@@ -117,7 +118,6 @@ angular.module('sedadApp', [
           permisos : [PERMISOS.listarConsultasSinResponder]
         }
       })
-
       .state('consultas.responder', {
         url : '/:id/responder',
         templateUrl : 'views/consultas/responder.html',
@@ -135,7 +135,6 @@ angular.module('sedadApp', [
         // You can simply add it inline here.
         template: '<ui-view/>'
       })
-      
       .state('roles.index', {
         url: '/',
         templateUrl: 'views/roles/index.html',
@@ -144,7 +143,6 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.listarRoles]
         }
       })
-
       .state('roles.edit', {
         url: '/:id/editar',
         templateUrl: 'views/roles/edit.html',
@@ -162,7 +160,6 @@ angular.module('sedadApp', [
         // You can simply add it inline here.
         template: '<ui-view/>'
       })
-      
       .state('usuarios.index', {
         url: '/',
         templateUrl: 'views/usuarios/index.html',
@@ -171,7 +168,6 @@ angular.module('sedadApp', [
           permisos: [PERMISOS.listarUsuarios]
         }
       })
-
       .state('usuarios.edit', {
         url: '/:id/editar',
         templateUrl: 'views/usuarios/edit.html',

@@ -10,7 +10,6 @@
 angular.module('sedadApp')
   .controller('InstrumentosIndexCtrl', ['$scope', 'Instrumento', function ($scope, Instrumento) {
     $scope.instrumentosDisponibles = Instrumento.query();
-console.log($scope.instrumentosDisponibles);
     $scope.eliminarInstrumento = function(instrumento) {
         var indices = getIdxInstrumento(instrumento);
         Instrumento.delete({id: instrumento.id}, function(data) {
