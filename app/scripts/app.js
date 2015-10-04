@@ -19,6 +19,13 @@ angular.module('sedadApp', [
     'ui.router',
     'angular-momentjs'
   ])
+  .directive('menuPrincipal', ['$rootScope', 'CurrentUser', 'PERMISOS', function ($rootScope, CurrentUser, PERMISOS) {
+      return {
+          restrict: 'E',
+          templateUrl: 'views/layouts/shared/navbar.html',
+          controller: 'MenuCtrl',
+      };
+  }])
 	.config(['$stateProvider', '$urlRouterProvider', 'PERMISOS', function ($stateProvider, $urlRouterProvider, PERMISOS) {
     $urlRouterProvider.otherwise('/');
     $stateProvider

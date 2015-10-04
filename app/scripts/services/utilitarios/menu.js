@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('sedadApp')
-	.controller('MenuCtrl', ['$scope', 'PERMISOS', 'AuthService', 'CurrentUser', function($scope, PERMISOS, AuthService, CurrentUser){
+	.controller('MenuCtrl', ["$rootScope", "$state", '$scope', 'PERMISOS', 'AuthService', 'CurrentUser', function($rootScope, $state, $scope, PERMISOS, AuthService, CurrentUser){
 		$scope.menu = Array();
-
+		$scope.mostrarMenuDeSesion = false;
+		
 		var generarMenu = function(usuario) {
 			var menu = Array();
 			if(usuario && usuario.rol && usuario.permisos) {
@@ -32,15 +33,22 @@ angular.module('sedadApp')
 						}
 					}
 				});
+				$scope.mostrarMenuDeSesion = true;
+			}
+			else {
+				$scope.mostrarMenuDeSesion = false;
 			}
 
 			return menu;
 		}
-		
-		var usuario = CurrentUser.user();
-		$scope.menu = generarMenu(usuario);
 
 	    $scope.cerrarSesion = function() {
 	        AuthService.logout();
 	    }
-}]);
+		
+		$rootScope.$on('$stateChangeStart', function(usuario) {
+			console.log("hola");
+			var usuario = CurrentUser.user();
+			$scope.menu = generarMenu(usuario);
+		});
+	}]);
