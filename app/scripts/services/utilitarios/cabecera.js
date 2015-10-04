@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('sedadApp')
-	.controller('MenuCtrl', ["$rootScope", "$state", '$scope', 'PERMISOS', 'AuthService', 'CurrentUser', function($rootScope, $state, $scope, PERMISOS, AuthService, CurrentUser){
+	.controller('CabeceraCtrl', ["$rootScope", "$state", '$scope', 'PERMISOS', 'AuthService', 'CurrentUser', function($rootScope, $state, $scope, PERMISOS, AuthService, CurrentUser){
 		$scope.menu = Array();
-		$scope.mostrarMenuDeSesion = false;
+		$scope.mostrarElementosDeSesion = false;
 		
 		var generarMenu = function(usuario) {
 			var menu = Array();
@@ -33,10 +33,10 @@ angular.module('sedadApp')
 						}
 					}
 				});
-				$scope.mostrarMenuDeSesion = true;
+				$scope.mostrarElementosDeSesion = true;
 			}
 			else {
-				$scope.mostrarMenuDeSesion = false;
+				$scope.mostrarElementosDeSesion = false;
 			}
 
 			return menu;
@@ -47,8 +47,10 @@ angular.module('sedadApp')
 	    }
 		
 		$rootScope.$on('$stateChangeStart', function(usuario) {
-			console.log("hola");
 			var usuario = CurrentUser.user();
 			$scope.menu = generarMenu(usuario);
 		});
+
+		var usuario = CurrentUser.user();
+		$scope.menu = generarMenu(usuario);
 	}]);

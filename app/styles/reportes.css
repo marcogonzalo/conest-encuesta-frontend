@@ -1,27 +1,8 @@
-.navbar-inverse {
-/*  background-color: #f0ad4e;
-  border-color: #f0ad4e; mostaza*/
-  background-color: #6699cc;
-  border-color: #6699cc; 
-}
 /* Customize container  modificado anterior max-width: 730px;*/
 @media (min-width: 768px) {
   .container {
     max-width: 1000px;
   }
-}
-.navbar-inverse .navbar-nav > li > a {
-  color: white;
-}
-.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-  background-color: #ff9900;
-  border-color: red;
-}
-button,
-input,
-select[multiple],
-textarea {
-  background-image: none;
 }
 
 a {

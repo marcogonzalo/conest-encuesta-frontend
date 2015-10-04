@@ -1,4 +1,4 @@
-    <nav class="navbar navbar-static-top navbar-inverse" ng-controller="MenuCtrl">
+    <nav class="navbar navbar-static-top" ng-controller="CabeceraCtrl">
       <div class="container-fluid">
         <a class="navbar-header top-logo" ui-sref="instrumentos.index">
           <img src="/images/logo.png" alt="">
@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
           <ul class="nav navbar-nav">
             <li ng-repeat="i in menu | orderBy:'titulo'"><a ui-sref="{{i.state}}">{{i.titulo}}</a></li>
-            <li ng-show="mostrarMenuDeSesion"><a href="" ng-click="cerrarSesion()">Cerrar sesión</a></li>
+            <li ng-show="mostrarElementosDeSesion"><a href="" ng-click="cerrarSesion()">Cerrar sesión</a></li>
           </ul>
         </div>
       </div>

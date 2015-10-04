@@ -23,6 +23,14 @@ body {
   padding-bottom: 19px;
 }
 
+nav {
+  background-color: #7AA7C6;
+}
+
+nav ul.nav li a:hover {
+  background-color: #6996b5;
+}
+
 nav ul.nav {
   margin-top: 10px;
 }
@@ -30,6 +38,12 @@ nav ul.nav {
 nav ul.nav li {
   margin-left: 10px;
 }
+
+nav ul.nav li a {
+  color: white;
+}
+
+
 
 /* Custom page footer */
 .footer {

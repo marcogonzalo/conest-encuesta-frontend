@@ -19,11 +19,11 @@ angular.module('sedadApp', [
     'ui.router',
     'angular-momentjs'
   ])
-  .directive('menuPrincipal', ['$rootScope', 'CurrentUser', 'PERMISOS', function ($rootScope, CurrentUser, PERMISOS) {
+  .directive('cabecera', ['$rootScope', 'CurrentUser', 'PERMISOS', function ($rootScope, CurrentUser, PERMISOS) {
       return {
           restrict: 'E',
-          templateUrl: 'views/layouts/shared/navbar.html',
-          controller: 'MenuCtrl',
+          templateUrl: 'views/layouts/shared/cabecera.html',
+          controller: 'CabeceraCtrl',
       };
   }])
 	.config(['$stateProvider', '$urlRouterProvider', 'PERMISOS', function ($stateProvider, $urlRouterProvider, PERMISOS) {
