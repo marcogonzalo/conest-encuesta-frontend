@@ -27,7 +27,7 @@ nav {
   background-color: #7AA7C6;
 }
 
-nav ul.nav li a:hover {
+nav ul.nav li a:active, nav ul.nav li a:hover, nav ul.nav li a:focus {
   background-color: #6996b5;
 }
 

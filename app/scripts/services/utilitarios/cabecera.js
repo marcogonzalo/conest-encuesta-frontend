@@ -13,13 +13,13 @@ angular.module('sedadApp')
 					accesoTotal = accesoTotal || permiso_usuario === 'accesoTotal';
 					var permiso = PERMISOS[permiso_usuario];
 					if(permiso || accesoTotal) {
-						if(permiso == 'listarInstrumentos' || accesoTotal) {
+						if(permiso == 'crearInstrumento' || permiso == 'editarInstrumento' || accesoTotal) {
 							menu.unshift({titulo: 'Instrumentos', state: 'instrumentos.index'});
 						}
 						if(permiso == 'listarConsultasSinResponder') {
 							menu.unshift({titulo: 'Consultas', state: 'consultas.index'});
 						}
-						if(permiso == 'listarPeriodos' || accesoTotal) {
+						if(permiso == 'crearPeriodo' || permiso == 'sincronizarPeriodo' || permiso == 'sincronizarEstudiantes' || accesoTotal) {
 							menu.unshift({titulo: 'Períodos', state: 'periodos.index'});
 						}
 						if(permiso == 'listarReportes' || accesoTotal) {
