@@ -11,7 +11,7 @@
 		<div class="col-sm-12">
 			<ul>
 				<li ng-repeat="p in rolCompleto.permisos | orderBy:'nombre'">
-					<input type="checkbox" ng-model="permisos_seleccionados[p.id]" ng-checked="p.existe"> <label>{{p.nombre}}</label>
+					<input type="checkbox" ng-model="permisos_seleccionados[p.id]" ng-checked="permisos_seleccionados[p.id]"> <label>{{p.nombre}}</label>
 				</li>
 			</ul>
 		</div>

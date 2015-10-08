@@ -15,19 +15,21 @@ angular.module('sedadApp')
   			$scope.rolCompleto.permisos[i].existe = false;
   			for(var j = 0, m = $scope.rolCompleto.permisos_rol.length; j < m; j++) {
 	  			if($scope.rolCompleto.permisos[i].id == $scope.rolCompleto.permisos_rol[j]) {
-	                $scope.rolCompleto.permisos[i].existe = true;
-	                break;
-	            }
-            }
+            $scope.permisos_seleccionados[$scope.rolCompleto.permisos[i].id] = true;
+            $scope.rolCompleto.permisos[i].existe = true;
+            break;
+          }
         }
-  	}
+      }
+    }
 
-  	$scope.guardar = function() {
-  		var permisos_rol_ids = [];
+    $scope.guardar = function() {
+      var permisos_rol_ids = [];
+      console.log($scope.permisos_seleccionados);
   		angular.forEach($scope.permisos_seleccionados, function(value, key) {
   			if(value) {
   				console.log(key+" "+value);
-				permisos_rol_ids.unshift(key);
+				  permisos_rol_ids.unshift(key);
   			}
 		});
   		console.log(permisos_rol_ids);
