@@ -8,14 +8,14 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('InstrumentosIndexCtrl', ['$scope', 'Instrumento', function ($scope, Instrumento) {
+  .controller('InstrumentosIndexCtrl', ['$scope', 'Instrumento', 'Notification', function ($scope, Instrumento, Notification) {
     $scope.instrumentosDisponibles = Instrumento.query();
     $scope.eliminarInstrumento = function(instrumento) {
         var indices = getIdxInstrumento(instrumento);
         Instrumento.delete({id: instrumento.id}, function(data) {
             console.log(data);
             $scope.instrumentosDisponibles.splice(indices.instrumento_idx,1);
-            console.log("Instrumento eliminado");
+            Notification.success("Instrumento eliminado");
         });
     };
 

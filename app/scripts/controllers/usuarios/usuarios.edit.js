@@ -8,7 +8,7 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('UsuariosEditCtrl', ['$http', '$scope', '$stateParams', 'Rol', 'UsuarioEditar', 'SEDAD_API_V1_URL', function ($http, $scope, $stateParams, Rol, UsuarioEditar, SEDAD_API_V1_URL) {
+  .controller('UsuariosEditCtrl', ['$http', '$scope', '$stateParams', 'Rol', 'UsuarioEditar', 'SEDAD_API_V1_URL', 'Notification', function ($http, $scope, $stateParams, Rol, UsuarioEditar, SEDAD_API_V1_URL, Notification) {
   	$scope.rol_seleccionado = {};
   	var cruzarRol  = function() {
   		for(var i = 0, n = $scope.usuarioEditar.roles.length; i < n; i++) {
@@ -25,10 +25,10 @@ angular.module('sedadApp')
 
         $http.put(SEDAD_API_V1_URL + '/usuarios/' + $scope.usuarioEditar.usuario.cedula, { 'rol_id': $scope.rol_seleccionado.id })
           .success(function(data, status, headers, config) {
-            console.log("Rol asignado");
+            Notification.success("Rol asignado");
           })
           .error(function(data, status, headers, config) {
-            console.log(data);
+            Notification.error(data);
           // called asynchronously if an error occurs
           // or server returns response with an error status.
         });

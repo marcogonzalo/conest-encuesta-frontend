@@ -8,7 +8,7 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('ConsultasResponderCtrl', ['$scope', '$stateParams', '$http', 'Instrumento', 'CurrentUser', 'SEDAD_API_V1_URL', function ($scope, $stateParams, $http, Instrumento, CurrentUser, SEDAD_API_V1_URL) {
+  .controller('ConsultasResponderCtrl', ['$scope', '$stateParams', '$http', 'Instrumento', 'CurrentUser', 'SEDAD_API_V1_URL', 'Notification', function ($scope, $stateParams, $http, Instrumento, CurrentUser, SEDAD_API_V1_URL, Notification) {
     var u = CurrentUser.user();
 
     $scope.consulta = {
@@ -33,6 +33,7 @@ angular.module('sedadApp')
 	        });
 		})
     	.error(function(data, status, headers, config) {
+    		Notification.error('Error al construir la consulta');
     		console.log(data);
 			// called asynchronously if an error occurs
 			// or server returns response with an error status.
@@ -55,10 +56,11 @@ angular.module('sedadApp')
 
 	   	$http.post(SEDAD_API_V1_URL + '/consultas/' + $stateParams.id + '/responder', { "consulta": $scope.respuesta })
 	    	.success(function(data, status, headers, config) {
+	    		Notification.success('Consulta respondida satisfactoriamente');
 	    		console.log(data);
-	    		console.log("Consulta respondida");
 	    	})
 	    	.error(function(data, status, headers, config) {
+	    		Notification.error('Hubo un error al responder la consulta');
 	    		console.log(data);
 				// called asynchronously if an error occurs
 				// or server returns response with an error status.

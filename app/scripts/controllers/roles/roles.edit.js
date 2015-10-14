@@ -8,7 +8,7 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('RolesEditCtrl', ['$http', '$scope', '$stateParams', 'Rol', 'RolCompleto', 'SEDAD_API_V1_URL', function ($http, $scope, $stateParams, Rol, RolCompleto, SEDAD_API_V1_URL) {
+  .controller('RolesEditCtrl', ['$http', '$scope', '$stateParams', 'Rol', 'RolCompleto', 'SEDAD_API_V1_URL', 'Notification', function ($http, $scope, $stateParams, Rol, RolCompleto, SEDAD_API_V1_URL, Notification) {
   	$scope.permisos_seleccionados = {};
   	var cruzarPermisos = function(permisos_rol) {
   		for(var i = 0, n = $scope.rolCompleto.permisos.length; i < n; i++) {
@@ -31,17 +31,18 @@ angular.module('sedadApp')
   				console.log(key+" "+value);
 				  permisos_rol_ids.unshift(key);
   			}
-		});
+		  });
   		console.log(permisos_rol_ids);
 
   		$http.put(SEDAD_API_V1_URL + '/roles/' + $scope.rolCompleto.rol.id, { 'permisos_rol': permisos_rol_ids  })
 	    	.success(function(data, status, headers, config) {
 	    		$scope.rolCompleto = data
 	    		cruzarPermisos(data.permisos_rol);
-	    		console.log("Permisos asignados");
+	    		Notification.success("Permisos asignados");
 	    	})
 	    	.error(function(data, status, headers, config) {
-	    		console.log(data);
+          console.log(data);
+	    		Notification.error(data.message);
 				// called asynchronously if an error occurs
 				// or server returns response with an error status.
 			});

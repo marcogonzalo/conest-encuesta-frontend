@@ -15,7 +15,7 @@ angular.module('sedadApp')
 		editarInstrumentos: 'editarInstrumento',
 		eliminarInstrumentos: 'eliminarInstrumento',
 		listarConsultasSinResponder: 'listarConsultasSinResponder',
-		responderConsultas: 'responderConsulta',
+		responderConsulta: 'responderConsulta',
 		crearPeriodo: 'crearPeriodo',
 		listarPeriodos: 'listarPeriodos',
 		cambiarInstrumentoDeConsulta: 'cambiarInstrumentoDeConsulta',
