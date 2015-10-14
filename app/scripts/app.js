@@ -9,6 +9,7 @@
  * Main module of the application.
  */
 angular.module('sedadApp', [
+    'angular-momentjs',
     'chart.js',
     'ngAnimate', 
     'ngMessages', 
@@ -16,8 +17,8 @@ angular.module('sedadApp', [
     'ngSanitize', 
     'ngTouch', 
     'ui.bootstrap', 
-    'ui.router',
-    'angular-momentjs'
+    'ui-notification',
+    'ui.router'
   ])
   .directive('cabecera', ['$rootScope', 'CurrentUser', 'PERMISOS', function ($rootScope, CurrentUser, PERMISOS) {
       return {

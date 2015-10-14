@@ -8,7 +8,7 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('InstrumentosEditCtrl', ['$scope', '$stateParams', 'Instrumento', function ($scope, $stateParams, Instrumento) {
+  .controller('InstrumentosEditCtrl', ['$scope', '$stateParams', 'Instrumento', 'Notification', function ($scope, $stateParams, Instrumento, Notification) {
     var nuevoInstrumento = true; // Se asume, por defecto, que es un nuevo instrumento
     $scope.texto_boton = "Crear";
     $scope.instrumento = {};
@@ -31,8 +31,10 @@ angular.module('sedadApp')
         nuevoInstrumento = false;
         $scope.instrumento = Instrumento.get({id: $stateParams.id});
         $scope.texto_boton = "Actualizar";
-
-        // Falta validar si se obtuvo el objeto
+        /**
+            TODO:
+            - Falta validar si se obtuvo el objeto
+         */   
     }
 
     $scope.agregarBloque = function(idx_bloque_anterior) {
@@ -161,7 +163,7 @@ angular.module('sedadApp')
 
     $scope.guardar = function() {
         if(nuevoInstrumento) {
-            alert("nuevo");
+            console.log("nuevo");
             Instrumento.save($scope.instrumento, function(data) {
                 if(data.id != null) {
                     $scope.instrumento = data;
@@ -170,15 +172,15 @@ angular.module('sedadApp')
                 else {
                     console.log(data);
                 }
-                console.log("Instrumento creado");
+                Notificacion.success("Instrumento creado");
             });
         }
         else {
-            alert("existe");
+            console.log('existente');
             Instrumento.update($scope.instrumento, function(data) {
                 console.log(data);
                 $scope.instrumento = data;
-                console.log("Instrumento actualizado");
+                Notification.success("Instrumento actualizado");
             });
         }
     };
