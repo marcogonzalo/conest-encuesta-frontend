@@ -8,12 +8,4 @@ angular.module('sedadApp')
 			}
 		});
 		return res;
-	}])
-	.factory('UsuarioEditar', ['$resource', 'SEDAD_API_V1_URL', function($resource, API){
-		var res = $resource(API + '/usuarios/:id/editar', {id: '@id'}, {
-			get: {
-				method: 'GET'
-			}
-		});
-		return res;
 	}]);
