@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sedadApp')
-	.controller('PeriodosIndexCtrl', ['$scope', '$http', 'Periodo', 'SEDAD_API_V1_URL', function($scope, $http, Periodo, SEDAD_API_V1_URL){
+	.controller('PeriodosIndexCtrl', ['$scope', '$http', 'Periodo', 'SEDAD_API_V1_URL', 'Notification', function($scope, $http, Periodo, SEDAD_API_V1_URL, Notification){
 		$scope.periodos = Periodo.query();
         $scope.nuevo_periodo='';
 		
@@ -26,9 +26,15 @@ angular.module('sedadApp')
 				$http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/sincronizar_asignaturas')
 		          .success(function(data, status, headers, config) {
 		          	$scope.periodos[index].sincronizacion = data.sincronizacion;
-		            console.log("Asignaturas sincronizadas");
+		            Notification.success("Asignaturas sincronizadas");
 		          })
 		          .error(function(data, status, headers, config) {
+		          	if(status == 304) {
+		          		Notification.warning('Información sin cambios');
+		          	} 
+		          	else {
+		          		Notification.error('Error al sincronizar asignaturas');
+		          	}
 		            console.log(data);
 		          // called asynchronously if an error occurs
 		          // or server returns response with an error status.
@@ -38,9 +44,15 @@ angular.module('sedadApp')
 				$http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/sincronizar_estudiantes')
 		          .success(function(data, status, headers, config) {
 		          	$scope.periodos[index].sincronizacion = data.sincronizacion;
-		            console.log("Estudiantes sincronizados");
+		            Notification.success("Estudiantes sincronizados");
 		          })
 		          .error(function(data, status, headers, config) {
+		          	if(status == 304) {
+		          		Notification.warning('Información sin cambios');
+		          	} 
+		          	else {
+			            Notification.error('Error al sincronizar estudiantes');
+			        }
 		            console.log(data);
 		          // called asynchronously if an error occurs
 		          // or server returns response with an error status.

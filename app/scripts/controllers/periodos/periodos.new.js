@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sedadApp')
-	.controller('PeriodosNewCtrl', ['$scope', 'Periodo', 'Instrumento', function($scope, Periodo, Instrumento){
+	.controller('PeriodosNewCtrl', ['$scope', 'Periodo', 'Instrumento', 'Notification', function($scope, Periodo, Instrumento, Notification){
 		$scope.instrumentosDisponibles = Instrumento.query();
         $scope.nuevoPeriodo = '';
         $scope.instrumentoSeleccionado = {}
@@ -10,7 +10,7 @@ angular.module('sedadApp')
 			Periodo.save({ periodo_academico: { periodo: $scope.nuevoPeriodo, instrumento_id: $scope.instrumentoSeleccionado.id } }, function(data) {
                 if(data.estatus == "OK") {
                     console.log(data);
-	                console.log("Instrumento creado");
+	                Notification.success("Instrumento creado");
 					$state.go('main');
                 }
                 else {
