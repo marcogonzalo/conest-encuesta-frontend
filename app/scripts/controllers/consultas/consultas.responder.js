@@ -25,6 +25,7 @@ angular.module('sedadApp')
     		console.log(data);
 		
 		    Instrumento.get({id: data.instrumento_id}, function(instrumento, getResponseHeaders){
+			    console.log(instrumento);
 			    $scope.consulta.instrumento = instrumento;
 			    $scope.consulta.oferta_academica = data.oferta_academica;
 
