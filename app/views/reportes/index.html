@@ -8,117 +8,215 @@
 
 <div class="clearfix"> </div>
   <div ng-hide="Vp7" class="col-sm-4 col-md-4">
-     <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
-        <div ng-hide="Vp70">
-         ¿{{graficas.pregunta.interrogante}}? Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}
+     <h5 class="subtitulo-rep">
+      <strong>{{nombre_reporte}}:</strong>
+
+      <div ng-hide="Vp70">
+<!--          Datos01: {{datos01}}<br>
+         Series02: {{series02}} -->
+         ¿{{valores.pregunta.interrogante}}? <br>
+         Materia: {{valores.materia.codigo}} {{valores.materia.nombre}}
+          <canvas id="pie" class="chart chart-pie" data="datos01"
+          labels="ejex01" legend="true" 
+          click="">
+          </canvas>
+          <canvas id="bar" class="chart chart-bar" data="datos02" labels="ejex01" legend="true" series="series02" click="">
+          </canvas> 
+          <canvas id="line" class="chart chart-line" data="datos02"
+           labels="ejex01" legend="true" series="series02"
+           click="onClick">
+          </canvas> 
+      </div>
+
+
+      <div ng-hide="Vp71">
+<!--        {{instrumentos}} -->
+       <div class="row" ng-repeat="b in datosx1 track by $index">  
+
+<!--           {{datosx}} -->
+
+          {{b[0]}}<br>
+<!--           {{b[1]}}<br>
+          {{b[2]}}<br>
+          {{b[3]}}<br><br> -->
+
+          <canvas id="pie" class="chart chart-pie" data="b[2]"
+          labels="b[1]" legend="true" 
+          click="">
+          </canvas>
+<!--            <canvas id="bar" class="chart chart-bar" data="b[2]" labels="b[3]" legend="true" series="" click="">
+          </canvas>  -->
+<!--           <canvas id="line" class="chart chart-line" data="b[2]"
+             labels="b[1]" legend="true" series="series02"
+             click="onClick">
+            </canvas>  -->         
+
+<!--             <canvas id="bar" class="chart chart-bar" data="b[2]" labels="b[1]" legend="true" series="series2" click="">
+            </canvas>  -->
+<!--             <canvas id="line" class="chart chart-line" data="b[2]"
+             labels="b[1]" legend="true" series="series2"
+             click="onClick">
+            </canvas>  -->          
+
+       </div>
+
+
+
+
+<!--         Materia:{{valores.materia.codigo}}-{{valores.materia.nombre}}<br>
+        Instrumento:{{valores.instrumento.nombre}}<br>
+        Bloque:{{b.nombre}}<br> -->
+<!--         {{nombre_rep}} -->
+<!--         <div class="row pregunta" ng-repeat="p in b.preguntas track by $index">
+        Pregunta: {{p.interrogante}}
+         <div class="row pregunta" ng-repeat="r in p.resultados track by $index"> -->
+
+
+<!--            cargarDatos(r,$index); -->
+<!--             {{r.periodo}}<br> -->
+
+
+
+<!--           <canvas id="bar" class="chart chart-bar" data="datos2" labels="ejex1" legend="true" series="series2" click="">
+          </canvas> 
+          <canvas id="line" class="chart chart-line" data="datos2"
+           labels="ejex1" legend="true" series="series2"
+           click="onClick">
+          </canvas> 
+ -->
+
+<!--          </div> --> <!-- r  -->
+<!--         </div> --><!-- p  -->
+<!--        </div> --><!-- b  -->
+<!--       </div> --><!-- ng-hide="Vp71"  -->
+
+
+
+<!--               <div ng-repeat="p in b.preguntas ">
+               Pregunta: {{p.interrogante}}
+               <div ng-repeat="p in b.preguntas">
+                cargarDatos(p.resultados,$index)
+
+                Pregunta: {{p.interrogante}}
+                cargarind1($index)
+                <div class="col-xs-12" ng-repeat="o in p.resultados" >
+                  <button class="btn btn-primary btn-xs" ng-click="cargarDatos(o,$index)">Ver Grafica</button>
+
+                </div> 
+                <canvas id="pie" class="chart chart-pie" data="datos1[0]" labels="ejex1" legend="true" 
+                click="">
+                </canvas> 
+               </div>
+              </div> 
+             </div> -->
         </div>
-        <div ng-hide="Vp71">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Instrumento:{{graficas.instrumento.nombre}}
-        </div> 
         <div ng-hide="Vp72">
-         {{graficas.materia.codigo}} {{graficas.materia.nombre}}    Instrumento: {{graficas.instrumento.nombre}}
+         {{valores.materia.codigo}} {{valores.materia.nombre}}    Instrumento: {{valores.instrumento.nombre}}
         </div>
         <div ng-hide="Vp73">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Per&iacute;odo: {{periodos[persel].periodo}}
+<!--          Materia: {{valores.materia.codigo}} {{valores.materia.nombre}} Per&iacute;odo: {{periodos[persel].periodo}} -->
+         <div class="row" ng-repeat="b in datosx1 track by $index">  
+<!--           {{datosx}} -->
+          {{b[0]}}<br>
+<!--           {{b[1]}}<br> -->
+<!--           {{b[2]}}<br>
+          {{b[3]}}<br><br> -->
+          <canvas id="pie" class="chart chart-pie" data="b[2]"
+          labels="b[1]" legend="true" 
+          click="">
+          </canvas>
+         </div>
+<!--              <canvas id="pie" class="chart chart-pie" data="datos31"
+            labels="ejex31" legend="true" 
+            click="">
+            </canvas> -->
+<!--             <canvas id="bar" class="chart chart-bar" data="datos52" labels="ejex51" legend="true" series="series52" click="">
+            </canvas> 
+            <canvas id="line" class="chart chart-line" data="datos52"
+             labels="ejex51" legend="true" series="series52"
+             click="onClick">
+            </canvas>    -->      
         </div>  
         <div ng-hide="Vp74">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}}
+         Materia: {{valores.materia.codigo}} {{valores.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}}
         </div> 
         <div ng-hide="Vp75">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Pregunta:{{graficas.pregunta.interrogante}}
+         {{valores.docente.cedula}} {{valores.docente.nombre_completo}} Pregunta:{{valores.pregunta.interrogante}}
+            <canvas id="pie" class="chart chart-pie" data="datos51"
+            labels="ejex51" legend="true" 
+            click="">
+            </canvas>
+            <canvas id="bar" class="chart chart-bar" data="datos52" labels="ejex51" legend="true" series="series52" click="">
+            </canvas> 
+            <canvas id="line" class="chart chart-line" data="datos52"
+             labels="ejex51" legend="true" series="series52"
+             click="onClick">
+            </canvas> 
         </div> 
-         <div ng-hide="Vp76">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Instrumento:{{graficas.instrumento.nombre}}
-        </div> 
+<!--          <div ng-hide="Vp76">
+         {{valores.docente.cedula}} {{valores.docente.nombre_completo}} Instrumento:{{valores.instrumento.nombre}}
+
+        </div>  -->
+
+        <div ng-hide="Vp76">
+
+<!-- {{datosx1}} -->
+         <div class="row" ng-repeat="b in datosx1 track by $index">  
+<!--           {{datosx}} -->
+          {{b[0]}}<br>
+<!--           {{b[1]}}<br> -->
+<!--           {{b[2]}}<br>
+          {{b[3]}}<br><br> -->
+          <canvas id="pie" class="chart chart-pie" data="b[2]"
+          labels="b[3]" legend="true" 
+          click="">
+          </canvas>
+         </div>
+
+
+
+
+
+<!--          <div class="row" ng-repeat="s in datosx6 track by $index">  --> 
+<!--           {{datosx}} -->
+<!--            {{b[0]}}<br>
+          <canvas id="pie" class="chart chart-pie" data="s[2]"
+          labels="s[1]" legend="true" 
+          click="">
+          </canvas>
+         </div> -->
+        </div>
+
+
+
         <div ng-hide="Vp77">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}    Instrumento: {{graficas.instrumento.nombre}}
+         {{valores.docente.cedula}} {{valores.docente.nombre_completo}}    Instrumento: {{valores.instrumento.nombre}}
         </div>  
          <div ng-hide="Vp78">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Per&iacute;odo:{{graficas.periodo}}
+<!-- {{datosx1}} -->
+         <div class="row" ng-repeat="b in datosx1 track by $index">  
+<!--           {{datosx}} -->
+          {{b[0]}}<br>
+<!--           {{b[1]}}<br> -->
+<!--           {{b[2]}}<br>
+          {{b[3]}}<br><br> -->
+          <canvas id="pie" class="chart chart-pie" data="b[2]"
+          labels="b[3]" legend="true" 
+          click="">
+          </canvas>
+         </div>
+
+
+
+         
         </div>  
           <div ng-hide="Vp79">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}     Per&iacute;odo:{{graficas.periodo_academico.periodo}}
+         {{valores.docente.cedula}} {{valores.docente.nombre_completo}}     Per&iacute;odo:{{valores.periodo_academico.periodo}}
         </div>   
        </h5> 
-        <canvas id="pie" class="chart chart-pie" data="datos1"
-        labels="etiquetas" legend="true" 
-        click="">
-<!--         click="asignavalor1()"> -->
-      </canvas>
-     
-<!-- fin Gráfica Torta -->
-<!-- Gráfica Radar -->
-<!--       <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
-        <div ng-hide="Vp70">
-         ¿{{graficas.pregunta.interrogante}}? Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}
-        </div>
-        <div ng-hide="Vp71">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Instrumento:{{graficas.instrumento.nombre}}
-        </div> 
-        <div ng-hide="Vp73">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}}
-        </div>                
-        <div ng-hide="Vp75">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Pregunta:{{graficas.pregunta.interrogante}}
-        </div> 
-         <div ng-hide="Vp76">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Instrumento:{{graficas.instrumento.nombre}}
-        </div> 
-         <div ng-hide="Vp78">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}} Per&iacute;odo:{{graficas.periodo}}
-        </div>  
 
-       </h5> 
-      <canvas id="base" class="chart-base" chart-type="type" data="datos1"
-      labels="etiquetas" legend="true" 
-      click="">
-      </canvas>
-    -->
-<!--fin Gráfica Radar-->
 
-<!--Gráfica Linea -->
 
-<!--       <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
-        <div ng-hide="Vp72">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}    Instrumento: {{graficas.instrumento.nombre}}
-        </div>
-        <div ng-hide="Vp74">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}}
-        </div> 
-        <div ng-hide="Vp77">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}    Instrumento: {{graficas.instrumento.nombre}}
-        </div>  
-          <div ng-hide="Vp79">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}     Per&iacute;odo:{{graficas.periodo_academico.periodo}}
-        </div>                        
-      </h5> 
-
-      <canvas id="line" class="chart chart-line" data="datos2"
-      labels="ejex1" legend="true" series="series2"
-      click="onClick">
-      </canvas>
- -->     
-<!--fin Gráfica Linea-->
-<!--Gráfica Barra-->
-<!--       <h5 class="subtitulo-rep"><strong>{{nombre_reporte}}:</strong>
-        <div ng-hide="Vp72">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}}    Instrumento: {{graficas.instrumento.nombre}}
-        </div>
-        <div ng-hide="Vp74">
-         Materia: {{graficas.materia.codigo}} {{graficas.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}}
-        </div>  
-         <div ng-hide="Vp77">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}     Instrumento: {{graficas.instrumento.nombre}}
-        </div>   
-         <div ng-hide="Vp79">
-         {{graficas.docente.cedula}} {{graficas.docente.nombre_completo}}     Per&iacute;odo:{{graficas.periodo_academico.periodo}}
-        </div>                      
-      </h5> 
-
-      <canvas id="bar" class="chart chart-bar" data="datos2" labels="ejex1" legend="true" series="series2" click="">
-     </canvas> -->
-    
-<!--fin Gráfica Barra-->
 </div>
 <!--fin Gráficas-->
 
@@ -262,10 +360,10 @@
         </button>   
       </div>
     </div><!--Fin Reporte Formato CSV--> 
-    <div class="col-xs-3"><!--Emitir Graficas-->  
+    <div class="col-xs-3"><!--Emitir valores-->  
       <button class="btn btn-rep1 " ng-click="graReporte()">Gráfica
       </button>  
-    </div><!--Fin Graficas-->
+    </div><!--Fin valores-->
 </div>    
 </form>   
 </div>
