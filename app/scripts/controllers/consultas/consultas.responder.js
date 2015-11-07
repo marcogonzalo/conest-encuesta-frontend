@@ -8,7 +8,7 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('ConsultasResponderCtrl', ['$scope', '$stateParams', '$http', 'Instrumento', 'CurrentUser', 'SEDAD_API_V1_URL', 'Notification', function ($scope, $stateParams, $http, Instrumento, CurrentUser, SEDAD_API_V1_URL, Notification) {
+  .controller('ConsultasResponderCtrl', ['$scope', '$state', '$stateParams', '$http', 'Instrumento', 'CurrentUser', 'SEDAD_API_V1_URL', 'Notification', function ($scope, $state, $stateParams, $http, Instrumento, CurrentUser, SEDAD_API_V1_URL, Notification) {
     var u = CurrentUser.user();
 
     $scope.consulta = {
@@ -59,10 +59,17 @@ angular.module('sedadApp')
 	    	.success(function(data, status, headers, config) {
 	    		Notification.success('Consulta respondida satisfactoriamente');
 	    		console.log(data);
+	    		$state.go('consultas.index');
 	    	})
 	    	.error(function(data, status, headers, config) {
-	    		Notification.error('Hubo un error al responder la consulta');
-	    		console.log(data);
+	    		if(status == 304) {
+		    		Notification.warning('Consulta respondida anteriormente');
+		    		$state.go('consultas.index');
+	    		}
+	    		else {
+		    		Notification.error('Hubo un error al responder la consulta');
+		    		console.log(data);
+		    	}
 				// called asynchronously if an error occurs
 				// or server returns response with an error status.
 			});
