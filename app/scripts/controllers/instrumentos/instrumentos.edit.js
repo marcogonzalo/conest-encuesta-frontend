@@ -94,7 +94,7 @@ angular.module('sedadApp')
         var indices = getIdxPregunta(pregunta);
 
         if(idx_opcion_anterior === null) {
-            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.unshift(opcion);
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.push(opcion);
         }
         else {
             $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(idx_opcion_anterior+1,0,opcion);
