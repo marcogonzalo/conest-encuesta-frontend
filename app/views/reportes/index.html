@@ -1,4 +1,4 @@
-<!--Migas de Pan-->
+<!--Migas de Pan--> 
 <ol class="breadcrumb">
  <li><a ui-sref="instrumentos.index">Inicio</a></li>
  <!--   <li><a href="#">Administración</a></li> -->
@@ -31,6 +31,7 @@
 
       <div ng-hide="Vp71">
 <!--        {{instrumentos}} -->
+
        <div class="row" ng-repeat="b in datosx1 track by $index">  
 
 <!--           {{datosx}} -->
@@ -304,7 +305,7 @@
     </div>
    </div>
   </div> 
- <!--Fin Pregunta -->
+
  <!--Se requiere Instrumento -->
 <div ng-hide="Vp3">
   <div class="form-group">
@@ -338,6 +339,39 @@
 </div>
 </div>  
  <!--Fin Docente -->
+    <!--Se requiere Pregunta 1 comparar-->
+     <div ng-hide="Vp61">
+    <div class="form-group">
+     <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 1 a comparar:</label>
+     <div class="col-md-6">
+      <select class='form-control' ng-model="presel1" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
+      </select> 
+    </div>
+   </div>
+  </div> 
+
+   <!--Se requiere Pregunta 2 comparar -->
+     <div ng-hide="Vp62">
+    <div class="form-group">
+     <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 2 a comparar:</label>
+     <div class="col-md-6">
+      <select class='form-control' ng-model="presel2" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
+      </select> 
+    </div>
+   </div>
+  </div> 
+   <!--Se requiere Pregunta 3 comparar -->
+     <div ng-hide="Vp63">
+    <div class="form-group">
+     <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 3 a comparar:</label>
+     <div class="col-md-6">
+      <select class='form-control' ng-model="presel3" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
+      </select> 
+    </div>
+   </div>
+  </div>
+
+ <!--Fin Pregunta -->
 <br>
 <div class="container col-sm-10 col-md-10" >
  <br>

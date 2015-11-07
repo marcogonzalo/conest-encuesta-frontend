@@ -1,5 +1,5 @@
 'use strict';
-
+ 
 angular.module('sedadApp')
     .controller('ReportesIndexCtrl', ['$scope','$http', 'SEDAD_API_V1_URL', 'LisMat', 'LisPre', 'LisCar', 'LisIns', 'LisPer', 'LisDoc', 'GraR0','GraR1','GraR2','GraR3','GraR4','GraR5','GraR6','GraR7','GraR8','GraR9', function ($scope,$http,API,LisMat,LisPre,LisCar,LisIns,LisPer,LisDoc,GraR0,GraR1,GraR2,GraR3,GraR4,GraR5,GraR6,GraR7,GraR8,GraR9){
         $scope.repdis = [
@@ -63,22 +63,28 @@ angular.module('sedadApp')
         $scope.carreras     = LisCar.query();
         $scope.carsel       = 1;//  ''
         $scope.preguntas    = LisPre.query();
-        $scope.presel       = 0;
+        $scope.presel       = 0; //pregunta
+        $scope.presel1      = 0; //primer   parametro de comparado x pregunta
+        $scope.presel2      = 0; //segundo  parametro de comparado x pregunta
+        $scope.presel3      = 0; //tercer   parametro de comparado x pregunta
         $scope.materias     = LisMat.query({id: $scope.carsel});
         $scope.Visible1     = false;
         $scope.Visible2     = true;
         $scope.Vp1          = true;
-        $scope.Vp2          = true;
+        $scope.Vp2           = true;
         $scope.Vp3          = true;
         $scope.Vp4          = true;
         $scope.Vp5          = true;
         $scope.Vp6          = true;
+$scope.Vp61          = true;
+$scope.Vp62          = true;
+$scope.Vp63          = true;
         $scope.Vp7          = false;
         $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;
         $scope.Vp73=true;$scope.Vp74=true;$scope.Vp75=true;
         $scope.Vp76=true;$scope.Vp77=true;$scope.Vp78=true;
         $scope.Vp79=true;
-        $scope.psel = [10,11,12];                
+        $scope.psel = []; // contiene los ids
         $scope.numrep       = 0; // contiene el numero de reporte sel.
         $scope.tiprep       = 0; //pdf por defecto 
         $scope.repourl      = "";//contiene url del reporte sel.
@@ -119,7 +125,7 @@ $scope.datosx    = [];
           console.log(index);
           $scope.datos1    = [];
 
-          $scope.Vp6=true;
+$scope.Vp6=true;$scope.Vp61=true;$scope.Vp62=true;$scope.Vp63=true;
           $scope.Vp7=false; 
           $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;
           $scope.Vp73=true;$scope.Vp74=true;$scope.Vp75=true;
@@ -147,7 +153,9 @@ $scope.datosx    = [];
           if (index === 2) {
             $scope.Vp0=true;$scope.Vp1=false;$scope.Vp2=true;
             $scope.Vp3=false;$scope.Vp4=true;$scope.Vp5=true;
+            $scope.Vp61=false;$scope.Vp62=false;$scope.Vp63=false;
             $scope.numrep=2;
+$scope.Vp61=false;$scope.Vp62=false;$scope.Vp63=false;
             // $scope.nombre_reporte='Histórico Comparado de Materia';    
           };
           if (index === 3) {
@@ -160,6 +168,7 @@ $scope.datosx    = [];
             $scope.Vp0=true;$scope.Vp1=false;$scope.Vp2=true;
             $scope.Vp3=true;$scope.Vp4=false;$scope.Vp5=true;
             $scope.numrep=4;
+ $scope.Vp61=false;$scope.Vp62=false;$scope.Vp63=false;           
             // $scope.nombre_reporte='Período Comparado de Materia';
           };
           if (index === 5) {
@@ -178,6 +187,7 @@ $scope.datosx    = [];
             $scope.Vp0=true ;$scope.Vp1=true;$scope.Vp2=true;
             $scope.Vp3=false;$scope.Vp4=true;$scope.Vp5=false;
             $scope.numrep=7;
+$scope.Vp61=false;$scope.Vp62=false;$scope.Vp63=false;            
             // $scope.nombre_reporte='Histórico Comparado de Docente';
           };
           if (index === 8) {
@@ -190,6 +200,7 @@ $scope.datosx    = [];
             $scope.Vp0=true;$scope.Vp1=true ;$scope.Vp2=true;
             $scope.Vp3=true;$scope.Vp4=false;$scope.Vp5=false;
             $scope.numrep=9;
+$scope.Vp61=false;$scope.Vp62=false;$scope.Vp63=false;            
             // $scope.nombre_reporte='Período Comparado de Docente';
           };
         };
@@ -200,6 +211,7 @@ $scope.datosx    = [];
             $scope.Vp6=false;$scope.Visible1=false;$scope.Visible2=true;$scope.Vp7=false;
             $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;$scope.Vp73=true;$scope.Vp74=true;$scope.Vp75=true;
             $scope.Vp76=true;$scope.Vp77=true;$scope.Vp78=true;$scope.Vp79=true;
+$scope.Vp61=true;$scope.Vp62=true;$scope.Vp63=true;
             $scope.datos1=[];
             $scope.datos2=[]; 
 
@@ -516,7 +528,8 @@ $scope.datosx    = [];
         };  
 
         $scope.csvReporte = function() {
-            $scope.Vp6=false;  
+            $scope.Vp6=false; 
+ $scope.Vp61=true;$scope.Vp62=true;$scope.Vp63=true;            
             $scope.Visible1=false;
             $scope.Visible2=true;  
             $scope.datos1    = [];
@@ -651,6 +664,7 @@ $scope.datosx    = [];
             $scope.presel= 0;$scope.matsel= 0;
           }; 
         $scope.graReporte = function() {
+$scope.Vp61=true;$scope.Vp62=true;$scope.Vp63=true;
             $scope.Vp7=false;
             $scope.Vp70=true;$scope.Vp71=true;$scope.Vp72=true;
             $scope.Vp73=true;$scope.Vp74=true;$scope.Vp75=true;
@@ -660,33 +674,33 @@ $scope.datosx    = [];
             $scope.Visible2=true;  
 
             if ($scope.numrep === 0) {
-                    GraR0.get({codigo: $scope.matsel ,id: $scope.presel}, function(data){
-                    $scope.valores = data;              
-                    $scope.ejex01=[];
-                    $scope.datos01=[];
-                    $scope.datos02=[];
-                    var t_sec_x_per = 1; 
-                    var t_dat = 0; 
-                    var a_limite=[];
+               GraR0.get({codigo: $scope.matsel ,id: $scope.presel}, function(data){
+               $scope.valores = data;              
+               $scope.ejex01=[];
+               $scope.datos01=[];
+               $scope.datos02=[];
+               var t_sec_x_per = 1; 
+               var t_dat = 0; 
+               var a_limite=[];
 
-                    for (var i = 0; i <= data.periodos.length-1; i++) {  
+               for (var i = 0; i <= data.periodos.length-1; i++) {  
 
-                        var periodo = data.periodos[i];
-                        $scope.ejex01[i]=periodo.periodo;
-                        t_dat = 0;
-                        t_sec_x_per = periodo.secciones.length
+                  var periodo = data.periodos[i];
+                  $scope.ejex01[i]=periodo.periodo;
+                  t_dat = 0;
+                  t_sec_x_per = periodo.secciones.length
                         // for (var j = periodo.secciones.length - 1; j >= 0; j--) {
-                        for (var j  = 0; j <= periodo.secciones.length-1; j++) {       
-                            var seccion = periodo.secciones[j];
-                              t_dat += seccion.datos.media_de_seccion;
-                        };
-                        a_limite[i]= 5;
-                        $scope.datos01.push(t_dat/t_sec_x_per);            
-                    };
-                        $scope.datos02.push($scope.datos01);
+                  for (var j  = 0; j <= periodo.secciones.length-1; j++) {       
+                    var seccion = periodo.secciones[j];
+                    t_dat += seccion.datos.media_de_seccion;
+                  };
+                    a_limite[i]= 5;
+                    $scope.datos01.push(t_dat/t_sec_x_per);            
+                };
+                $scope.datos02.push($scope.datos01);
 
-                });
-                $scope.Vp70=false;
+               });
+               $scope.Vp70=false;
             }
 
             if ($scope.numrep === 1) {
@@ -745,8 +759,9 @@ $scope.datosx    = [];
             }
 
             if ($scope.numrep === 2) {
-
-                GraR2.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel, ids: $scope.psel}, function(data){
+$scope.Vp61=false;$scope.Vp62=false;$scope.Vp63=false;
+                // GraR2.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel, ids: $scope.psel}, function(data){
+                GraR2.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel,'ids[]': $scope.psel}, function(data){
                     $scope.valores = data;
 //por hacer
 
@@ -1015,9 +1030,10 @@ $scope.datosx    = [];
             };        
             $scope.volver = function() {
               $scope.Visible1=false;$scope.Visible2=true;
-              $scope.Vp0=true;$scope.Vp1=true;$scope.Vp2=true;$scope.Vp3=true;
-              $scope.Vp4=true;$scope.Vp5=true;$scope.Vp6=true;$scope.Vp7=false;          
-              $scope.docsel= 0;$scope.persel= 0;$scope.inssel= 0;
+              $scope.Vp0=true;$scope.Vp1=true;$scope.Vp2=true;
+              $scope.Vp3=true;$scope.Vp4=true;$scope.Vp5=true;
+$scope.Vp6=true;$scope.Vp61=true;$scope.Vp62=true;$scope.Vp63=true;
+              $scope.Vp7=false;$scope.docsel= 0;$scope.persel= 0;$scope.inssel= 0;
               $scope.carsel= 1;$scope.presel= 0;$scope.matsel= 0;           
             };
     }]);
