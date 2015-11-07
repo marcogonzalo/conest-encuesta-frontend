@@ -1,5 +1,5 @@
 'use strict';
-
+ 
 angular.module('sedadApp')
 	.factory('GraR0', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		var res = $resource (API +'/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}, {
@@ -21,10 +21,10 @@ angular.module('sedadApp')
 	}])	
 	.factory('GraR2', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		// var res = $resource (API +'/reportes/historico_comparado/materias/:codigo/instrumentos/:instrumento_id.json?ids[]=1&ids[]=2&ids[]=3', {codigo: '@codigo',instrumento_id: '@id'}, {
-		var res = $resource (API +'/reportes/historico_comparado/materias/:codigo/instrumentos/:instrumento_id.json?', {codigo: '@codigo',instrumento_id: '@id'}, {
-//http://localhost:3000/api/v1/reportes/historico_comparado/materias/6014/instrumentos/1.json?ids[]=1&ids[]=2&ids[]=3
+		var res = $resource (API +'/reportes/historico_comparado/materias/:codigo/instrumentos/:instrumento_id.json', {codigo: '@codigo',instrumento_id: '@id',ids: '@ids'}, {
 			update: {
 				method: 'GET', isArray: true
+
 			}
 		});
 		return res;
@@ -55,7 +55,6 @@ angular.module('sedadApp')
 	}])
 	.factory('GraR6', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		var res = $resource (API +'/reportes/historico_completo/docentes/:cedula_docente/instrumentos/:instrumento_id.json', {cedula_docente: '@cedula_docente',instrumento_id: '@instrumento_id'}, {
-
 			update: {
 				method: 'GET', isArray: true
 			}
@@ -109,4 +108,3 @@ angular.module('sedadApp')
 	.factory('LisMat',function ($resource){
 		return $resource('http://localhost:3000/api/v1/carreras/:id/materias', {id: '@id'});
 		});
-
