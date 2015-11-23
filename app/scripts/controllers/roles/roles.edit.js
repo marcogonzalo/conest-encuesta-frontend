@@ -51,5 +51,7 @@ angular.module('sedadApp')
   	$scope.rolCompleto = RolCompleto.get({id: $stateParams.id}, function(rolCompleto, getResponseHeaders){
 	  	cruzarPermisos(rolCompleto.permisos_rol);
 	  	return rolCompleto;
-  	});
+  	}, function(error) {
+        Notification.error('Error al obtener la información');
+    });
   }]);

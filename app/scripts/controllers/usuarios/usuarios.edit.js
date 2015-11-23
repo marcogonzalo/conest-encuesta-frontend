@@ -50,5 +50,6 @@ angular.module('sedadApp')
         }
       })
       .error(function(data, status, headers, config) {
+          Notification.error('Error al obtener la información');
       });
   }]);

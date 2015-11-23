@@ -31,6 +31,9 @@ angular.module('sedadApp')
 
 		        console.log("después de cargar estructura");
 		        console.log($scope.respuesta.respuestas);
+	        }, 
+	        function(error) {
+	    		Notification.error('Error al obtener el instrumento')
 	        });
 		})
     	.error(function(data, status, headers, config) {

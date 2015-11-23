@@ -9,5 +9,9 @@
  */
 angular.module('sedadApp')
   .controller('UsuariosIndexCtrl', ['$scope', 'Usuario', function ($scope, Usuario) {
-    $scope.usuarios = Usuario.query();
+    $scope.usuarios = Usuario.query(function(data) {
+        return data;  
+    }, function(error) {
+        Notification.error('Error al obtener listado');
+    });
   }]);
