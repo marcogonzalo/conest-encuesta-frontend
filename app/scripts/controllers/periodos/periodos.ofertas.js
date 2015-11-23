@@ -4,7 +4,11 @@ angular.module('sedadApp')
 	.controller('PeriodosOfertasCtrl', ['$scope', '$stateParams', '$http', 'Periodo', 'Instrumento', 'SEDAD_API_V1_URL', 'Notification', function($scope, $stateParams, $http, Periodo, Instrumento, SEDAD_API_V1_URL, Notification){
 		$scope.ofertasEnPeriodo = [];
 		$scope.periodo = {}
-		$scope.instrumentosDisponibles = Instrumento.query();
+		$scope.instrumentosDisponibles = Instrumento.query(function(data) {
+            return data;  
+        }, function(error) {
+            Notification.error('Error al obtener listado de instrumentos');
+        });
 
 	    // Verificar si se existe un id como parametro de la llamada
 	    if($stateParams.periodo != null) {

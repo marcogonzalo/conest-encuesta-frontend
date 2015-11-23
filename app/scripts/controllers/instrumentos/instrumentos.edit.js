@@ -8,7 +8,7 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('InstrumentosEditCtrl', ['$scope', '$stateParams', 'Instrumento', 'Notification', function ($scope, $stateParams, Instrumento, Notification) {
+  .controller('InstrumentosEditCtrl', ['$scope', '$state', '$stateParams', 'Instrumento', 'Notification', function ($scope, $state, $stateParams, Instrumento, Notification) {
     var nuevoInstrumento = true; // Se asume, por defecto, que es un nuevo instrumento
     $scope.texto_boton = "Crear";
     $scope.instrumento = {};
@@ -29,12 +29,12 @@ angular.module('sedadApp')
     else {
         // Si existe un id, se solicita el instrumento
         nuevoInstrumento = false;
-        $scope.instrumento = Instrumento.get({id: $stateParams.id});
+        $scope.instrumento = Instrumento.get({id: $stateParams.id}, function(data) { return data; }, 
+        function(error) {
+            Notification.error({ title: 'No se pudo obtener el instrumento', message: 'Cualquier modificación generada será registrada como un instrumento nuevo' });
+            return {};
+        });
         $scope.texto_boton = "Actualizar";
-        /**
-            TODO:
-            - Falta validar si se obtuvo el objeto
-         */   
     }
 
     $scope.agregarBloque = function(idx_bloque_anterior) {
@@ -172,15 +172,20 @@ angular.module('sedadApp')
                 else {
                     console.log(data);
                 }
-                Notificacion.success("Instrumento creado");
+                Notificacion.success({ title: "Instrumento creado", message: "Puede continuar trabajando en el elemento" });
+            }, 
+            function(error) {
+                Notification.error('No se pudo guardar el instrumento');
             });
         }
         else {
             console.log('existente');
             Instrumento.update($scope.instrumento, function(data) {
-                console.log(data);
                 $scope.instrumento = data;
                 Notification.success("Instrumento actualizado");
+            }, 
+            function(error) {
+                Notification.error('No se pudo guardar el instrumento');
             });
         }
     };

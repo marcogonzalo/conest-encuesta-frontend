@@ -8,8 +8,12 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('RolesIndexCtrl', ['$scope', 'Rol', function ($scope, Rol) {
-    $scope.roles = Rol.query();
+  .controller('RolesIndexCtrl', ['$scope', 'Rol', 'Notification', function ($scope, Rol, Notification) {
+    $scope.roles = Rol.query(function(data) {
+        return data;  
+    }, function(error) {
+        Notification.error('Error al obtener listado');
+    });
 
     var getIdxInstrumento = function(instrumento) {
         var indices = {};

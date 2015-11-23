@@ -2,7 +2,11 @@
 
 angular.module('sedadApp')
 	.controller('PeriodosIndexCtrl', ['$scope', '$http', 'Periodo', 'SEDAD_API_V1_URL', 'Notification', function($scope, $http, Periodo, SEDAD_API_V1_URL, Notification){
-		$scope.periodos = Periodo.query();
+		$scope.periodos = Periodo.query(function(data) {
+            return data;  
+        }, function(error) {
+            Notification.error('Error al obtener listado');
+        });
         $scope.nuevo_periodo='';
 		
 		$scope.eliminarPeriodo = function(periodo){

@@ -9,13 +9,21 @@
  */
 angular.module('sedadApp')
   .controller('InstrumentosIndexCtrl', ['$scope', 'Instrumento', 'Notification', function ($scope, Instrumento, Notification) {
-    $scope.instrumentosDisponibles = Instrumento.query();
+    $scope.instrumentosDisponibles = Instrumento.query(function(data) {
+            return data;  
+        }, function(error) {
+            Notification.error('Error al obtener listado');
+        });
+
     $scope.eliminarInstrumento = function(instrumento) {
         var indices = getIdxInstrumento(instrumento);
         Instrumento.delete({id: instrumento.id}, function(data) {
             console.log(data);
             $scope.instrumentosDisponibles.splice(indices.instrumento_idx,1);
             Notification.success("Instrumento eliminado");
+        }, 
+        function(error) {
+            Notification.error('No se pudo eliminar el elemento');
         });
     };
 
