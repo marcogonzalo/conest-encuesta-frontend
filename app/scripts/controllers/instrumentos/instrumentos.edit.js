@@ -29,11 +29,12 @@ angular.module('sedadApp')
     else {
         // Si existe un id, se solicita el instrumento
         nuevoInstrumento = false;
-        $scope.instrumento = Instrumento.get({id: $stateParams.id}, function(data) { return data; }, 
-        function(error) {
-            Notification.error({ title: 'No se pudo obtener el instrumento', message: 'Cualquier modificación generada será registrada como un instrumento nuevo' });
-            return {};
-        });
+        $scope.instrumento = Instrumento.get({id: $stateParams.id}, 
+            function(data) { return data; }, 
+            function(error) {
+                Notification.error({ title: 'No se pudo obtener el instrumento', message: 'Cualquier modificación generada será registrada como un instrumento nuevo' });
+                return {};
+            });
         $scope.texto_boton = "Actualizar";
     }
 

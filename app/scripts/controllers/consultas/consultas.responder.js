@@ -22,10 +22,7 @@ angular.module('sedadApp')
 
     $http.get(SEDAD_API_V1_URL + '/consultas/' + $stateParams.id)
     	.success(function(data, status, headers, config) {
-    		console.log(data);
-		
 		    Instrumento.get({id: data.instrumento_id}, function(instrumento, getResponseHeaders){
-			    console.log(instrumento);
 			    $scope.consulta.instrumento = instrumento;
 			    $scope.consulta.oferta_academica = data.oferta_academica;
 
@@ -61,7 +58,6 @@ angular.module('sedadApp')
 	   	$http.post(SEDAD_API_V1_URL + '/consultas/' + $stateParams.id + '/responder', { "consulta": $scope.respuesta })
 	    	.success(function(data, status, headers, config) {
 	    		Notification.success('Consulta respondida satisfactoriamente');
-	    		console.log(data);
 	    		$state.go('consultas.index');
 	    	})
 	    	.error(function(data, status, headers, config) {

@@ -13,5 +13,6 @@ angular.module('sedadApp')
         return data;  
     }, function(error) {
         Notification.error('Error al obtener listado');
+        console.log(error);
     });
   }]);

@@ -10,17 +10,22 @@ angular.module('sedadApp')
         $scope.nuevo_periodo='';
 		
 		$scope.eliminarPeriodo = function(periodo){
-			// $scope.periodos.splice(periodo.id,1);
-			Periodo.delete({id: periodo.id});
-			// periodo.$delete(function(){
+			// TODO	
+			// Verificar que el período no tenga respuestas
+
+			Periodo.delete({id: periodo.id}, 
+            function(data) {
+                Notification.error('Período eliminado');
 				for(var i=0, n=$scope.periodos.lenght; i<n; ++i){
 					if($scope.periodos[i].id === periodo.id){
 						$scope.periodos.splice(i, 1);
 						break;
 					};
 				};
-			// });
-			
+            }, 
+            function(error) {
+                Notification.error('No se pudo guardar el instrumento');
+            });			
 		};
 
 		$scope.sincronizar = function(solicitud, index) {
