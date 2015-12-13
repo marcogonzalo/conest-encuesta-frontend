@@ -41,7 +41,6 @@ angular.module('sedadApp')
       .success(function(data, status, headers, config) {
         if(data.usuario !== null) {
           $scope.usuarioEditar = data;
-          console.log($scope.usuarioEditar);
           cruzarRol(data.usuario.rol_id);
         }
         else {
@@ -50,5 +49,7 @@ angular.module('sedadApp')
         }
       })
       .error(function(data, status, headers, config) {
+          Notification.error('Error al obtener la información');
+          console.log(data);
       });
   }]);

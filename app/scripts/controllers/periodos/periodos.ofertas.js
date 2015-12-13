@@ -13,22 +13,26 @@ angular.module('sedadApp')
 	    // Verificar si se existe un id como parametro de la llamada
 	    if($stateParams.periodo != null) {
 	    	console.log($stateParams.periodo);
-			Periodo.get({id: $stateParams.periodo}, function(periodo, getResponseHeaders) {
-	        	$scope.periodo = periodo;
-				console.log(periodo);
-	        	// Si existe un id, se solicita el instrumento
-		        $http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/ofertas_periodo')
-		        	.success(function(data, status, headers, config) {
-						$scope.ofertasEnPeriodo = data;
-					})
-					.error(function(data, status, headers, config) {
-						Notification.error('Error al obtener el listado');
-						console.log(data);
-						// called asynchronously if an error occurs
-						// or server returns response with an error status.
-					});
-				console.log($scope.ofertasEnPeriodo);
-			});
+			Periodo.get({id: $stateParams.periodo}, 
+				function(periodo, getResponseHeaders) {
+		        	$scope.periodo = periodo;
+					console.log(periodo);
+		        	// Si existe un id, se solicita el instrumento
+			        $http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/ofertas_periodo')
+			        	.success(function(data, status, headers, config) {
+							$scope.ofertasEnPeriodo = data;
+						})
+						.error(function(data, status, headers, config) {
+							Notification.error('Error al obtener el listado');
+							console.log(data);
+							// called asynchronously if an error occurs
+							// or server returns response with an error status.
+						});
+					console.log($scope.ofertasEnPeriodo);
+				}, 
+				function(error) {
+		            Notification.error('No se pudo obtener el período');
+		        });
 	    }
 	    else {
 	    }
@@ -38,7 +42,6 @@ angular.module('sedadApp')
 	        for(var i = 0, n = $scope.ofertasEnPeriodo.length; i < n; i++) {
 	            if($scope.ofertasEnPeriodo[i] == oferta) {
 	                indices = { "oferta_idx":i };
-	                console.log(indices);
 	                return indices;
 	            }
 	        }
@@ -55,7 +58,6 @@ angular.module('sedadApp')
 					// Asociar instrumento a consulta4
 					$http.put(SEDAD_API_V1_URL + '/ofertas_periodo/'+oferta.id+'/cambiar_instrumento', { instrumento_id: $scope.ofertasEnPeriodo[indices.oferta_idx].instrumentoSeleccionado.id })
 						.success(function(data, status, headers, config) {
-							console.log(data);
 							if(data.estatus == 'OK') {
 								Notification.success(data.mensaje);
 								$scope.ofertasEnPeriodo[indices.oferta_idx].instrumento_de_consulta = $scope.ofertasEnPeriodo[indices.oferta_idx].instrumentoSeleccionado;
