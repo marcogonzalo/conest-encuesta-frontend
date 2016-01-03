@@ -39,8 +39,17 @@ angular.module('sedadApp')
     
     $http.get(SEDAD_API_V1_URL + '/usuarios/' + $stateParams.id + '/editar')
       .success(function(data, status, headers, config) {
-        $scope.usuarioEditar = data;
-        console.log($scope.usuarioEditar);
-        cruzarRol(data.usuario.rol_id);
+        if(data.usuario !== null) {
+          $scope.usuarioEditar = data;
+          cruzarRol(data.usuario.rol_id);
+        }
+        else {
+          Notification.error('No se pudo obtener el usuario');
+          $state.go('usuarios.index');
+        }
+      })
+      .error(function(data, status, headers, config) {
+          Notification.error('Error al obtener la información');
+          console.log(data);
       });
   }]);

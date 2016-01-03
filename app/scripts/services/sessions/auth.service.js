@@ -30,7 +30,7 @@ angular.module('sedadApp')
     }
   };
 })
-.factory('AuthService', ['$http', '$q', '$rootScope', '$state', 'AuthToken', 'AUTH_EVENTS', 'PERMISOS', 'ROLES', 'CurrentUser', 'SEDAD_API_V1_URL', function($http, $q, $rootScope, $state, AuthToken, AUTH_EVENTS, PERMISOS, ROLES, CurrentUser, SEDAD_API_V1_URL) {
+.factory('AuthService', ['$http', '$q', '$rootScope', '$state', 'AuthToken', 'AUTH_EVENTS', 'PERMISOS', 'ROLES', 'CurrentUser', 'SEDAD_API_V1_URL', 'Notification', function($http, $q, $rootScope, $state, AuthToken, AUTH_EVENTS, PERMISOS, ROLES, CurrentUser, SEDAD_API_V1_URL, Notification) {
   return {
     login: function(credenciales) {
       AuthToken.unset('usuario');
@@ -40,12 +40,17 @@ angular.module('sedadApp')
         AuthToken.set('usuario',angular.toJson(resp));
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         d.resolve(resp.user);
-        console.log(resp);
         $state.go(ROLES[(resp.rol).toLowerCase()].ruta);
       })
       .error(function(resp) {
         $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-        d.reject(resp.error);
+        if(resp) {
+          Notification.warning(resp.error);
+          d.reject(resp.error);
+        } 
+        else {
+          Notification.error('Error al intentar la autenticación');
+        }
         $state.go('main');
       });
       return d.promise;

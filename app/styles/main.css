@@ -74,6 +74,43 @@ nav ul.nav li a {
   margin-top: 28px;
 }
 
+.bloque legend {
+  margin-bottom: 0;
+}
+
+
+.bloque .descripcion {
+  color: gray;
+  font-style: italic;
+  margin-top: 0px;
+  margin-bottom: 1em;
+}
+
+.pregunta .titulo {
+  font-weight: bold;
+}
+
+.pregunta .descripcion {
+  font-style: italic;
+}
+
+.bloque .descripcion, .pregunta .descripcion {
+  color: gray;
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+.opciones li {
+  display: inline-block;
+  margin: auto 1%;
+  text-align: center;
+}
+
+.opciones label {
+  display: block;
+  margin: 0px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
