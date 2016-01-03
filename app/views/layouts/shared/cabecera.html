@@ -8,6 +8,11 @@
             <li ng-repeat="i in menu | orderBy:'titulo'"><a ui-sref="{{i.state}}">{{i.titulo}}</a></li>
             <li ng-show="mostrarElementosDeSesion"><a href="" ng-click="cerrarSesion()">Cerrar sesión</a></li>
           </ul>
+          <ul class="nav nabar-nav pull-right">
+            <li ng-show="mostrarElementosDeSesion">
+<!--             <li ng-show="mostrarElementosDeSesion"> -->
+            <a ui-sref="instrumentos.index">Usuario C.I.:{{usuario.cedula}}</a></li>
+          </ul>
         </div>
       </div>
     </nav>

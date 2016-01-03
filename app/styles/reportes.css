@@ -76,9 +76,9 @@ a:focus {
   color: #428bca;
 }
 .subtitulo-rep {
-  color: white;
-  background-color: #cc6633;
-  border-color: #cc6633;
+  color: #000033;
+/*  background-color: #cc6633;
+  border-color: #cc6633;*/
 }
 .alerta {
     color: red;

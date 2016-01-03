@@ -49,8 +49,10 @@ angular.module('sedadApp')
 		$rootScope.$on('$stateChangeStart', function(usuario) {
 			var usuario = CurrentUser.user();
 			$scope.menu = generarMenu(usuario);
+			$scope.usuario = usuario;
 		});
 
 		var usuario = CurrentUser.user();
+		$scope.usuario = usuario;
 		$scope.menu = generarMenu(usuario);
 	}]);
