@@ -7,116 +7,114 @@
 <!--Fin Migas de Pan-->
 <div class="container" > 
   <div ng-hide="Vp7" class="col-sm-8 col-md-8">
-     <h3 class="subtitulo-rep">
+      <h3 class="subtitulo-rep"></h3>
 <!-- 
 ------------------------------------------------
  Descarga de documentos pdf o csv
 ------------------------------------------------ --> 
-<div ng-hide="Vp6">
-  <div class="col-sm-8 col-md-8 text-center ">
-    <a href={{repourl}}>Presione para Descargar<i class="glyphicon glyphicon-download"></i></a>
-  </div>
-</div>
+      <div ng-hide="Vp6">
+        <div class="col-sm-8 col-md-8 text-center ">
+          <a href={{repourl}}>Presione para Descargar<i class="glyphicon glyphicon-download"></i></a>
+        </div>
+      </div>
 <!--fin Descargas-->
 <!-- 
 ------------------------------------------------
  0-Histórico de Pregunta por Materia
 ------------------------------------------------ --> 
       <div ng-hide="Vp70">
-         Materia: {{n_materia}}<br>
+<!--          Materia: {{n_materia}}<br> -->
         <div style="width: 10%">
           <canvas id="canvas" height="50" width="50"></canvas>
         </div>
+        <div class="row">
 <!-- Gráfico de Línea 
 ---------------------- -->            
-        <canvas id="line" class="chart chart-line" data="gra_dat"
+          <canvas id="line" class="chart chart-line" data="gra_dat"
           labels="ejex01" legend="true" series="series"
           click="onClick">
-        </canvas> 
+          </canvas> 
 <!-- Gráfico de Barras
 ---------------------- -->   
-<!--         <canvas id="bar" class="chart chart-bar" data="gra_dat"
+<!--      <canvas id="bar" class="chart chart-bar" data="gra_dat"
           labels="ejex01" legend="true" series="series" click="">
-        </canvas> -->
+          </canvas> -->
 <!-- Gráfico de Torta
 ---------------------- -->   
 
-<!--    <canvas id="pie" class="chart chart-pie" data="gra_dat"
+<!--      <canvas id="pie" class="chart chart-pie" data="gra_dat"
           labels="ejex01" legend="true" 
           click="">
-        </canvas> -->
+          </canvas> -->
+        </div>  
       </div>
 <!-- 
 ------------------------------------------------
  1-Histórico Completo de Materia por Instrumento
 ------------------------------------------------ --> 
       <div ng-hide="Vp71">
- Materia: {{n_materia}}<br>
- Instrumento: {{n_instrumento}}
-       <div class="row" ng-repeat="b in gra_dat track by $index"> 
+<!--         Materia: {{n_materia}}<br>
+        Instrumento: {{n_instrumento}} -->
+        <div class="row" ng-repeat="b in gra_dat track by $index"> 
 <!-- Gráfico de Línea
 ---------------------- -->  
-        <canvas id="line" class="chart chart-line" data="b[2]"
+          <canvas id="line" class="chart chart-line" data="b[2]"
           labels="b[1]" legend="true" series="b[0]"
           click="onClick">
-        </canvas>  
+          </canvas>  
 <!-- Gráfico de Barras
 ---------------------- -->                       
-<!--    <canvas id="bar" class="chart chart-bar" data="b[2]" 
+<!--      <canvas id="bar" class="chart chart-bar" data="b[2]" 
           labels="b[3]" legend="true" series="" click="">
-        </canvas>  -->
+         </canvas>  -->
 <!-- Gráfico de Torta
 ---------------------- -->           
-<!--    <canvas id="pie" class="chart chart-pie" data="b[2]"
+<!--      <canvas id="pie" class="chart chart-pie" data="b[2]"
           labels="b[1]" legend="true" series="b[0]" click="">
-        </canvas> -->
-       </div>
+          </canvas> -->
+        </div>
       </div> 
 <!-- 
 ------------------------------------------------
  2-Histórico Comparado de Materia
 ------------------------------------------------ --> 
       <div ng-hide="Vp72">
-<!--          {{valores.materia.codigo}} {{valores.materia.nombre}}
-         Instrumento: {{valores.instrumento.nombre}} -->
-        <div class="row" ng-repeat="b in datosx1 track by $index">  
-          <canvas id="pie" class="chart chart-pie" data="b[2]"
-            labels="b[1]" legend="true" 
-            click="">
+<!--         {{n_materia}}
+        {{n_instrumento}} -->
+        <div ng-hide="Vp72">
+          <canvas id="line" class="chart chart-line" data="gra_dat"
+          labels="ejex11" legend="true" series="n_pregunta_a" click="">
           </canvas>
-          <canvas id="bar" class="chart chart-bar" data="b[2]" 
-            labels="b[1]" legend="true" series="series02" click="">
-          </canvas> 
-       </div>
-      </div>
+        </div>
+      </div>  
 <!-- 
 ------------------------------------------------
  3-Histórico Completo de Materia por Período
 ------------------------------------------------ -->
-        <div ng-hide="Vp73">
+      <div ng-hide="Vp73">
 <!-- Gráfico de Torta
 ---------------------- --> 
-         <div class="row" ng-repeat="b in gra_dat track by $index"> 
+        <div class="row" ng-repeat="b in gra_dat track by $index"> 
            {{b[0]}}
           <canvas id="pie" class="chart chart-pie" data="b[2]"
           labels="b[1]" legend="true"  click="">
           </canvas>
-         </div>
         </div>
+      </div>
 <!-- 
 ------------------------------------------------
  4-Comparado de Materia por Período
 ------------------------------------------------ -->
-        <div ng-hide="Vp74">
+      <div ng-hide="Vp74">
 <!--          Materia: {{valores.materia.codigo}} {{valores.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}} -->
-        </div> 
+      </div> 
 <!-- 
 ------------------------------------------------
  5-Histórico de Pregunta por Docente
 ------------------------------------------------ -->
-        <div ng-hide="Vp75">
-          Docente:{{n_docente}}
-          <br>
+      <div ng-hide="Vp75">
+<!--         Docente:{{n_docente}} -->
+        <br>
 <!-- Gráfico de Línea
 ---------------------- --> 
           <canvas id="line" class="chart chart-line" data="gra_dat"
@@ -133,7 +131,7 @@
 <!--           <canvas id="pie" class="chart chart-pie" data="gra_dat"
            labels="ejex01" legend="true" series="series" click="">
           </canvas> -->
-        </div> 
+      </div> 
 <!-- 
 ------------------------------------------------
  6-Histórico Completo de Docente
@@ -141,24 +139,24 @@
       <div ng-hide="Vp76">
 <!--  Materia: {{n_materia}}<br>
  Instrumento: {{n_instrumento}} -->
-       <div class="row" ng-repeat="b in gra_dat track by $index"> 
+        <div class="row" ng-repeat="b in gra_dat track by $index"> 
 <!-- Gráfico de Línea
 ---------------------- -->  
-        <canvas id="line" class="chart chart-line" data="b[2]"
+          <canvas id="line" class="chart chart-line" data="b[2]"
           labels="b[1]" legend="true" series="b[0]"
           click="onClick">
-        </canvas>  
+          </canvas>  
 <!-- Gráfico de Barras
 ---------------------- -->                       
-<!--    <canvas id="bar" class="chart chart-bar" data="b[2]" 
-          labels="b[3]" legend="true" series="" click="">
-        </canvas>  -->
+<!--      <canvas id="bar" class="chart chart-bar" data="b[2]" 
+          labels="b[1]" legend="true" series="" click="">
+          </canvas>  -->
 <!-- Gráfico de Torta
 ---------------------- -->           
-<!--    <canvas id="pie" class="chart chart-pie" data="b[2]"
+<!--      <canvas id="pie" class="chart chart-pie" data="b[2]"
           labels="b[1]" legend="true" series="b[0]" click="">
-        </canvas> -->
-       </div>
+          </canvas> -->
+        </div>
       </div> 
 <!-- 
 ------------------------------------------------
@@ -172,11 +170,10 @@
  8-Período Completo de Docente
 ------------------------------------------------ -->          
          <div ng-hide="Vp78">
-         <div class="row" ng-repeat="b in datosx1 track by $index">  
+         <div class="row" ng-repeat="b in gra_dat track by $index">  
           {{b[0]}}<br>
           <canvas id="pie" class="chart chart-pie" data="b[2]"
-          labels="b[3]" legend="true" 
-          click="">
+          labels="b[1]" legend="true" series="b[0]" click="">
           </canvas>
          </div>
         </div>
@@ -186,12 +183,21 @@
 ------------------------------------------------ -->         
           <div ng-hide="Vp79">
 <!--          {{valores.docente.cedula}} {{valores.docente.nombre_completo}}     Per&iacute;odo:{{valores.periodo_academico.periodo}} -->
-        </div>   
-       </h5> 
-</div>
+<!--          <div class="row" ng-repeat="b in gra_dat track by $index">   -->
+          {{b[0]}}<br>
+          <canvas id="pie" class="chart chart-pie" data="datos_line"
+          labels="etiquetas_line" legend="true" series="series_line" click="">
+          </canvas>
+<!--          </div>
+ -->
+
+
+
+          </div>   
+<!--           </h5>  -->
+  </div>
 </div>
 <!--fin Gráficas-->
-
 <!--Tabla de reportes Visible1-->
 <div ng-hide="Visible1">
   <div class="container">
@@ -212,25 +218,22 @@
           </thead>
           <tbody>
             <tr ng-repeat="r in repdis">
-             <td class="col-xs-1 text-center">{{r.id }}</td>
-             <td class="col-xs-6">{{r.nombre}}</td>
-             <td class="col-xs-5 text-center">
-              <a ng-click="pedirparametros($index)" class="btn btn-xs btn-primary">Ver</a>
+              <td class="col-xs-1 text-center">{{r.id }}</td>
+              <td class="col-xs-6">{{r.nombre}}</td>
+              <td class="col-xs-5 text-center">
+                <a ng-click="pedirparametros($index)" class="btn btn-xs btn-primary">Ver</a>
 <!--               <a ng-click="pdfReporte($index)" class="btn btn-xs btn-primary">pdf</a>
               <a ng-click="csvReporte($index)" class="btn btn-xs btn-primary">csv</a> -->
-
-            </td>          
-          </tr>
-        </tbody>
-      </table>
+              </td>          
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
-</div>
 <!--Fin Tabla de reportes Visible1-->
 <!--Solicitud de Campos Requeridos para emision del Reporte solicitado-->
-
-
 <div ng-hide="Visible2">
   <div class="container">
     <div class="row">
@@ -239,167 +242,151 @@
       </div>
     </div>
     <div class="row">
-     <div class="col-xs-12">
-     <br>
-      <form ng-submit="">
+      <div class="col-xs-12">
+        <br>
+        <form ng-submit="">
        <!--Se requiere Carrera -->
-<!--      <div ng-hide="Vp0">
-       <div class="form-group">
-        <label for="id" class="col-sm-8 col-md-8 control-label">Carrera:</label>
-        <div class="col-md-6">
-         <select class='form-control' ng-model="carsel" required="required" ng-options="carrera.id as carrera.id+' '+carrera.nombre for carrera in carreras">
-         </select> 
-       </div>
-     </div>
-   </div> -->
+    <!--   <div ng-hide="Vp0">
+            <div class="form-group">
+             <label for="id" class="col-sm-8 col-md-8 control-label">Carrera:</label>
+             <div class="col-md-6">
+              <select class='form-control' ng-model="carsel" required="required" ng-options="carrera.id as carrera.id+' '+carrera.nombre for carrera in carreras">
+              </select> 
+             </div>
+            </div>
+           </div> -->
    <!--Fin Carrera -->
    <!--Se requiere Materia -->
-     <div ng-hide="Vp1">
-      <div class="form-group">
-        <label for="codigo" class="col-sm-8 col-md-8 control-label">Materia:</label>
-        <div class="col-md-9">
-         <select class='form-control' ng-model="matsel" required="required" ng-options="materia.codigo as materia.codigo+'-'+materia.nombre for materia in materias">
-         </select> 
-       </div>
-     </div>
-   </div> 
+          <div ng-hide="Vp1">
+            <div class="form-group">
+              <label for="codigo" class="col-sm-8 col-md-8 control-label">Materia:</label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="matsel" required="required" ng-options="materia.codigo as materia.codigo+'-'+materia.nombre for materia in materias">
+                </select> 
+              </div>
+            </div>
+          </div> 
  <!--Fin Materia -->
  <!--Se requiere Pregunta -->
-   <div ng-hide="Vp2">
-    <div class="form-group">
-     <label for="id" class="col-sm8 col-md-8 control-label">Pregunta:</label>
-     <div class="col-md-9">
-      <select class='form-control' ng-model="presel" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
-      </select> 
-    </div>
-  </div>
-  </div> 
+          <div ng-hide="Vp2">
+            <div class="form-group">
+              <label for="id" class="col-sm-8 col-md-8 control-label">Pregunta: </label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="presel" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
+                </select> 
+              </div>
+            </div>
+           </div> 
 <!--Fin Pregunta -->
 <!--Se requiere Instrumento -->
-  <div ng-hide="Vp3">
-   <div class="form-group">
-    <label for="id" class="col-sm-8 col-md-8 control-label">Instrumentos:</label>
-     <div class="col-md-9">
-      <select class='form-control' ng-model="inssel" required="required" ng-options="instrumento.id as instrumento.id+'  '+instrumento.nombre for instrumento in instrumentos">
-      </select> 
-    </div>
-  </div>
-  </div> 
+          <div ng-hide="Vp3">
+            <div class="form-group">
+             <label for="id" class="col-sm-8 col-md-8 control-label">Instrumentos:</label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="inssel" required="required" ng-options="instrumento.id as instrumento.id+'  '+instrumento.nombre for instrumento in instrumentos">
+                </select> 
+              </div>
+            </div>
+          </div> 
 <!--Fin Instrumento -->
 <!--Se requiere Periodo Académico -->
-  <div ng-hide="Vp4">
-   <div class="form-group"><!-- text-center -->
-    <label for="periodo" class="col-sm-8 col-md-8 control-label">Per&iacute;odo Académico:</label>
-    <div class="col-md-9">
-     <select class='form-control' ng-model="persel" required="required" ng-options="periodo.periodo as periodo.periodo for periodo in periodos">
-     </select> 
-   </div>
-  </div>
-  </div> 
+          <div ng-hide="Vp4">
+            <div class="form-group"><!-- text-center -->
+              <label for="periodo" class="col-sm-8 col-md-8 control-label">Per&iacute;odo Académico:</label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="persel" required="required" ng-options="periodo.periodo as periodo.periodo for periodo in periodos">
+                </select> 
+              </div>
+            </div>
+          </div> 
 <!--Fin Periodo Académico -->
 <!--Se requiere Docente -->
-  <div ng-hide="Vp5">
-    <div class="form-group">
-     <label for="cedula" class="col-sm-8 col-md-8 control-label">Docente:</label>
-     <div class="col-md-9">
-      <select class='form-control' ng-model="docsel" required="required" ng-options="docente.cedula as docente.cedula+' '+docente.primer_nombre+' '+docente.primer_apellido for docente in docentes">
-      </select> 
-    </div>
-   </div>
-  </div>  
+          <div ng-hide="Vp5">
+            <div class="form-group">
+              <label for="cedula" class="col-sm-8 col-md-8 control-label">Docente:</label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="docsel" required="required" ng-options="docente.cedula as docente.cedula+' '+docente.primer_nombre+' '+docente.primer_apellido for docente in docentes">
+                </select> 
+              </div>
+            </div>
+          </div>  
 <!--Fin Docente -->
-  </div>
-  <br>
-
+<!--   </div> Fin div class="col-xs-12" -->
+          <br>
 <!-- 
 --------------------
  Menú de Pregunta 1 (comparar)
 -------------------- -->  
- <div ng-hide="Vp61">
-    <div class="form-group">
-     <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 1 a comparar:</label>
-     <div class="col-md-9">
-      <select class='form-control' ng-model="idssel1" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
-      </select> 
-    </div>
-  </div>
-  </div> 
+          <div ng-hide="Vp61">
+            <div class="form-group">
+              <br><br>
+              <label class="col-sm-8 col-md-8 control-label"> 
+                <h3>Comparar con:</h3>
+              </label>
+              <br>
+              <label for="id" class="col-sm-8 col-md-8 control-label">Pregunta 1:</label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="idssel1" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
+                </select> 
+              </div>
+            </div>
+          </div> 
 <!-- 
 --------------------
  Menú de Pregunta 2 (comparar)
 -------------------- -->  
- <div ng-hide="Vp62">
-    <div class="form-group">
-     <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 2 a comparar:</label>
-     <div class="col-md-9">
-      <select class='form-control' ng-model="idssel2" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
-      </select> 
-    </div>
-  </div>
-  </div> 
+          <div ng-hide="Vp62">
+            <div class="form-group">
+              <label for="id" class="col-sm-8 col-md-8 control-label">Pregunta 2:</label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="idssel2" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
+                </select> 
+              </div>
+            </div>
+          </div> 
 <!-- 
 --------------------
  Menú de Pregunta 3 (comparar)
 -------------------- -->  
- <div ng-hide="Vp63">
-    <div class="form-group">
-     <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 3 a comparar:</label>
-     <div class="col-md-9">
-      <select class='form-control' ng-model="idssel3" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
-      </select> 
-    </div>
-  </div>
-  </div> 
+          <div ng-hide="Vp63">
+            <div class="form-group">
+              <label for="id" class="col-sm-8 col-md-8 control-label">Pregunta 3:</label>
+              <div class="col-md-9">
+                <select class='form-control' ng-model="idssel3" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas">
+                </select> 
+              </div>
+            </div>
+          </div> 
  <!--Fin Preguntas -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <div class="container col-xs-9" >
-   <br>
+          <div class="container col-xs-9" >
+            <br>
  <!--Cancelar Reporte --> 
-    <div class="col-xs-2">
-      <button class="btn btn-default" ng-click="iniciar()">Cancelar
-      </button>
-    </div> 
+            <div class="col-xs-2">
+              <button class="btn btn-default" ng-click="iniciar()">Cancelar
+              </button>
+            </div> 
 <!--Fin Cancelar Reporte --> 
 <!--Emitir Reporte Formato PDF-->  
-    <div ng-hide="pdf">
-      <div class="col-xs-1">
-        <button class="btn btn-rep3" ng-click="pdfReporte()">PDF
-        </button>
-      </div><!--Fin Reporte Formato PDF-->
+            <div ng-hide="pdf">
+              <div class="col-xs-1">
+                <button class="btn btn-rep3" ng-click="pdfReporte()">PDF
+                </button>
+              </div><!--Fin Reporte Formato PDF-->
+            </div>
+            <div ng-hide="csv"><!--Emitir Reporte Formato CSV-->
+              <div class="col-xs-1">    
+                <button class="btn btn-success" ng-click="csvReporte()">CSV
+                </button> 
+              </div>   
+            </div><!--Fin Reporte Formato CSV--> 
+            <div class="col-xs-1"><!--Emitir Graficas-->
+              <button class="btn btn-rep1 " ng-click="graReporte()">Gráfica
+              </button>
+            </div><!--Fin Graficas-->
+          </div><!--Fin class="container col-xs-9" -->
+        </form> 
+      </div> <!-- Fin div class="col-xs-12" -->
     </div>
-    <div ng-hide="csv"><!--Emitir Reporte Formato CSV-->
-      <div class="col-xs-1">    
-        <button class="btn btn-success" ng-click="csvReporte()">CSV
-        </button> 
-      </div>   
-    </div><!--Fin Reporte Formato CSV--> 
-    <div class="col-xs-1"><!--Emitir Graficas-->
-
-        <button class="btn btn-rep1 " ng-click="graReporte()">Gráfica
-        </button>
-
-    </div><!--Fin Graficas-->
-   </div>
-  </form> 
-</div>
-</div>
+  </div>
 </div>
