@@ -8,7 +8,6 @@ angular.module('sedadApp')
 				method: 'GET', isArray: false
 			}
 		});
-
      	return res;
 	}])
 	.factory('GraR1', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
@@ -24,7 +23,6 @@ angular.module('sedadApp')
 		var res = $resource (API +'/reportes/historico_comparado/materias/:codigo/instrumentos/:instrumento_id.json', {codigo: '@codigo',instrumento_id: '@id',ids: '@ids'}, {
 			update: {
 				method: 'GET', isArray: true
-
 			}
 		});
 		return res;
@@ -38,7 +36,7 @@ angular.module('sedadApp')
 		return res;
 	}])
 	.factory('GraR4', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
-		var res = $resource (API +'/reportes/periodo_comparado/materias/:codigo_materia/periodos/:periodo.json?ids[]=1&ids[]=2&ids[]=3', {codigo_materia: '@codigo_materia',periodo: '@periodo'}, {
+		var res = $resource (API +'/reportes/periodo_comparado/materias/:codigo/periodos/:periodo.json', {codigo: '@codigo',periodo: '@periodo',ids: '@ids'}, {
 			update: {
 				method: 'GET', isArray: true
 			}
@@ -60,7 +58,6 @@ angular.module('sedadApp')
 			}
 		});
 		return res;
-	
 	}])
 	.factory('GraR7', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		var res = $resource (API +'/reportes/historico_comparado/docentes/:cedula_docente/instrumentos/:instrumento_id.json?ids[]=1&ids[]=2&ids[]=3', {cedula_docente: '@cedula_docente',instrumento_id: '@instrumento_id'}, {
@@ -69,7 +66,6 @@ angular.module('sedadApp')
 			}
 		});
 		return res;
-	
 	}])
 	.factory('GraR8', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		var res = $resource (API +'/reportes/periodo_completo/docentes/:cedula_docente/periodos/:periodo.json', {cedula_docente: '@cedula_docente',periodo: '@periodo'}, {
@@ -78,7 +74,6 @@ angular.module('sedadApp')
 			}
 		});
 		return res;
-	
 	}])
 	.factory('GraR9', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		var res = $resource (API +'/reportes/periodo_comparado/docentes/:cedula_docente/periodos/:periodo.json?ids[]=1&ids[]=2&ids[]=3', {cedula_docente: '@cedula_docente',periodo: '@periodo'}, {
@@ -87,9 +82,7 @@ angular.module('sedadApp')
 			}
 		});
 		return res;
-	
 	}])
-
 	.factory('LisDoc',function ($resource){
 		return $resource('http://localhost:3000/api/v1/docentes/:id');
 		})
