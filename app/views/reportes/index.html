@@ -79,8 +79,8 @@
  2-Histórico Comparado de Materia
 ------------------------------------------------ --> 
       <div ng-hide="Vp72">
-<!--         {{n_materia}}
-        {{n_instrumento}} -->
+<!-- {{periodos}} -->
+        {{posicion_i}}
         <div ng-hide="Vp72">
           <canvas id="line" class="chart chart-line" data="gra_dat"
           labels="ejex11" legend="true" series="n_pregunta_a" click="">
@@ -92,6 +92,7 @@
  3-Histórico Completo de Materia por Período
 ------------------------------------------------ -->
       <div ng-hide="Vp73">
+      {{gra_dat}}
 <!-- Gráfico de Torta
 ---------------------- --> 
         <div class="row" ng-repeat="b in gra_dat track by $index"> 
@@ -106,7 +107,12 @@
  4-Comparado de Materia por Período
 ------------------------------------------------ -->
       <div ng-hide="Vp74">
-<!--          Materia: {{valores.materia.codigo}} {{valores.materia.nombre}} Per&iacute;odo:{{periodos[persel].periodo}} -->
+<!-- gra_dat:{{gra_dat}}
+ejex11: {{ejex11}}
+n_pregunta_a: {{n_pregunta_a}} -->
+          <canvas id="line" class="chart chart-line" data="gra_dat"
+          labels="ejex11" legend="true" series="n_pregunta_a" click="">
+          </canvas>
       </div> 
 <!-- 
 ------------------------------------------------
@@ -163,7 +169,9 @@
  7-Histórico Comparado de Docente
 ------------------------------------------------ -->
         <div ng-hide="Vp77">
-<!--          {{valores.docente.cedula}} {{valores.docente.nombre_completo}}    Instrumento: {{valores.instrumento.nombre}} -->
+          <canvas id="line" class="chart chart-line" data="gra_dat"
+          labels="ejex11" legend="true" series="n_pregunta_a" click="">
+          </canvas>
         </div>
 <!-- 
 ------------------------------------------------

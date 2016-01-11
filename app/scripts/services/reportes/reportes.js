@@ -60,7 +60,7 @@ angular.module('sedadApp')
 		return res;
 	}])
 	.factory('GraR7', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
-		var res = $resource (API +'/reportes/historico_comparado/docentes/:cedula_docente/instrumentos/:instrumento_id.json?ids[]=1&ids[]=2&ids[]=3', {cedula_docente: '@cedula_docente',instrumento_id: '@instrumento_id'}, {
+		var res = $resource (API +'/reportes/historico_comparado/docentes/:cedula_docente/instrumentos/:instrumento_id.json', {cedula_docente: '@cedula_docente',instrumento_id: '@instrumento_id',ids: '@ids'}, {
 			update: {
 				method: 'GET', isArray: true
 			}
@@ -76,7 +76,7 @@ angular.module('sedadApp')
 		return res;
 	}])
 	.factory('GraR9', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
-		var res = $resource (API +'/reportes/periodo_comparado/docentes/:cedula_docente/periodos/:periodo.json?ids[]=1&ids[]=2&ids[]=3', {cedula_docente: '@cedula_docente',periodo: '@periodo'}, {
+		var res = $resource (API +'/reportes/periodo_comparado/docentes/:cedula_docente/periodos/:periodo.json', {cedula_docente: '@cedula_docente',periodo: '@periodo',ids: '@ids'}, {
 			update: {
 				method: 'GET', isArray: true
 			}
