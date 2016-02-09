@@ -2,12 +2,6 @@
  
 angular.module('sedadApp')
     .controller('ReportesIndexCtrl', ['$scope','$http', 'SEDAD_API_V1_URL', 'LisMat', 'LisPre', 'LisCar', 'LisIns', 'LisPer', 'LisDoc', 'GraR0','GraR1','GraR2','GraR3','GraR4','GraR5','GraR6','GraR7','GraR8','GraR9', function ($scope,$http,API,LisMat,LisPre,LisCar,LisIns,LisPer,LisDoc,GraR0,GraR1,GraR2,GraR3,GraR4,GraR5,GraR6,GraR7,GraR8,GraR9){
-      $scope.listar_reportes = true;
-      $scope.datos_reportes = false;
-      $scope.botones_descarga = false;
-      $scope.desplegar = true;
-      $scope.nombre_reporte= '';//contiene titulo del rep.
-        
       $scope.repdis = [
         {id:' 0',nombre:'Histórico de Pregunta por Materia', codigo: 'historico_pregunta', elemento: 'materia',
         pdcs:'(PDF/CSV)', bpdf: false, bcsv: false, grat: false, grar: false,gral: true, grab: true},
@@ -50,8 +44,11 @@ angular.module('sedadApp')
 //------------------------------------------------
 // Variables lógicas para habilitar en la vista
 //------------------------------------------------ 
-        $scope.Visible1     = false;//false habilita la vista de la Tabla de Rep
-        $scope.Visible2     = true; //false habilita la sección de datos requeridos
+//      
+        $scope.listar_reportes = true;
+        $scope.datos_reportes = false;
+        $scope.botones_descarga = false;
+        $scope.desplegar = true;
         $scope.Vp1          = true; //false habilita menú de materias
         $scope.Vp2          = true; //false habilita menú de preguntas
         $scope.Vp3          = true; //false habilita menú de instrumentos
@@ -74,7 +71,6 @@ angular.module('sedadApp')
         $scope.Vp79         = true; //false habilita gráficas 9-Período Comparado de Docente
         $scope.pdf          =false; //false habilita boton para emisión pdf
         $scope.csv          =false; //false habilita boton para emisión csv        
-        $scope.csv          =false;
 //------------------------------------------------
 // Parámetros globales
 //------------------------------------------------ 
@@ -85,7 +81,7 @@ angular.module('sedadApp')
         $scope.numrep       = 0;    //contiene el numero de reporte seleccionado
         $scope.tiprep       = 0;    //tipo de reporte seleccionado,pdf por defecto 
         $scope.urlDescargaReporte      = "";//contiene url del reporte sel.
-        $scope.repourl      = '';   //contiene url del reporte sel.
+        $scope.nombre_tipo_reporte='';//contiene titulo del rep.
         $scope.nombre_reporte='';//contiene titulo del rep.
         $scope.nombre_rep   = [];
         $scope.series       = [];   //contiene identificación de la serie
@@ -120,13 +116,11 @@ angular.module('sedadApp')
             console.log(points,evt);
         };
         $scope.pedirparametros = function(index) {
+          $scope.iniciar();
+
           $scope.listar_reportes=false;
           $scope.datos_reportes=true;
           $scope.botones_descarga = false;
-
-          $scope.iniciar();
-          $scope.Visible1=true;
-          $scope.Visible2=false;
           $scope.idssel       = [];   // contiene los ids
           $scope.idssel1      = 0;    //primer   parametro de comparado x pregunta
           $scope.idssel2      = 0;    //segundo  parametro de comparado x pregunta
@@ -143,17 +137,20 @@ angular.module('sedadApp')
           $scope.numrep=10; 
           $scope.nombre_reporte=$scope.repdis[index].nombre;         
           if (index === 0) {
+             $scope.nombre_tipo_reporte='Histórico de Pregunta por Materia';
             $scope.Vp0=false;
             $scope.Vp1=false;
             $scope.Vp2=false;
             $scope.numrep=0;
           };
           if (index === 1) {
+                $scope.nombre_tipo_reporte='Histórico Completo de Materia';
             $scope.Vp1=false;
             $scope.Vp3=false;
             $scope.numrep=1; 
           }; 
           if (index === 2) {
+              $scope.nombre_tipo_reporte="Histórico Comparado de Materia";
             $scope.Vp1=false;
             $scope.Vp3=false;
             $scope.Vp61=false;
@@ -162,11 +159,13 @@ angular.module('sedadApp')
             $scope.numrep=2;
           };
           if (index === 3) {
+                $scope.nombre_tipo_reporte='Período Completo por Materia';
             $scope.Vp1=false; 
             $scope.Vp4=false;
             $scope.numrep=3;
           }; 
           if (index === 4) {
+              $scope.nombre_tipo_reporte="Periodo Comparado de Materia";
             $scope.Vp1 =false;
             $scope.Vp4 =false;
             $scope.Vp61=false;
@@ -175,16 +174,19 @@ angular.module('sedadApp')
             $scope.numrep=4;
           };
           if (index === 5) {
+             $scope.nombre_tipo_reporte='Histórico de Pregunta por Docente';
             $scope.Vp2=false;
             $scope.Vp5=false;
             $scope.numrep=5;
           }; 
-          if (index === 6) {
+          if (index === 6) {            
+            $scope.nombre_tipo_reporte ='Histórico Completo de Docente';
             $scope.Vp3=false;
             $scope.Vp5=false;
             $scope.numrep=6;
           };
           if (index === 7) {
+                $scope.nombre_tipo_reporte="Histórico Comparado de Docente";
             $scope.Vp3=false;
             $scope.Vp5=false;
             $scope.Vp61=false;
@@ -193,11 +195,13 @@ angular.module('sedadApp')
             $scope.numrep=7;
           };
           if (index === 8) {
+              $scope.nombre_tipo_reporte   ='Período Completo de Docente';
             $scope.Vp4=false;
             $scope.Vp5=false;
             $scope.numrep=8;
           };
           if (index === 9) {
+              $scope.nombre_tipo_reporte   ='Período Comparado de Docente';
             $scope.Vp4=false;
             $scope.Vp5=false;
             $scope.Vp61=false;
@@ -337,8 +341,6 @@ angular.module('sedadApp')
         };
       */  
         $scope.graReporte = function() {
-            $scope.Visible1=false;
-            $scope.Visible2=true;  
             $scope.series=[];
 
             $scope.botones_descarga = true;
@@ -393,9 +395,9 @@ angular.module('sedadApp')
 //          $scope.Vp70   = variable global que permite la visualización de la gráfica
 //---------------------------------------------------------------------------------------------
             if ($scope.numrep === 0) {
-               GraR0.get({codigo: $scope.matsel ,id: $scope.presel}, function(data){
-               $scope.nombre_reporte='Histórico de Pregunta por Materia'+' '+data.materia.codigo+' '+data.materia.nombre;
-               $scope.n_materia =data.materia.codigo+' '+data.materia.nombre;
+
+              GraR0.get({codigo: $scope.matsel ,id: $scope.presel}, function(data){
+               $scope.nombre_objeto_reporte = data.materia.codigo+' - '+data.materia.nombre;
                $scope.series.push(data.pregunta.interrogante); 
 //             inicialización de variables globales
                $scope.ejex01=[];
@@ -490,8 +492,7 @@ angular.module('sedadApp')
 
             if ($scope.numrep === 1) {
                 GraR1.get({codigo: $scope.matsel ,instrumento_id: $scope.inssel}, function(data){
-                    $scope.nombre_reporte='Histórico Completo de Materia '+data.materia.codigo+'-'+data.materia.nombre+' por Instrumento '+data.instrumento.nombre;
-                    $scope.n_materia =data.materia.codigo+' '+data.materia.nombre;
+                    $scope.nombre_objeto_reporte = data.materia.codigo+' - '+data.materia.nombre;
                     $scope.n_instrumento=data.instrumento.nombre;
                     $scope.n_bloque    =""; 
                     $scope.gra_dat     =[];
@@ -611,9 +612,6 @@ angular.module('sedadApp')
 //          seccion       = datos de seccion[j]
 //          
 //          vejex01       = contiene el periodo actual tranformado en XXXX-XX
-
-
-
 //                          
 //          vdatos01      = contiene la dupla periodo promedio, ["2014-01",3.33]
 //          tvdatos0      = se une periodo con promedio ["2014-01,3.33"] para luego ordenar
@@ -628,8 +626,7 @@ angular.module('sedadApp')
                 $scope.gra_dat_t=[]; 
                 $scope.ejex11 =[];
                 $scope.n_pregunta_a =[];       
-                $scope.nombre_reporte="Histórico Comparado de Materia "+data.materia.codigo+' '+data.materia.nombre+' por Instrumento '+data.instrumento.nombre;
-                $scope.n_materia    = "Materia: "+data.materia.codigo+' '+data.materia.nombre;   //nombre de materia
+                $scope.nombre_objeto_reporte = data.materia.codigo+' - '+data.materia.nombre;   //nombre de materia
                 $scope.n_instrumento= "Instrumento: "+data.instrumento.nombre;   //nombre de instrumento                    
                 $scope.posicion_i=0;
                 $scope.t_periodos_s = '';
@@ -718,10 +715,9 @@ angular.module('sedadApp')
 // 
             if ($scope.numrep === 3) {
                 GraR3.get({codigo: $scope.matsel ,periodo: $scope.persel}, function(data){
-                    $scope.nombre_reporte='Período '+$scope.persel+' Completo por Materia '+data.materia.codigo+'-'+data.materia.nombre;
                     $scope.gra_dat       = [];  
                     $scope.n_periodo     =[];        
-                    $scope.n_materia     ="Materia: "+data.materia.codigo+' '+data.materia.nombre;
+                    $scope.nombre_objeto_reporte     = data.materia.codigo+' - '+data.materia.nombre;
                     $scope.n_instrumento ="Instrumento: "+data.instrumento.nombre;
                     $scope.n_bloque      ="";
                     $scope.n_pregunta    ="";
@@ -773,8 +769,7 @@ angular.module('sedadApp')
                 $scope.gra_dat_t=[]; 
                 $scope.ejex11 =[];
                 $scope.n_pregunta_a =[];       
-                $scope.nombre_reporte="Periodo Comparado de Materia";
-                $scope.n_materia    = "Materia: "+data.materia.codigo+' '+data.materia.nombre;   //nombre de materia
+                $scope.nombre_objeto_reporte =  data.materia.codigo+' - '+data.materia.nombre;   //nombre de materia
                 $scope.n_instrumento= "Instrumento: "+data.instrumento.nombre;   //nombre de instrumento                    
                 var nombre_x_m=[];
                 for (var n = 0; n <= data.instrumento.preguntas.length - 1; n++) {
@@ -783,7 +778,6 @@ angular.module('sedadApp')
                      $scope.gra_dat_t=[];
                      $scope.ejex11 =[];
                      nombre_x_m=[];
-                     $scope.ejex11=[];
 //       se llena el arreglo de preguntas                            
                      $scope.n_pregunta_a.push(pregunta.interrogante);                        
                      for (var o = 0; o <= pregunta.resultados.length - 1; o++) {
@@ -798,8 +792,8 @@ angular.module('sedadApp')
                           };
 //       se llena el arreglo de datos = promedio de las medias de secciones                            
                           
-                       };             
-                       if (nombre_x_m.length == 0) {              
+                    };
+                       if (nombre_x_m.length == 0) {    
                        }else{
                              $scope.gra_dat_t.push(0);
                              $scope.gra_dat_t.push(5);
@@ -859,9 +853,8 @@ angular.module('sedadApp')
 //          $scope.Vp70   = variable global que permite la visualización de la gráfica
 //---------------------------------------------------------------------------------------------
             if ($scope.numrep === 5) {
-               GraR5.get({cedula_docente: $scope.docsel ,pregunta_id: $scope.presel}, function(data){
-               $scope.nombre_reporte='Histórico de Pregunta por Docente '+data.docente.cedula+' '+data.docente.nombre_completo;
-               $scope.n_docente=data.docente.cedula+'-'+data.docente.nombre_completo;
+              GraR5.get({cedula_docente: $scope.docsel ,pregunta_id: $scope.presel}, function(data){
+               $scope.nombre_objeto_reporte= data.docente.cedula+' - '+data.docente.nombre_completo;
                $scope.series.push(data.pregunta.interrogante); 
 //             inicialización de variables globales
                $scope.ejex01=[];
@@ -961,8 +954,7 @@ angular.module('sedadApp')
 
             if ($scope.numrep === 6) {
                 GraR6.get({cedula_docente: $scope.docsel ,instrumento_id: $scope.inssel}, function(data){
-                    $scope.nombre_reporte ='Histórico Completo de Docente '+data.docente.cedula+' '+data.docente.nombre_completo;
-                    $scope.n_docente=data.docente.cedula+'-'+data.docente.nombre_completo;
+                    $scope.nombre_objeto_reporte = data.docente.cedula+' - '+data.docente.nombre_completo;
                     // $scope.n_instrumento = data.instrumento.nombre;
                     $scope.n_bloque    =""; 
                     $scope.gra_dat     =[];
@@ -1106,9 +1098,8 @@ angular.module('sedadApp')
                 $scope.gra_dat= [];  
                 $scope.gra_dat_t=[]; 
                 $scope.ejex11 =[];
-                $scope.n_pregunta_a =[];       
-                $scope.nombre_reporte="Histórico Comparado de Docente "+data.docente.cedula+' '+data.docente.nombre_completo+' por Instrumento '+data.instrumento.nombre;
-                $scope.n_docente    = "Docente: "+data.docente.cedula+' '+data.docente.nombre_completo;   //identificación de docente
+                $scope.n_pregunta_a =[];
+                $scope.nombre_objeto_reporte = data.docente.cedula+' - '+data.docente.nombre_completo;   //identificación de docente
                 $scope.n_instrumento= "Instrumento: "+data.instrumento.nombre;   //nombre de instrumento                    
                 var t_sec_x_per = 1;
                 var t_med_per = 0;
@@ -1193,8 +1184,7 @@ angular.module('sedadApp')
             if ($scope.numrep === 8) {
              GraR8.get({cedula_docente: $scope.docsel ,periodo: $scope.persel}, function(data){
               $scope.gra_dat= [];  
-              $scope.nombre_reporte   ='Período '+data.periodo+' Completo de Docente '+data.docente.cedula+' '+data.docente.nombre_completo;
-              $scope.nombre_rep       ="";
+              $scope.nombre_objeto_reporte = data.docente.cedula+' - '+data.docente.nombre_completo;
               $scope.n_instrumento    ="Instrumento: "+data.instrumento.nombre;
               $scope.n_bloque         ="";
               var nombre_docente_m    ="Docente: "+data.docente.cedula+' '+data.docente.nombre_completo;

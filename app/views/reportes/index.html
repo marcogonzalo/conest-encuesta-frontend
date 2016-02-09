@@ -3,21 +3,21 @@
  <li><a ui-sref="instrumentos.index">Inicio</a></li>
  <!--   <li><a href="#">Administración</a></li> -->
  <li class="active">Reportes</li>
- <li class="active">{{nombre_reporte}}</li>
+ <li class="active">{{nombre_tipo_reporte}}</li>
 </ol>
 <!--Fin Migas de Pan-->
 
 <!-- Listado de reportes y solicitud de datos -->
 <div class="col-xs-12">
-  <div class="panel panel-primary">
+  <div id="reportes" class="panel panel-primary">
     <div class="panel-heading">
-      <h1>
-        Reportes 
+      <h4>
         <a ng-click="desplegar_o_no()" href="#">
+          Reportes 
           <i ng-if="desplegar" class="glyphicon glyphicon-triangle-top pull-right"></i>
           <i ng-if="!desplegar" class="glyphicon glyphicon-triangle-bottom pull-right"></i>
         </a>
-      </h1>
+      </h4>
     </div>
     <div ng-show="desplegar">
       <!-- Listado de reportes -->
@@ -49,7 +49,7 @@
       <div class="clearfix" ng-show="datos_reportes">
         <br>
         <div class="col-sm-8 col-md-8">
-          <p><b>Datos para el reporte "{{nombre_reporte}}"</b></p>
+          <p><b>Datos para el reporte "{{nombre_tipo_reporte}}"</b></p>
         </div>
         <form class="form col-sm-8 col-md-8" ng-submit="">
           <!--Se requiere Carrera - - >
@@ -126,7 +126,7 @@
             <div class="form-group">
               <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 1 a comparar:</label>
               <div class="col-md-6">
-                <select class='form-control' ng-model="presel1" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas"></select> 
+                <select class='form-control' ng-model="idssel1" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas"></select> 
               </div>
             </div>
           </div> 
@@ -135,7 +135,7 @@
             <div class="form-group">
               <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 2 a comparar:</label>
               <div class="col-md-6">
-                <select class='form-control' ng-model="presel2" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas"></select> 
+                <select class='form-control' ng-model="idssel2" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas"></select> 
               </div>
             </div>
           </div> 
@@ -144,7 +144,7 @@
             <div class="form-group">
               <label for="id" class="col-sm8 col-md-8 control-label">Pregunta 3 a comparar:</label>
               <div class="col-md-6">
-                <select class='form-control' ng-model="presel3" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas"></select> 
+                <select class='form-control' ng-model="idssel3" required="required" ng-options="pregunta.id as pregunta.id+'-'+pregunta.interrogante for pregunta in preguntas"></select> 
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@
             <p>
               <br>
               <!--Cancelar Reporte --> 
-              <button class="btn btn-success" ng-click="volver()">Cancelar<i class="glyphicon glyphicon-exit"></i></button>
+              <button class="btn btn-default" ng-click="volver()">Volver<i class="glyphicon glyphicon-exit"></i></button>
               <!--Fin Cancelar Reporte --> 
               <!--Emitir valores-->  
               <button class="btn btn-rep1 " ng-click="graReporte()">Ver</button>  
@@ -171,18 +171,9 @@
 <!-- FIN Listado de reportes y solicitud de datos -->
 
 <div class="container" > 
-  <div ng-hide="Vp7" class="col-sm-8 col-md-8">
-      <h3 class="subtitulo-rep"></h3>
-<!-- 
-------------------------------------------------
- Descarga de documentos pdf o csv
------------------------------------------------- --> 
-      <div ng-hide="Vp6">
-        <div class="col-sm-8 col-md-8 text-center ">
-          <a href={{repourl}}>Presione para Descargar<i class="glyphicon glyphicon-download"></i></a>
-        </div>
-      </div>
-<!--fin Descargas-->
+  <div ng-hide="Vp7" class="col-sm-12 col-md-12">
+      <h1 class="subtitulo-rep">{{nombre_tipo_reporte}}</h1>
+      <h2 class="subtitulo-rep">{{nombre_objeto_reporte}}</h2>
 <!-- 
 ------------------------------------------------
  0-Histórico de Pregunta por Materia
