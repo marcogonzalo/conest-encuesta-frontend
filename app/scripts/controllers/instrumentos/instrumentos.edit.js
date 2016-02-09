@@ -13,6 +13,7 @@ angular.module('sedadApp')
     $scope.texto_boton = "Crear";
     $scope.instrumento = {};
 
+    var tiposDeBloque = ["D", "G", "L", "P", "T"];
     // Estructura de un instrumento nuevo
     var instrumento = {
         "nombre": null,
@@ -173,6 +174,9 @@ angular.module('sedadApp')
                     if(instrumento.bloques[bi].nombre == null || instrumento.bloques[bi].nombre.trim() == '') {
                         return { error: true, mensaje: 'El instrumento posee bloques sin nombre.' };
                     }
+                    else if(instrumento.bloques[bi].tipo == null || instrumento.bloques[bi].tipo.trim() == '' || tiposDeBloque.indexOf(instrumento.bloques[bi].tipo) < 0) {
+                        return { error: true, mensaje: 'El instrumento posee bloques sin tipo definido.' };
+                    }
                     else {
                         var cant_preguntas = instrumento.bloques[bi].preguntas.length;
                         if(cant_preguntas > 0) {
@@ -222,11 +226,12 @@ angular.module('sedadApp')
                 if(data.id != null) {
                     $scope.instrumento = data;
                     $scope.texto_boton = "Actualizar";
+                    nuevoInstrumento = false;
                 }
                 else {
                     console.log(data);
                 }
-                Notificacion.success({ title: "Instrumento creado", message: "Puede continuar trabajando en el elemento" });
+                Notification.success({ title: "Instrumento creado", message: "Puede continuar trabajando en el elemento" });
             }, 
             function(error) {
                 Notification.error('No se pudo guardar el instrumento');
