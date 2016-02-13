@@ -105,6 +105,9 @@ a:focus {
 .container .jumbotronenc {
   border-radius: 6px;
 }
+
+#reportes h4 a { color:white; display: block; text-decoration: none;}
+
 @media screen and (min-width: 768px) {
   .jumbotronenc {
     padding-top: 10px;

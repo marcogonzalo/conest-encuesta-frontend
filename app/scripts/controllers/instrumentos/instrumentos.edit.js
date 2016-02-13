@@ -13,6 +13,7 @@ angular.module('sedadApp')
     $scope.texto_boton = "Crear";
     $scope.instrumento = {};
 
+    var tiposDeBloque = ["D", "G", "L", "P", "T"];
     // Estructura de un instrumento nuevo
     var instrumento = {
         "nombre": null,
@@ -162,18 +163,75 @@ angular.module('sedadApp')
         $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(indices.opcion_idx,1);
     };
 
+    var validarInstrumento = function(instrumento) {
+        if(instrumento.nombre == null || instrumento.nombre.trim() == '') {
+            return { error: true, mensaje: 'El instrumento no posee nombre.' };        
+        }
+        else {
+            var cant_bloques = instrumento.bloques.length;
+            if(cant_bloques > 0) {
+                for(var bi = 0, nb = cant_bloques; bi < nb; bi++) {
+                    if(instrumento.bloques[bi].nombre == null || instrumento.bloques[bi].nombre.trim() == '') {
+                        return { error: true, mensaje: 'El instrumento posee bloques sin nombre.' };
+                    }
+                    else if(instrumento.bloques[bi].tipo == null || instrumento.bloques[bi].tipo.trim() == '' || tiposDeBloque.indexOf(instrumento.bloques[bi].tipo) < 0) {
+                        return { error: true, mensaje: 'El instrumento posee bloques sin tipo definido.' };
+                    }
+                    else {
+                        var cant_preguntas = instrumento.bloques[bi].preguntas.length;
+                        if(cant_preguntas > 0) {
+                            for(var pi = 0, np = cant_preguntas; pi < np; pi++) {
+                                if(instrumento.bloques[bi].preguntas[pi].interrogante == null || instrumento.bloques[bi].preguntas[pi].interrogante.trim() == '') {
+                                    return { error: true, mensaje: 'El bloque "'+instrumento.bloques[bi].nombre+'" posee preguntas sin texto.' };
+                                }
+                                else {
+                                    var cant_opciones = instrumento.bloques[bi].preguntas[pi].opciones.length;
+                                    if(cant_opciones > 0) {
+                                        for(var oi = 0; oi < cant_opciones; oi++) {
+                                            if(instrumento.bloques[bi].preguntas[pi].opciones[oi].etiqueta == null || instrumento.bloques[bi].preguntas[pi].opciones[oi].etiqueta.trim() == '' || instrumento.bloques[bi].preguntas[pi].opciones[oi].valor == null) {
+                                                return { error: true, mensaje: 'La pregunta "'+instrumento.bloques[bi].preguntas[pi].interrogante+'" posee opciones sin etiqueta o valor.' };                                        
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        return { error: true, mensaje: 'La pregunta "'+instrumento.bloques[bi].preguntas[pi].interrogante+'" no posee opciones.' };
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            return { error: true, mensaje: 'El bloque "'+instrumento.bloques[bi].nombre+'" no posee preguntas.' };
+                        }
+                    }
+                }
+                return { error: false, mensaje: "Sin errores." };
+            }
+            else {
+                return { error: true, mensaje: "El instrumento no posee bloques." };        
+            }
+        }
+    };
+
     $scope.guardar = function() {
+        var revision = validarInstrumento($scope.instrumento);
+
+        if(revision.error) {
+            Notification.error(revision.mensaje); 
+            return false;
+        }
+
         if(nuevoInstrumento) {
             console.log("nuevo");
             Instrumento.save($scope.instrumento, function(data) {
                 if(data.id != null) {
                     $scope.instrumento = data;
                     $scope.texto_boton = "Actualizar";
+                    nuevoInstrumento = false;
                 }
                 else {
                     console.log(data);
                 }
-                Notificacion.success({ title: "Instrumento creado", message: "Puede continuar trabajando en el elemento" });
+                Notification.success({ title: "Instrumento creado", message: "Puede continuar trabajando en el elemento" });
             }, 
             function(error) {
                 Notification.error('No se pudo guardar el instrumento');

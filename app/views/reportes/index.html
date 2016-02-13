@@ -3,24 +3,23 @@
 <ol class="breadcrumb"> 
  <li><a ui-sref="instrumentos.index">Inicio</a></li>
  <!--   <li><a href="#">Administración</a></li> -->
- <li class="active">Reportes / {{titulo}}</li>
  <li class="active">Reportes</li>
- <li class="active">{{nombre_reporte}}</li>
+ <li class="active">{{nombre_tipo_reporte}}</li>
 </ol>
 
 <!--Fin Migas de Pan-->
 
 <!-- Listado de reportes y solicitud de datos -->
 <div class="col-xs-12">
-  <div class="panel panel-primary">
+  <div id="reportes" class="panel panel-primary">
     <div class="panel-heading">
-      <h1>
-        Reportes 
+      <h4>
         <a ng-click="desplegar_o_no()" href="#">
+          Reportes 
           <i ng-if="desplegar" class="glyphicon glyphicon-triangle-top pull-right"></i>
           <i ng-if="!desplegar" class="glyphicon glyphicon-triangle-bottom pull-right"></i>
         </a>
-      </h1>
+      </h4>
     </div>
     <div ng-show="desplegar">
       <!-- Listado de reportes -->
@@ -48,7 +47,7 @@
       <div class="clearfix" ng-show="datos_reportes">
         <br>
         <div class="col-sm-8 col-md-8">
-          <p><b>Datos para el reporte "{{nombre_reporte}}"</b></p>
+          <p><b>Datos para el reporte "{{nombre_tipo_reporte}}"</b></p>
         </div>
         <form class="form col-sm-8 col-md-8" ng-submit="">
           <!--Se requiere Carrera - - >
@@ -155,12 +154,11 @@
             <p>
               <br>
               <!--Cancelar Reporte --> 
-              <button class="btn btn-success" ng-click="volver()">Cancelar<i class="glyphicon glyphicon-exit"></i></button>
+              <button class="btn btn-default" ng-click="volver()">Volver<i class="glyphicon glyphicon-exit"></i></button>
               <!--Fin Cancelar Reporte --> 
               <!--Emitir valores-->  
               <button class="btn btn-rep1 " ng-click="graReporte()">Ver</button>  
               <!--Fin valores-->
-
             </p>
           </div>
         </form>     
@@ -169,30 +167,21 @@
   </div>
 </div>
 <!-- FIN Listado de reportes y solicitud de datos -->
-     
-<!-- Listado de reportes y solicitud de datos -->
-<div class="container" > 
-  <div ng-hide="Vp7" class="col-sm-8 col-md-8">
-      <h3 class="subtitulo-rep"></h3>
 
-<!-- 
-------------------------------------------------
- Descarga de documentos pdf o csv
------------------------------------------------- --> 
-      <div ng-hide="Vp6">
-        <div class="col-sm-8 col-md-8 text-center ">
-          <a href={{repourl}}>Presione para Descargar<i class="glyphicon glyphicon-download"></i></a>
-        </div>
-      </div>
-<!--fin Descargas-->
+<div class="container" > 
+  <div ng-hide="Vp7" class="col-sm-12 col-md-12">
+      <h1 class="subtitulo-rep">{{nombre_tipo_reporte}}</h1>
+      <h2 class="subtitulo-rep">{{nombre_objeto_reporte}}</h2>
+
+
+      <button ng-if="pdf" class="btn btn-info" ng-click="formatoReporte('pdf')">PDF</button>  
+      <button ng-if="csv" class="btn btn-info" ng-click="formatoReporte('csv')">CSV</button>   
 
 <!-- 
 ------------------------------------------------
  0-Histórico de Pregunta por Materia
 ------------------------------------------------ --> 
       <div ng-hide="Vp70">
-        <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>  
-        <button class="btn btn-info"ng-click="formatoReporte('csv')">CSV</button>   
         <div style="width: 10%">
           <canvas id="canvas" height="50" width="50"></canvas>
         </div>
@@ -284,22 +273,17 @@
 ------------------------------------------------
  5-Histórico de Pregunta por Docente
 ------------------------------------------------ -->
-      <div ng-hide="Vp75">
-          <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>  
-          <button class="btn btn-info"ng-click="formatoReporte('csv')">CSV</button>         
-<!-- Gráfico de Línea
----------------------- --> 
+      <div ng-hide="Vp75">        
+<!-- Gráfico de Línea  --> 
           <canvas id="line" class="chart chart-line" data="gra_dat"
            labels="ejex01" legend="true" series="series"
            click="onClick">
           </canvas> 
-<!-- Gráfico de Barra
----------------------- --> 
+<!-- Gráfico de Barra  --> 
 <!--           <canvas id="bar" class="chart chart-bar" data="gra_dat" 
            labels="ejex01" legend="true" series="series" click="">
           </canvas>  -->
-<!-- Gráfico de Torta
----------------------- --> 
+<!-- Gráfico de Torta  --> 
 <!--           <canvas id="pie" class="chart chart-pie" data="gra_dat"
            labels="ejex01" legend="true" series="series" click="">
           </canvas> -->
@@ -311,19 +295,16 @@
       <div ng-hide="Vp76">
         <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>         
         <div class="row" ng-repeat="b in gra_dat track by $index"> 
-<!-- Gráfico de Línea
----------------------- -->  
+<!-- Gráfico de Línea  -->  
           <canvas id="line" class="chart chart-line" data="b[2]"
           labels="b[1]" legend="true" series="b[0]"
           click="onClick">
           </canvas>  
-<!-- Gráfico de Barras
----------------------- -->                       
+<!-- Gráfico de Barras -->                       
 <!--      <canvas id="bar" class="chart chart-bar" data="b[2]" 
           labels="b[1]" legend="true" series="" click="">
           </canvas>  -->
-<!-- Gráfico de Torta
----------------------- -->           
+<!-- Gráfico de Torta  -->           
 <!--      <canvas id="pie" class="chart chart-pie" data="b[2]"
           labels="b[1]" legend="true" series="b[0]" click="">
           </canvas> -->
@@ -343,27 +324,21 @@
 ------------------------------------------------
  8-Período Completo de Docente
 ------------------------------------------------ -->          
-         <div ng-hide="Vp78">
-         <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>          
-         <div class="row" ng-repeat="b in gra_dat track by $index">  
+      <div ng-hide="Vp78">
+        <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>          
+        <div class="row" ng-repeat="b in gra_dat track by $index">  
           {{b[0]}}<br>
-          <canvas id="pie" class="chart chart-pie" data="b[2]"
-          labels="b[1]" legend="true" series="b[0]" click="">
-          </canvas>
-         </div>
+          <canvas id="pie" class="chart chart-pie" data="b[2]" labels="b[1]" legend="true" series="b[0]" click=""></canvas>
         </div>
+      </div>
 <!-- 
 ------------------------------------------------
  9-Período Comparado de Docente
 ------------------------------------------------ -->         
-<!-- Gráfico de Línea
----------------------- --> 
+<!-- Gráfico de Línea  --> 
       <div ng-hide="Vp79">
-          <canvas id="line" class="chart chart-line" data="gra_dat"
-          labels="ejex11" legend="true" series="n_pregunta_a" click="">
-          </canvas>
+          <canvas id="line" class="chart chart-line" data="gra_dat" labels="ejex11" legend="true" series="n_pregunta_a" click=""></canvas>
       </div>  
   </div>
 </div>
 <!--fin Gráficas-->
-
