@@ -211,7 +211,7 @@
  1-Histórico Completo de Materia por Instrumento
 ------------------------------------------------ --> 
       <div ng-hide="Vp71">
-        <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button> 
+        <h3>Instrumento: {{n_instrumento}}</h3>      
         <div class="row" ng-repeat="b in gra_dat track by $index"> 
 <!-- Gráfico de Línea
 ---------------------- -->  
@@ -236,7 +236,7 @@
  2-Histórico Comparado de Materia
 ------------------------------------------------ --> 
       <div ng-hide="Vp72">
-      
+        <h3>Instrumento: {{n_instrumento}}</h3>      
         <div ng-hide="Vp72">
           <canvas id="line" class="chart chart-line" data="gra_dat"
           labels="ejex11" legend="true" series="n_pregunta_a" click="">
@@ -247,9 +247,8 @@
 ------------------------------------------------
  3-Histórico Completo de Materia por Período
 ------------------------------------------------ -->
-      <div ng-hide="Vp73">
-         <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>  
-         <button class="btn btn-info"ng-click="formatoReporte('csv')">CSV</button>        
+      <div ng-hide="Vp73">    
+        <h3>Período: {{n_periodo}}</h3>      
 <!-- Gráfico de Torta
 ---------------------- --> 
         <div class="row" ng-repeat="b in gra_dat track by $index"> 
@@ -264,16 +263,16 @@
  4-Comparado de Materia por Período
 ------------------------------------------------ -->
       <div ng-hide="Vp74">
-       
-          <canvas id="line" class="chart chart-line" data="gra_dat"
-          labels="ejex11" legend="true" series="n_pregunta_a" click="">
-          </canvas>
+        <h3>Período: {{n_periodo}}</h3>      
+        <canvas id="line" class="chart chart-line" data="gra_dat"
+        labels="ejex11" legend="true" series="n_pregunta_a" click="">
+        </canvas>
       </div> 
 <!-- 
 ------------------------------------------------
  5-Histórico de Pregunta por Docente
 ------------------------------------------------ -->
-      <div ng-hide="Vp75">        
+      <div ng-hide="Vp75">
 <!-- Gráfico de Línea  --> 
           <canvas id="line" class="chart chart-line" data="gra_dat"
            labels="ejex01" legend="true" series="series"
@@ -293,7 +292,7 @@
  6-Histórico Completo de Docente
 ------------------------------------------------ -->
       <div ng-hide="Vp76">
-        <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>         
+        <h3>Instrumento: {{n_instrumento}}</h3>
         <div class="row" ng-repeat="b in gra_dat track by $index"> 
 <!-- Gráfico de Línea  -->  
           <canvas id="line" class="chart chart-line" data="b[2]"
@@ -315,7 +314,7 @@
  7-Histórico Comparado de Docente
 ------------------------------------------------ -->
         <div ng-hide="Vp77">
-     
+          <h3>Instrumento: {{n_instrumento}}</h3>
           <canvas id="line" class="chart chart-line" data="gra_dat"
           labels="ejex11" legend="true" series="n_pregunta_a" click="">
           </canvas>
@@ -324,8 +323,8 @@
 ------------------------------------------------
  8-Período Completo de Docente
 ------------------------------------------------ -->          
-      <div ng-hide="Vp78">
-        <button class="btn btn-info"ng-click="formatoReporte('pdf')">PDF</button>          
+      <div ng-hide="Vp78">        
+        <h3>Período: {{n_periodo}}</h3>      
         <div class="row" ng-repeat="b in gra_dat track by $index">  
           {{b[0]}}<br>
           <canvas id="pie" class="chart chart-pie" data="b[2]" labels="b[1]" legend="true" series="b[0]" click=""></canvas>
@@ -337,7 +336,8 @@
 ------------------------------------------------ -->         
 <!-- Gráfico de Línea  --> 
       <div ng-hide="Vp79">
-          <canvas id="line" class="chart chart-line" data="gra_dat" labels="ejex11" legend="true" series="n_pregunta_a" click=""></canvas>
+        <h3>Período: {{n_periodo}}</h3>
+        <canvas id="line" class="chart chart-line" data="gra_dat" labels="ejex11" legend="true" series="n_pregunta_a" click=""></canvas>
       </div>  
   </div>
 </div>
