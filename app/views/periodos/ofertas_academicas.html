@@ -30,7 +30,7 @@
                 <a ng-click="cambiarInstrumento(o)" class="btn btn-xs">Cambiar</a>
               </div>
               <div ng-if="o.cambiarInstrumento == true">
-                <select ng-options="option.nombre for option in instrumentosDisponibles track by option.id  | orderBy:'nombre':true" ng-model="o.instrumentoSeleccionado" convert-to-number></select>
+                <select ng-options="option.nombre for option in instrumentosDisponibles | orderBy:'nombre':true track by option.id" ng-model="o.instrumentoSeleccionado" convert-to-number></select>
                 <a ng-click="cambiarInstrumento(o)" class="btn btn-xs btn-primary">Guardar</a>
               </div>
             </td>
