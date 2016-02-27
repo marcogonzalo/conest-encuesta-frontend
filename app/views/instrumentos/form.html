@@ -13,7 +13,14 @@
 				<div class="bloque">
 					<input type="text" ng-model="b.nombre" placeholder="Nombre del bloque" class="col-xs-12">
 					<input type="text" ng-model="b.descripcion" placeholder="Descripción del bloque" class="col-xs-12 descripcion">
-					<input type="text" ng-model="b.tipo" placeholder="Tipo de aspecto a evaluar en el bloque" class="col-xs-12">
+					<select name="singleSelect" ng-model="b.tipo" class="col-xs-12">
+						<option value="">Tipo de aspecto a evaluar en el bloque</option>
+						<option value="D">Docente</option>
+						<option value="G">General</option>
+						<option value="L">Laboratorio</option>
+						<option value="P">Práctica</option>
+						<option value="T">Teoría</option>
+				    </select>
 					<fieldset class="col-xs-12">
 						<legend>
 							<div class="col-xs-9">Preguntas</div>
