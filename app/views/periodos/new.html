@@ -5,7 +5,7 @@
 			<input type="text" id="periodo" ng-model="nuevoPeriodo" placeholder="Semestre y año del Período. Ej.: 02-2015" class="col-xs-12 form-control">
 		</div>
 		<div class="col-xs-5">
-			<select ng-options="option.nombre for option in instrumentosDisponibles track by option.id  | orderBy:'nombre':true" ng-model="instrumentoSeleccionado" convert-to-number>
+			<select ng-options="option.nombre for option in instrumentosDisponibles | orderBy:'nombre':true track by option.id" ng-model="instrumentoSeleccionado" convert-to-number>
 				<option value="">Instrumento a emplear en el período</option>
 			</select>
 		</div>

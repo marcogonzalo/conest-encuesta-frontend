@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<label>Rol</label>
-			<select ng-options="option.nombre for option in usuarioEditar.roles track by option.id  | orderBy:'nombre':true" ng-model="rol_seleccionado" convert-to-number> </select>
+			<select ng-options="option.nombre for option in usuarioEditar.roles | orderBy:'nombre':true track by option.id" ng-model="rol_seleccionado" convert-to-number> </select>
 		</div>
 	</div>
 </div>
