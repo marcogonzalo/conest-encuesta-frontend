@@ -1,6 +1,6 @@
 <div class="container">
 	<h3>Habilitar período</h3>
-	<form id="periodo-form">
+	<form ng-hide="generar_token" class="row" id="periodo-form">
 		<div class="col-xs-5">
 			<input type="text" id="periodo" ng-model="nuevoPeriodo" placeholder="Semestre y año del Período. Ej.: 02-2015" class="col-xs-12 form-control">
 		</div>
@@ -13,4 +13,6 @@
 			<button class="btn btn-success" ng-click="guardar()">Habilitar Período</button>
 		</div>
 	</form>
+
+	<button ng-if="generar_token" class="btn btn-primary text-center col-xs-12" ng-click="solicitar_token()">Generar Token en servidor</button>
 </div>

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('sedadApp')
-	.controller('PeriodosNewCtrl', ['$scope', 'Periodo', 'Instrumento', 'Notification', function($scope, Periodo, Instrumento, Notification){
+	.controller('PeriodosNewCtrl', ['$scope', '$state', 'Periodo', 'Instrumento', 'SEDAD_API_V1_URL', 'Notification', function($scope, $state, Periodo, Instrumento, SEDAD_API_V1_URL, Notification){
+        $scope.generar_token = false
 		$scope.instrumentosDisponibles = Instrumento.query(function(data) {
             return data;  
         }, function(error) {
@@ -17,12 +18,19 @@ angular.module('sedadApp')
             return re.test(periodo);
         } 
 
-		$scope.guardar = function() {
+        /*$scope.solicitar_token = function() {
+            $http.post(SEDAD_API_V1_URL + '/api/v1/tokens', {}).success(function() {
+                Notification.info("Token de servidor registrado");
+                $scope.generar_token = false
+            })
+        }*/
+
+        $scope.guardar = function() {
             if(validar($scope.nuevoPeriodo)) {
-    			Periodo.save({ periodo_academico: { periodo: $scope.nuevoPeriodo, instrumento_id: $scope.instrumentoSeleccionado.id } }, function(data) {
+                Periodo.save({ periodo_academico: { periodo: $scope.nuevoPeriodo, instrumento_id: $scope.instrumentoSeleccionado.id } }, function(data) {
                     if(data.estatus == "OK") {
-    	                Notification.success("Período registrado");
-    					$state.go('main');
+                        Notification.success("Período registrado");
+    					$state.go('periodos.index');
                     }
                     else {
                     	Notification.error("No se pudo sincronizar el período")
@@ -34,8 +42,8 @@ angular.module('sedadApp')
     	                Notification.warning("Este período ya se encuentra registrado");
                     }
                     else {
-                        Notification.error("No se pudo sincronizar el período")
-                        console.log(error);
+                        Notification.error({ title: "No se pudo sincronizar el período", message: error.data.mensaje, delay: 25000 })
+                        //$scope.generar_token = true;
                     }
                 });
             }
