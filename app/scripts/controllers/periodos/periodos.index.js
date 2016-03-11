@@ -28,9 +28,9 @@ angular.module('sedadApp')
             });			
 		};
 
-		$scope.sincronizar = function(solicitud, index) {
-			var periodo = $scope.periodos[index];
-
+		$scope.sincronizar = function(solicitud, p) {
+			var periodo = p;
+          	var index = $scope.periodos.indexOf(p);
 			if(solicitud == 'asignaturas') {
 				$http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/sincronizar_asignaturas')
 		          .success(function(data, status, headers, config) {
