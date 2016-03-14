@@ -187,7 +187,7 @@ angular.module('sedadApp', [
 
 
   }])
-  .run(["$rootScope", "$state", "AuthService", 'AUTH_EVENTS', 'CurrentUser', function($rootScope, $state, AuthService, AUTH_EVENTS, CurrentUser){
+  .run(["$rootScope", "$state", "AuthService", 'AuthToken', 'AUTH_EVENTS', 'CurrentUser', function($rootScope, $state, AuthService, AuthToken, AUTH_EVENTS, CurrentUser){
     $rootScope.$on('$stateChangeStart', function(event, next, toState, toParams, fromState, fromParams){
       var permisos = (next && next.data) ? next.data.permisos : null;
       var usuario = CurrentUser.user();
@@ -207,26 +207,17 @@ angular.module('sedadApp', [
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
+      AuthToken.unset('usuario');
       $state.go('main');
     });
 
     $rootScope.$on(AUTH_EVENTS.sessionTimeout, function() {
-      $state.go('main');
-    });
-
-    $rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
-      $state.go('main');
-    });
-
-    $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
-      $state.go('main');
-    });
-
-    $rootScope.$on(AUTH_EVENTS.sessionTimeout, function() {
+      AuthToken.unset('usuario');
       $state.go('main');
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
+      AuthToken.unset('usuario');
       $state.go('main');
     });
   }]);
