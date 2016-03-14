@@ -29,39 +29,30 @@ angular.module('sedadApp')
 		};
 
 		$scope.sincronizar = function(solicitud, p) {
-			var periodo = p;
-          	var index = $scope.periodos.indexOf(p);
-			if(solicitud == 'asignaturas') {
-				$http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/sincronizar_asignaturas')
+			if(solicitud != "") {
+				var periodo = p;
+	          	var index = $scope.periodos.indexOf(p);
+	          	var valor_tipo = "";
+	          	var nombre_tipo = "";
+
+				if(solicitud == 'asignaturas') {
+					valor_tipo = 'asignaturas';
+				}
+				else if(solicitud == 'estudiantes') {
+					valor_tipo = 'estudiantes';
+				}
+				$http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/sincronizar_'+valor_tipo)
 		          .success(function(data, status, headers, config) {
 		          	$scope.periodos[index].sincronizacion = data.sincronizacion;
-		            Notification.success("Asignaturas sincronizadas");
+		            Notification.success('Sincronización de '+valor_tipo+' exitosa');
 		          })
 		          .error(function(data, status, headers, config) {
 		          	if(status == 304) {
 		          		Notification.warning('Información sin cambios');
-		          	} 
-		          	else {
-		          		Notification.error('Error al sincronizar asignaturas');
 		          	}
-		            console.log(data);
-		          // called asynchronously if an error occurs
-		          // or server returns response with an error status.
-		        });
-			}
-			else if(solicitud == 'estudiantes') {
-				$http.get(SEDAD_API_V1_URL + '/periodos_academicos/'+periodo.periodo+'/sincronizar_estudiantes')
-		          .success(function(data, status, headers, config) {
-		          	$scope.periodos[index].sincronizacion = data.sincronizacion;
-		            Notification.success("Estudiantes sincronizados");
-		          })
-		          .error(function(data, status, headers, config) {
-		          	if(status == 304) {
-		          		Notification.warning('Información sin cambios');
-		          	} 
 		          	else {
-			            Notification.error('Error al sincronizar estudiantes');
-			        }
+		          		Notification.error('Error al sincronizar '+valor_tipo);
+		          	}
 		            console.log(data);
 		          // called asynchronously if an error occurs
 		          // or server returns response with an error status.
