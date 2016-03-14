@@ -8,9 +8,10 @@
  * Controller of the sedadApp
  */
 angular.module('sedadApp')
-  .controller('UsuariosEditCtrl', ['$http', '$scope', '$state', '$stateParams', 'Rol', 'SEDAD_API_V1_URL', 'Notification', function ($http, $scope, $state, $stateParams, Rol, SEDAD_API_V1_URL, Notification) {
+  .controller('UsuariosEditCtrl', ['$http', '$scope', '$state', '$stateParams', 'CurrentUser', 'Rol', 'SEDAD_API_V1_URL', 'Notification', function ($http, $scope, $state, $stateParams, CurrentUser, Rol, SEDAD_API_V1_URL, Notification) {
     $scope.usuarioEditar = {};
     $scope.rol_seleccionado = {};
+    var u = CurrentUser.user();
     var cruzarRol  = function() {
       for(var i = 0, n = $scope.usuarioEditar.roles.length; i < n; i++) {
         if($scope.usuarioEditar.usuario.rol_id == $scope.usuarioEditar.roles[i].id) {
@@ -40,11 +41,17 @@ angular.module('sedadApp')
     $http.get(SEDAD_API_V1_URL + '/usuarios/' + $stateParams.id + '/editar')
       .success(function(data, status, headers, config) {
         if(data.usuario !== null) {
-          $scope.usuarioEditar = data;
-          cruzarRol(data.usuario.rol_id);
+          if(data.usuario.cedula != u.cedula) {
+            $scope.usuarioEditar = data;
+            cruzarRol(data.usuario.rol_id);
+          } 
+          else {
+            Notification.error('No se pudo obtener el usuario o no puede editarse');
+            $state.go('usuarios.index');
+          }
         }
         else {
-          Notification.error('No se pudo obtener el usuario');
+          Notification.error('No se pudo obtener el usuario o no puede editarse');
           $state.go('usuarios.index');
         }
       })
