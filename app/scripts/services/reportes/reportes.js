@@ -83,21 +83,21 @@ angular.module('sedadApp')
 		});
 		return res;
 	}])
-	.factory('LisDoc',function ($resource){
-		return $resource('http://localhost:3000/api/v1/docentes/:id');
-		})
-	.factory('LisPer',function ($resource){
-		return $resource('http://localhost:3000/api/v1/periodos_academicos/:id');
-		})
-	.factory('LisIns',function ($resource){
-		return $resource('http://localhost:3000/api/v1/instrumentos/:id');
-		})
-	.factory('LisCar',function ($resource){
-		return $resource('http://localhost:3000/api/v1/carreras');
-		})
-	.factory('LisPre',function ($resource){
-		return $resource('http://localhost:3000/api/v1/preguntas');
-		})
-	.factory('LisMat',function ($resource){
-		return $resource('http://localhost:3000/api/v1/carreras/:id/materias', {id: '@id'});
-		});
+	.factory('LisDoc', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		return $resource(API +'/docentes/:id');
+	}])
+	.factory('LisPer', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		return $resource(API +'/periodos_academicos/:id');
+	}])
+	.factory('LisIns', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		return $resource(API +'/instrumentos/:id');
+	}])
+	.factory('LisCar', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		return $resource(API +'/carreras');
+	}])
+	.factory('LisPre', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		return $resource(API +'/preguntas');
+	}])
+	.factory('LisMat', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
+		return $resource(API +'/carreras/:id/materias', {id: '@id'});
+	}]);
