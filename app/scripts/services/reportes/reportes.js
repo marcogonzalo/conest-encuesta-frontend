@@ -3,7 +3,7 @@
 angular.module('sedadApp')
 	.factory('GraR0', ['$resource', 'SEDAD_API_V1_URL', function ($resource, API){
 		var res = $resource (API +'/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}, {
-// 'http://localhost:3000/api/v1/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}
+// '/reportes/historico_pregunta/materias/:codigo/preguntas/:id.json', {codigo: '@codigo',id: '@id'}
 			update: {
 				method: 'GET', isArray: false
 			}

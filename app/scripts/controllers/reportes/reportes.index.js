@@ -283,7 +283,7 @@ angular.module('sedadApp')
 //          GraR0.get     = Indica el servicio del reporte 0 que a través del método get
 //                          realiza la petición al servidor retornando un json el cual puede
 //                          ser referenciado en data.
-//                          url: 'http://localhost:3000/api/v1/reportes/historico_pregunta/
+//                          url: '/reportes/historico_pregunta/
 //                          materias/:codigo/preguntas/:id.pdf'
 //          $scope.matsel = codigo de materia seleccionada
 //          $scope.presel = id de pregunta seleccionada 
@@ -516,7 +516,7 @@ angular.module('sedadApp')
 //          GraR2.get     = Indica el servicio del reporte 2 que a través del método get
 //                          realiza la petición al servidor retornando un json el cual puede
 //                          ser referenciado en data.
-//                          url: rpdf:'http://localhost:3000/api/v1/reportes/historico_comparado/
+//                          url: rpdf:'/reportes/historico_comparado/
 //                          materias/:codigo/instrumentos/:instrumento_id.json
 //                          ?ids[]=1&ids[]=2&ids[]=3'.json'
 //          $scope.matsel = materia seleccionado
@@ -629,7 +629,7 @@ angular.module('sedadApp')
 // GraR3.get            = Indica el servicio del reporte 3 que a través del método get
 //                        realiza la petición al servidor retornando un json el cual puede
 //                        ser referenciado en data.
-//                        rpdf:'http://localhost:3000/api/v1/reportes/periodo_completo
+//                        rpdf:'/reportes/periodo_completo
 //                        /materias/:codigo/periodos/:periodo           
 // $scope.matsel        = materia seleccionado
 // $scope.persel        = periodo seleccionado 
@@ -764,7 +764,7 @@ angular.module('sedadApp')
 //          GraR5.get     = Indica el servicio del reporte 0 que a través del método get
 //                          realiza la petición al servidor retornando un json el cual puede
 //                          ser referenciado en data.
-//                          url: rpdf:'http://localhost:3000/api/v1/reportes/historico_pregunta/
+//                          url: rpdf:'/reportes/historico_pregunta/
 //                          docentes/:cedula_docente/preguntas/:pregunta_id..json'
 //          $scope.docsel = docente seleccionado
 //          $scope.n_docente= Cédula-Nombre del Docente
@@ -1001,7 +1001,7 @@ angular.module('sedadApp')
 //          GraR7.get     = Indica el servicio del reporte 2 que a través del método get
 //                          realiza la petición al servidor retornando un json el cual puede
 //                          ser referenciado en data.
-//                          url: rpdf:'http://localhost:3000/api/v1/reportes/historico_comparado/
+//                          url: rpdf:'/reportes/historico_comparado/
 //                          docentes/:codigo/instrumentos/:instrumento_id.json
 //                          ?ids[]=1&ids[]=2&ids[]=3'.json'
 //          $scope.docsel = docente seleccionado
