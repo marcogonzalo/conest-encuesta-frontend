@@ -111,6 +111,12 @@ nav ul.nav li a {
   margin: 0px;
 }
 
+/* Cambio de color en barra de carga */
+#loading-bar .bar { background: #FC9500; height: 5px; }
+/* Fancy blur effect */
+#loading-bar .peg { -moz-box-shadow: #FC9500 1px 0 6px 1px; -ms-box-shadow: #FC9500 1px 0 6px 1px; -webkit-box-shadow: #FC9500 1px 0 6px 1px; box-shadow: #FC9500 1px 0 6px 1px; }
+#loading-bar-spinner .spinner-icon { border-top-color:  #FC9500; border-left-color: #FC9500; } 
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {

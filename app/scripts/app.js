@@ -9,6 +9,7 @@
  * Main module of the application.
  */
 angular.module('sedadApp', [
+    'angular-loading-bar',
     'angular-momentjs',
     'chart.js',
     'ngAnimate', 
