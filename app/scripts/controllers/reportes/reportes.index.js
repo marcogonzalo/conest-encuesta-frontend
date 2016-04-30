@@ -1053,7 +1053,7 @@ angular.module('sedadApp')
 
                 $scope.nombre_objeto_reporte = data.docente.cedula+' - '+data.docente.nombre_completo;   //identificación de docente
 
-                $scope.n_instrumento= +data.instrumento.nombre;   //nombre de instrumento                    
+                $scope.n_instrumento= data.instrumento.nombre;   //nombre de instrumento                    
                 var t_sec_x_per = 1;
                 var t_med_per = 0;
                 var datos_grafica_m=[];
