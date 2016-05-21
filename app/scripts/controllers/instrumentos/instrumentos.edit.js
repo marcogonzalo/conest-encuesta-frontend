@@ -146,21 +146,33 @@ angular.module('sedadApp')
             }
         }
     };
+    // Set up the default filters.
+    $scope.filters = {
+        _destroy: true
+    };
 
     $scope.quitarBloque = function(bloque) {
         var indices = getIdxBloque(bloque);
-        console.log(indices.bloque_idx);
-        $scope.instrumento.bloques[indices.bloque_idx]['_destroy'] = true; 
+        if(nuevoInstrumento)
+            $scope.instrumento.bloques.splice(indices.bloque_idx,1);
+        else 
+            $scope.instrumento.bloques[indices.bloque_idx]['_destroy'] = true; 
     };
 
     $scope.quitarPregunta = function(pregunta) {
         var indices = getIdxPregunta(pregunta);
-        $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx]['_destroy'] = true; 
+        if(nuevoInstrumento)
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas.splice(indices.pregunta_idx,1);
+        else 
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx]['_destroy'] = true; 
     };
 
     $scope.quitarOpcion = function(opcion) {
         var indices = getIdxOpcion(opcion);
-        $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones[indices.opcion_idx]['_destroy'] = true; 
+        if(nuevoInstrumento)
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones.splice(indices.opcion_idx,1);
+        else 
+            $scope.instrumento.bloques[indices.bloque_idx].preguntas[indices.pregunta_idx].opciones[indices.opcion_idx]['_destroy'] = true; 
     };
 
     var validarInstrumento = function(instrumento) {
