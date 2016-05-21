@@ -13,8 +13,6 @@ angular.module('sedadApp')
 		
         var validar = function(periodo) {
             var re = /(01|02)-[\d]{4}/;
-            console.log(periodo);
-            console.log(re.test(periodo));
             return re.test(periodo);
         } 
 
@@ -28,21 +26,22 @@ angular.module('sedadApp')
         $scope.guardar = function() {
             if(validar($scope.nuevoPeriodo)) {
                 Periodo.save({ periodo_academico: { periodo: $scope.nuevoPeriodo, instrumento_id: $scope.instrumentoSeleccionado.id } }, function(data) {
+                    console.log(data);
                     if(data.estatus == "OK") {
                         Notification.success("Período registrado");
-    					$state.go('periodos.index');
+                        $state.go('periodos.index');
                     }
                     else {
-                    	Notification.error("No se pudo sincronizar el período")
-                    	console.log(data);
+                        Notification.error("No se pudo sincronizar el período")
                     }
                 },
                 function(error) {
+                	console.log(error);
                     if(error.status == 304) {
     	                Notification.warning("Este período ya se encuentra registrado");
                     }
                     else {
-                        Notification.error({ title: "No se pudo sincronizar el período", message: error.data.mensaje, delay: 25000 })
+                        Notification.error({ title: "No se pudo sincronizar el período", message: error.mensaje, delay: 25000 })
                         //$scope.generar_token = true;
                     }
                 });

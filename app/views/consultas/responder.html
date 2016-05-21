@@ -8,18 +8,20 @@
 
 <div class="container">
 		<h1>Consulta sobre la Actividad Docente</h1>
-		<dl>
-			<dt>Per&iacute;odo</dt>
-			<dd>{{ consulta.oferta_academica.periodo }}</dd>
-			<dt>Asignatura:</dt>
-			<dd>{{ consulta.oferta_academica.nombre }} ({{ consulta.oferta_academica.codigo }})</dd>
-			<dt>Sección</dt>
-			<dd>{{ consulta.oferta_academica.seccion }} - Prof. {{ consulta.oferta_academica.docente.primer_nombre }} {{ consulta.oferta_academica.docente.primer_apellido }}</dd>
-			<dt>Instrumento:</dt>
-			<dd>{{ consulta.instrumento.nombre }}</dd>
-		</dl>
+		<details>
+			<dl>
+				<dt>Per&iacute;odo</dt>
+				<dd>{{ consulta.oferta_academica.periodo }}</dd>
+				<dt>Asignatura:</dt>
+				<dd>{{ consulta.oferta_academica.nombre }} ({{ consulta.oferta_academica.codigo }})</dd>
+				<dt>Sección</dt>
+				<dd>{{ consulta.oferta_academica.seccion }} - Prof. {{ consulta.oferta_academica.docente.primer_nombre }} {{ consulta.oferta_academica.docente.primer_apellido }}</dd>
+				<dt>Instrumento:</dt>
+				<dd>{{ consulta.instrumento.nombre }}</dd>
+			</dl>
+		</details>
 		
-		<fieldset class="row bloque" ng-repeat="b in consulta.instrumento.bloques">
+		<fieldset class="bloque" ng-repeat="b in consulta.instrumento.bloques">
 			<legend>{{ b.nombre }} ({{ b.tipo }})</legend>
 			<p class="descripcion">{{ b.descripcion }}</p>
 

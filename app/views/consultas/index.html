@@ -9,7 +9,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-md-8">
-      <h1>Consultas sin responder</h1>
+      <h3>Consultas sin responder</h3>
     </div>
   </div>
   <div class="row">
@@ -27,7 +27,7 @@
             <td>{{ c.periodo_academico }}</td>
             <td>({{ c.materia.codigo }}) {{ c.materia.nombre }}</td>
             <td class="text-right">
-              <a ui-sref="consultas.responder({id: c.id})" class="btn btn-small btn-primary">responder</a>
+              <a ui-sref="consultas.responder({id: c.id})" class="btn btn-small btn-primary">Responder</a>
             </td>
           </tr>
         </tbody>
