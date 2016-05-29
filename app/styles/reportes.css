@@ -8,6 +8,7 @@
 a {
   color: #428bca;
   text-decoration: none;
+  cursor: pointer;
 }
 a:hover, a:focus {
   color: #2a6496;
